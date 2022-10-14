@@ -6,11 +6,23 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 11:23:57 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/14 16:54:35 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//function that checks for whitespace characters
+int	is_whitespace(char *line)
+{
+	while (*line)
+	{
+		if (*line != 32 && !(*line >= 9 && *line <= 13))
+			return (0);
+		line++;
+	}
+	return (1);
+}
 
 //function that puts, "/" after being splitted for every path
 void	ft_put_backsl(t_vars *vars)
@@ -55,6 +67,22 @@ void	ft_get_path(t_vars *vars, char *env[])
 	free(path);
 }
 
+//function that count how many arguments there are
+void	ft_count_args(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (vars->args[i])
+		i++;
+	vars->num_args = i;
+}
+
+// void	ft_check_cmd(t_vars *vars)
+// {
+	
+// }
+
 // // FREE THE VARS->LINE, VARS->ARGS
 // void	ft_readline(t_vars *vars)
 // {
@@ -67,7 +95,7 @@ void	ft_get_path(t_vars *vars, char *env[])
 // 	while (vars->args[i])
 // 		printf("%s\n", vars->args[i++]);
 // }
-ls	-la
+
 int	main(int argc, char *argv[], char *env[])
 {
 	t_vars	vars;
@@ -84,5 +112,14 @@ int	main(int argc, char *argv[], char *env[])
 	while (vars.args[i])
 		printf("%s\n", vars.args[i++]);
 	ft_get_path(&vars, env);
+	while (1)
+	{
+		vars.line = readline("minish$ ");
+		if (*vars.line != '\0')
+			add_history(vars.line);
+		if (*vars.line != '\0' && !is_whitespace(vars.line))
+			parseline(&vars);
+		free(vars.line);
+	}
 	return (0);
 }
