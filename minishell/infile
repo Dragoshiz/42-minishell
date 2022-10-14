@@ -1,0 +1,12 @@
+total 152
+drwxr-xr-x  11 dimbrea  2021_wolfsburg    374 Oct 14 11:36 .
+drwxr-xr-x   7 dimbrea  2021_wolfsburg    238 Oct 14 11:36 ..
+-rw-r--r--   1 dimbrea  2021_wolfsburg   1304 Oct 14 10:47 Makefile
+-rw-r--r--   1 dimbrea  2021_wolfsburg      0 Oct 14 11:36 infile
+drwxr-xr-x  85 dimbrea  2021_wolfsburg   2890 Oct 14 11:13 libft
+-rw-r--r--   1 dimbrea  2021_wolfsburg   2267 Oct 14 11:23 main.c
+-rw-r--r--   1 dimbrea  2021_wolfsburg   4280 Oct 14 11:13 main.o
+-rwxr-xr-x   1 dimbrea  2021_wolfsburg  52024 Oct 14 11:13 minishell
+drwxr-xr-x   3 dimbrea  2021_wolfsburg    102 Oct 14 11:00 minishell.dSYM
+-rw-r--r--   1 dimbrea  2021_wolfsburg   1154 Oct 13 17:49 minishell.h
+-rw-r--r--   1 dimbrea  2021_wolfsburg    107 Oct 13 13:19 outputfile
