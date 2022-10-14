@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 15:32:53 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/14 17:39:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define WHITESPACE " \t"
+# define WHITESPACE " \t\r\n\v"
 
 typedef struct s_vars{
 	char	**paths; // ENV list
