@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
 /*   Updated: 2022/10/15 15:15:18 by dimbrea          ###   ########.fr       */
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define WHITESPACE " \t"
+# define WHITESPACE " \t\r\n\v"
 
 typedef struct s_vars{
 	char	**paths; // ENV list
@@ -36,7 +36,8 @@ parseline.c
 */
 
 // returns cmd tree/line for the executor
-void	parseline(t_vars *vars);
+
+void	parseline(t_vars *vars, char * env[]);
 void	ft_free_doublepoint(char **to_free);
 
 #endif
