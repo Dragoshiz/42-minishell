@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/15 19:35:41 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:18:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_vars{
 	char	**paths; // extracted paths from ENV
-	*env_sh; // working ENV (minishell)
+	char	*env_sh; // working ENV (minishell)
 	char	**args; // array of commands for the executor
 	char	*line;
 	char	*cmd; //maybe delete
@@ -32,10 +32,6 @@ typedef struct s_vars{
 	int		num_pipes;
 }t_vars;
 
-typedef struct s_env_sh{
-	char				*value;
-	struct	s_env_sh	*next;
-}	t_env_sh;
 
 /*
 parseline.c
@@ -44,6 +40,7 @@ parseline.c
 // returns cmd tree/line for the executor
 
 void	parseline(t_vars *vars);
+void	set_env_sh(t_vars *vars, char *env[]);
 void	ft_free_doublepoint(char **to_free);
 
 #endif
