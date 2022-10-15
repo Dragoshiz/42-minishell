@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 17:41:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:32:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (*vars.line != '\0')
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			parseline(&vars);
+			parseline(&vars, env);
 		free(vars.line);
 	}
 	return (0);

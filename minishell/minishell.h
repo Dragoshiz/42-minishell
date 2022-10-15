@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 17:39:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:32:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ parseline.c
 */
 
 // returns cmd tree/line for the executor
-void	parseline(t_vars *vars);
+void	parseline(t_vars *vars, char * env[]);
 
 #endif
