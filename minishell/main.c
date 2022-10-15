@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/15 16:10:58 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/15 17:05:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int	main(int argc, char *argv[], char *env[])
 	int		i;
 
 	i = 0;
+	vars.env_sh = env;
 	vars.args = malloc(sizeof(char *) * 5);
 	while (i < 3)
 		vars.args[i++] = malloc(sizeof(char) * 15);
@@ -149,14 +150,14 @@ int	main(int argc, char *argv[], char *env[])
 	vars.args[4] = "shrep";
 	i = 0;
 	ft_get_path(&vars, env);
-	ft_check_cmd(&vars);
+	//ft_check_cmd(&vars);
 	while (1)
 	{
 		vars.line = readline("minish$ ");
 		if (*vars.line != '\0')
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			parseline(&vars, env);
+			parseline(&vars);
 		free(vars.line);
 	}
 	return (0);
