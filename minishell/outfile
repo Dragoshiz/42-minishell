@@ -1,3 +1,16 @@
--rwxr-xr-x   1 dimbrea  2021_wolfsburg  52024 Oct 14 11:13 minishell
-drwxr-xr-x   3 dimbrea  2021_wolfsburg    102 Oct 14 11:00 minishell.dSYM
--rw-r--r--   1 dimbrea  2021_wolfsburg   1154 Oct 13 17:49 minishell.h
+total 184
+drwxr-xr-x  15 dimbrea  2021_wolfsburg    510 Oct 15 15:31 .
+drwxr-xr-x   5 dimbrea  2021_wolfsburg    170 Oct 15 15:11 ..
+-rw-r--r--   1 dimbrea  2021_wolfsburg   1343 Oct 15 15:14 Makefile
+-rw-r--r--   1 dimbrea  2021_wolfsburg    748 Oct 14 12:07 infile
+drwxr-xr-x  85 dimbrea  2021_wolfsburg   2890 Oct 15 15:31 libft
+-rw-r--r--   1 dimbrea  2021_wolfsburg   3385 Oct 15 15:42 main.c
+-rw-r--r--   1 dimbrea  2021_wolfsburg   6448 Oct 15 15:31 main.o
+-rw-r--r--   1 dimbrea  2021_wolfsburg   1047 Oct 15 15:14 minish_utils.c
+-rw-r--r--   1 dimbrea  2021_wolfsburg   2188 Oct 15 15:31 minish_utils.o
+-rwxr-xr-x   1 dimbrea  2021_wolfsburg  53608 Oct 15 15:31 minishell
+drwxr-xr-x   3 dimbrea  2021_wolfsburg    102 Oct 14 12:07 minishell.dSYM
+-rw-r--r--   1 dimbrea  2021_wolfsburg   1434 Oct 15 15:15 minishell.h
+-rw-r--r--   1 dimbrea  2021_wolfsburg      0 Oct 15 15:43 outfile
+-rw-r--r--   1 dimbrea  2021_wolfsburg    107 Oct 14 12:07 outputfile
+drwxr-xr-x   4 dimbrea  2021_wolfsburg    136 Oct 15 15:31 parsing
