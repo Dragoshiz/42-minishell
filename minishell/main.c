@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 16:54:35 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:10:58 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,47 @@ void	ft_count_args(t_vars *vars)
 	vars->num_args = i;
 }
 
-// void	ft_check_cmd(t_vars *vars)
-// {
-	
-// }
+int	ft_is_a_cmd(char **paths, char *arg)
+{
+	char	*cmd;
+	int		i;
+
+	i = 0;
+	while (paths[i])
+	{
+		cmd = ft_strjoin(paths[i], arg);
+		if (access(cmd, F_OK) == 0)
+		{
+			free(cmd);
+			return (1);
+		}
+		free(cmd);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_check_cmd(t_vars *vars)
+{
+	int		i;
+	char	**cmd;
+
+	i = 0;
+	while (vars->args[i])
+	{
+		if (ft_isalpha(vars->args[i][0]))
+		{
+			cmd = ft_split(vars->args[i], ' ');
+			if (!ft_is_a_cmd(vars->paths, cmd[0]))
+			{
+				printf("COMMAND NOT FOUND %s", vars->args[i]);
+				exit(2);
+			}
+			ft_free_doublepoint(cmd);
+		}
+		i++;
+	}
+}
 
 // // FREE THE VARS->LINE, VARS->ARGS
 // void	ft_readline(t_vars *vars)
@@ -102,16 +139,17 @@ int	main(int argc, char *argv[], char *env[])
 	int		i;
 
 	i = 0;
-	vars.args = malloc(sizeof(char *) * 3);
+	vars.args = malloc(sizeof(char *) * 5);
 	while (i < 3)
-		vars.args[i++] =  malloc(sizeof(char) * 15);
+		vars.args[i++] = malloc(sizeof(char) * 15);
 	vars.args[0] = "ls -la";
 	vars.args[1] = "|";
-	vars.args[2] = "grep libft";
+	vars.args[2] = "grep";
+	vars.args[3] = "<";
+	vars.args[4] = "shrep";
 	i = 0;
-	while (vars.args[i])
-		printf("%s\n", vars.args[i++]);
 	ft_get_path(&vars, env);
+	ft_check_cmd(&vars);
 	while (1)
 	{
 		vars.line = readline("minish$ ");

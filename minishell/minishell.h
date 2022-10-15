@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/14 15:32:53 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/15 15:15:18 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
 	char	*line;
-	char	*cmd;
+	char	*cmd; //maybe delete
+	int		num_paths;
 	int		num_args;
 	int		num_pipes;
 }t_vars;
@@ -36,5 +37,6 @@ parseline.c
 
 // returns cmd tree/line for the executor
 void	parseline(t_vars *vars);
+void	ft_free_doublepoint(char **to_free);
 
 #endif

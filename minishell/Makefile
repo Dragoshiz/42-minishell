@@ -22,6 +22,7 @@ AF = ar rcs
 
 SRCS = \
 parsing/parseline.c\
+minish_utils.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)
