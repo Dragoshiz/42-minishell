@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/15 20:18:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:40:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,40 @@
 
 # define WHITESPACE " \t\r\n\v"
 
+typedef struct s_node {
+	void	*data;
+	struct	s_node *next;
+}	t_node;
+
+typedef struct s_linkedList {
+	t_node	*head;
+	t_node	*tail;
+	t_node	*current;
+}	t_linkedList;
+
 typedef struct s_vars{
-	char	**paths; // extracted paths from ENV
-	char	*env_sh; // working ENV (minishell)
-	char	**args; // array of commands for the executor
-	char	*line;
-	char	*cmd; //maybe delete
-	int		num_paths;
-	int		num_args;
-	int		num_pipes;
+	char			**paths; // extracted paths from ENV
+	t_linkedList	env_sh; // working ENV (minishell)
+	char			**args; // array of commands for the executor
+	char			*line;
+	char			*cmd; //maybe delete
+	int				num_paths;
+	int				num_args;
+	int				num_pipes;
+	int				num_env_sh;
 }t_vars;
 
+//Initialize
+void	initialize_env_sh(t_vars *vars, char *env[]);
 
-/*
-parseline.c
-*/
+//Lexer
+void	get_tokens(t_vars *vars);
 
-// returns cmd tree/line for the executor
+// Export Builtin
+void	displayLinkedList(t_linkedList *list);
 
-void	parseline(t_vars *vars);
-void	set_env_sh(t_vars *vars, char *env[]);
+// Cleanup
 void	ft_free_doublepoint(char **to_free);
+// free env_sh linkedList
 
 #endif

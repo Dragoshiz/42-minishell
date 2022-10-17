@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/15 20:15:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:40:37 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,16 @@ int	main(int argc, char *argv[], char *env[])
 	vars.args[4] = "shrep";
 	i = 0;
 	ft_get_path(&vars, env);
-	set_env_sh(&vars, env);
+	initialize_env_sh(&vars, env);
 	//ft_check_cmd(&vars);
+	displayLinkedList(&vars.env_sh);
 	while (1)
 	{
 		vars.line = readline("minish$ ");
 		if (*vars.line != '\0')
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			parseline(&vars);
+			get_tokens(&vars);
 		free(vars.line);
 	}
 	return (0);
