@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:40:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/17 17:47:20 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:35:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // create Link List for ENV
 // Strdup for each element
 
+// adds a node at the top
 void	addHead(t_linkedList *list, void *data)
 {
 	t_node *node;
@@ -32,6 +33,7 @@ void	addHead(t_linkedList *list, void *data)
 	list->head = node;
 }
 
+// adds a node at the tail
 void	addTail(t_linkedList *list, void *data)
 {
 	t_node *node;
@@ -46,6 +48,7 @@ void	addTail(t_linkedList *list, void *data)
 	list->tail = node;
 }
 
+// prints the list
 void	displayLinkedList(t_linkedList *list)
 {
 	t_node *current;
@@ -58,6 +61,7 @@ void	displayLinkedList(t_linkedList *list)
 	}
 }
 
+// initializes the list
 void	initializeList(t_linkedList *list)
 {
 	list->head = NULL;
@@ -65,16 +69,17 @@ void	initializeList(t_linkedList *list)
 	list->current = NULL;
 }
 
-void	initialize_env_sh(t_vars *vars, char *env[])
+// initializes ENV_SH_LIST
+void	initialize_env_sh_list(t_vars *vars, char *env[])
 {
 	int	i;
 
 	// check if env is valid and has content
-	initializeList(&vars->env_sh);
+	initializeList(&vars->env_sh_list);
 	i = 0;
 	while (env[i])
 	{
-		addTail(&vars->env_sh, env[i]);
+		addTail(&vars->env_sh_list, env[i]);
 		i++;
 	}
 	vars->num_env_sh = i;
@@ -86,6 +91,7 @@ void	initialize_env_sh(t_vars *vars, char *env[])
 
 // third pass: extract tokens
 
+// extract tokens from the line
 void	get_tokens(t_vars *vars)
 {
 //	printf("Line: %s\n", vars->line);

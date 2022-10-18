@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 10:16:35 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 11:31:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	main(int argc, char *argv[], char *env[])
 	ft_count_args(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-  initialize_env_sh(&vars, env);
+  initialize_env_sh_list(&vars, env);
 	//ft_check_cmd(&vars);
   displayLinkedList(&vars.env_sh);
 	while (1)
