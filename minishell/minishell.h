@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 11:31:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:38:37 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,35 @@ typedef struct s_vars{
   t_linkedList	env_sh_list; // working ENV (minishell)
 }t_vars;
 
-//Initialize
-void	initialize_env_sh_list(t_vars *vars, char *env[]);
+/*
+BUILTINS
+*/
+// export.c
 
-//Lexer
+/*
+PARSING
+*/
+// env_sh_list.c
+void	initialize_env_sh_list(t_vars *vars, char *env[]);
+// parseline.c
 void	get_tokens(t_vars *vars);
 
-// Export Builtin
+/*
+UTILS
+*/
+// list_sh_utils.c
+void	addHead(t_linkedList *list, void *data);
+void	addTail(t_linkedList *list, void *data);
 void	displayLinkedList(t_linkedList *list);
-
-// Cleanup
+void	initializeList(t_linkedList *list);
+// minish_utils.c
 void	ft_free_doublepoint(char **to_free);
-// free env_sh linkedList
-
+void	ft_cpy_env(t_vars *vars, char **env);
+char	*ft_find_arg_path(t_vars *vars, char *arg);
+void	ft_exec(t_vars *vars);
+int		ft_double(t_vars *vars, char arg, int i);
+int		ft_check_pipes(t_vars *vars);
 void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
-void	ft_cpy_env(t_vars *vars, char **env);
-void	ft_exec(t_vars *vars);
 
 #endif
