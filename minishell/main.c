@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 12:16:27 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:25:46 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	main(int argc, char *argv[], char *env[])
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
 	initialize_env_sh(&vars, env);
-	displayLinkedList(&vars.env_sh);
+	displayLinkedList(&vars.env_sh_list);
 	while (1)
 	{
 		vars.line = readline("minish$ ");

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 12:03:50 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:25:13 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ typedef struct s_vars{
 	int		hv_outfile;
 	int		hv_redirect;
 	int		hv_heredoc;	
-	t_linkedList	env_sh; // working ENV (minishell)
+	t_linkedList	env_sh_list; // working ENV (minishell)
 }t_vars;
 
 //Initialize
-void	initialize_env_sh(t_vars *vars, char *env[]);
+void	initialize_env_sh_list(t_vars *vars, char *env[]);
 
 //Lexer
 void	get_tokens(t_vars *vars);
