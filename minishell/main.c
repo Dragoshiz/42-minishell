@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/17 16:46:58 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 10:16:35 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	main(int argc, char *argv[], char *env[])
 	vars.args[1] = "|";
 	vars.args[2] = "grep mini";
 	vars.args[3] = "|";
-	vars.args[4] = "|";
+	vars.args[4] = "<";
 	ft_get_path(&vars, env);
 	ft_check_cmd(&vars);
 	ft_count_args(&vars);

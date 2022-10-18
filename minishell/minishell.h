@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/17 16:41:55 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 09:36:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <readline/readline.h>
@@ -30,6 +31,10 @@ typedef struct s_vars{
 	int		num_args;
 	int		num_cmds;
 	int		num_pipes;
+	int		hv_infile;
+	int		hv_outfile;
+	int		hv_redirect;
+	int		hv_heredoc;
 }t_vars;
 
 /*

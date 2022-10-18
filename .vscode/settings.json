@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"*.py": "python",
+		"algorithm": "c",
+		"functional": "c",
+		"__hash_table": "c",
+		"memory": "c",
+		"mutex": "c",
+		"optional": "c",
+		"unordered_map": "c",
+		"vector": "c"
+	}
+}
