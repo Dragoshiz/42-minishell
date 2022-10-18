@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:40:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/18 16:02:50 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:48:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 // extract tokens from the line
 void	get_tokens(t_vars *vars)
 {
+	(void)vars;
 //	printf("Line: %s\n", vars->line);
 }

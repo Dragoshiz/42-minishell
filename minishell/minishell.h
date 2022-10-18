@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:38:37 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:47:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
 	char	**env_sh;
+	char	**cmds;
 	char	*line;
 	int		num_paths;
 	int		num_args;
@@ -46,8 +47,8 @@ typedef struct s_vars{
 	int		hv_infile;
 	int		hv_outfile;
 	int		hv_redirect;
-	int		hv_heredoc;
-  t_linkedList	env_sh_list; // working ENV (minishell)
+	int		hv_heredoc;	
+	t_linkedList	env_sh_list; // working ENV (minishell)
 }t_vars;
 
 /*
