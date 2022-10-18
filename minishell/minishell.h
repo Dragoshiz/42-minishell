@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/17 17:40:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 09:36:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <readline/readline.h>
@@ -33,15 +34,20 @@ typedef struct s_linkedList {
 }	t_linkedList;
 
 typedef struct s_vars{
-	char			**paths; // extracted paths from ENV
-	t_linkedList	env_sh; // working ENV (minishell)
-	char			**args; // array of commands for the executor
-	char			*line;
-	char			*cmd; //maybe delete
-	int				num_paths;
-	int				num_args;
-	int				num_pipes;
-	int				num_env_sh;
+	char	**paths; // ENV list
+	char	**args; // array of commands for the executor
+	char	**env_sh;
+	char	*line;
+	int		num_paths;
+	int		num_args;
+	int		num_cmds;
+	int		num_pipes;
+  int		num_env_sh;
+	int		hv_infile;
+	int		hv_outfile;
+	int		hv_redirect;
+	int		hv_heredoc;
+  t_linkedList	env_sh; // working ENV (minishell)
 }t_vars;
 
 //Initialize
@@ -56,5 +62,10 @@ void	displayLinkedList(t_linkedList *list);
 // Cleanup
 void	ft_free_doublepoint(char **to_free);
 // free env_sh linkedList
+
+void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
+void	ft_iter(t_vars *vars);//try
+void	ft_cpy_env(t_vars *vars, char **env);
+void	ft_exec(t_vars *vars);
 
 #endif
