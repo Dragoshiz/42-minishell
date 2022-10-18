@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 10:16:35 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:16:27 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,19 @@ int	ft_is_a_cmd(char **paths, char *arg)
 void	ft_check_cmd(t_vars *vars)//1st function
 {
 	int		i;
-	char	**cmd;
 
 	i = 0;
 	while (vars->args[i])
 	{
 		if (ft_isalpha(vars->args[i][0]))
 		{
-			cmd = ft_split(vars->args[i], ' ');
-			if (!ft_is_a_cmd(vars->paths, cmd[0]))
+			vars->cmd = ft_split(vars->args[i], ' ');
+			if (!ft_is_a_cmd(vars->paths, vars->cmd[0]))
 			{
 				printf("minishell: command not found: %s", vars->args[i]);
 				exit(2);
 			}
-			ft_free_doublepoint(cmd);
+			ft_free_doublepoint(vars->cmd);
 			vars->num_cmds++;
 		}
 		i++;
@@ -142,7 +141,7 @@ int	main(int argc, char *argv[], char *env[])
 	int		i;
 
 	vars.args = malloc(sizeof(char *) * 5);
-	// while (i < 1)
+	while (i < 1)
 		vars.args[i++] = malloc(sizeof(char) * 15);
 	vars.args[0] = "ls -la";
 	vars.args[1] = "|";
@@ -154,9 +153,8 @@ int	main(int argc, char *argv[], char *env[])
 	ft_count_args(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-  initialize_env_sh(&vars, env);
-	//ft_check_cmd(&vars);
-  displayLinkedList(&vars.env_sh);
+	initialize_env_sh(&vars, env);
+	displayLinkedList(&vars.env_sh);
 	while (1)
 	{
 		vars.line = readline("minish$ ");

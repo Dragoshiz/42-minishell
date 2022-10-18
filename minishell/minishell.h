@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 09:36:41 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:03:50 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@ typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
 	char	**env_sh;
+	char	**cmd;
 	char	*line;
 	int		num_paths;
 	int		num_args;
 	int		num_cmds;
 	int		num_pipes;
-  int		num_env_sh;
+	int		num_env_sh;
+	int		hv_backgrd;
 	int		hv_infile;
 	int		hv_outfile;
 	int		hv_redirect;
-	int		hv_heredoc;
-  t_linkedList	env_sh; // working ENV (minishell)
+	int		hv_heredoc;	
+	t_linkedList	env_sh; // working ENV (minishell)
 }t_vars;
 
 //Initialize

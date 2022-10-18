@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 10:42:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:17:12 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void	ft_free_doublepoint(char **to_free)
 	free(to_free);
 }
 
+void	ft_cleanup(t_vars *vars)
+{
+	ft_free_doublepoint(vars->env_sh);
+}
 //copies env in the vars->env
 //free vars->env at the end
 void	ft_cpy_env(t_vars *vars, char **env)
@@ -142,16 +146,22 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 
 void	ft_exec(t_vars *vars)
 {
+	int	pid;
 	int	tmpin;
 	int	tmpout;
 	int	fdin;
 	int	fdout;
 	int	i;
+	int	fdpipe[2];
+	char **cmd;
 
+	i = 0;
 	tmpin = dup(0);
 	tmpout = dup(1);
 	if (vars->hv_infile)
 		fdin = open(vars->args[vars->hv_infile + 2], O_RDONLY);
+	if (fdin < 0)
+		printf("Err opening file\n");
 	else
 		fdin = dup(tmpin);
 	while (i < vars->num_cmds)
@@ -161,13 +171,39 @@ void	ft_exec(t_vars *vars)
 		if (i == vars->num_cmds - 1)
 		{
 			if (vars->hv_outfile)
+			{
 				fdout = open(vars->args[vars->hv_outfile + 2], O_RDWR
 						| O_CREAT | O_TRUNC, 0777);
-				if
+				if (fdout < 0)
+					printf("Err opening file\n");
+			}
 			else
 				fdout = dup(tmpout);
-			
 		}
+		else
+		{
+			if (pipe(fdpipe) < 0)
+				printf("Error piping");
+			fdout = fdpipe[1];
+			fdin = fdpipe[0];
+		}
+		dup2(fdout, 1);
+		close(fdout);
+		pid = fork();
+		if (pid < 0)
+			printf("Error forking");
+		if (pid == 0)
+			if (!execve(ft_find_arg_path(vars, vars->cmd[i]), vars->cmd[i], vars->env))
+			{
+				perror("err Executing");
+				exit(1);
+			}
+		dup2(tmpin, 0);
+		dup2(tmpout, 1);
+		close(tmpin);
+		close(tmpout);
+		waitpid(pid, NULL, 0);
+		i++;
 	}
 }
 
@@ -189,35 +225,34 @@ int	ft_check_pipes(t_vars *vars)
 
 void	ft_assign_symbs(t_vars *vars, char arg, int i)
 {
-	if (arg == '|')
-	{	
-		vars->num_pipes++;//need function to initialize struct variables
-		ft_check_pipes(vars);
-		printf("PIPE number =  %d\n", vars->num_pipes);
-		// ft_pipe(vars,i);
-	}
-	else if (arg == '$')
+	if (arg == '$')
 		printf("DOLLA at index %d\n", i);
 	else if (arg == '<')
 	{
 		printf("SMALLER at index %d\n", i);
 		if (ft_double(vars, arg, i))
-			vars->hv_heredoc = i + 2;
-		vars->hv_infile = i; //need function to find place of file
+			vars->hv_heredoc = 1;
+		vars->hv_infile = i + 2; //need function to find place of file
 	}
 	else if (arg == '>')
 	{
 		printf("BIGGER at index %d\n", i);
 		if (ft_double(vars, arg, i))
 			vars->hv_redirect = 1;
-		vars->hv_outfile = i + 1;//need function to find place of file
+		vars->hv_outfile = i + 2;//need function to find place of file
 	}
 	else if (arg == '\'')
 		printf("SINGLEQ at index %d\n", i);
 	else if (arg == '\"')
 		printf("DOUBLEQ at index %d\n", i);
+	if (arg == '|')
+	{	
+		vars->num_pipes++;//need function to initialize struct variables
+		ft_check_pipes(vars);
+		// printf("PIPE number =  %d\n", vars->num_pipes);
+		ft_exec(vars);
+	}
 }
-
 
 //function that iterates through arguments and find if there are symbols
 void	ft_iter(t_vars *vars)
@@ -225,7 +260,7 @@ void	ft_iter(t_vars *vars)
 	int		i;
 	int		j;
 	char	*symbs;
-	
+
 	i = 0;
 	j = 0 ;
 	symbs = "|$<>\'\"";
