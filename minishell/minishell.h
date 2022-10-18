@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 12:25:13 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:13:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
 	char	**env_sh;
-	char	**cmd;
+	char	**cmds;
 	char	*line;
 	int		num_paths;
 	int		num_args;
 	int		num_cmds;
 	int		num_pipes;
 	int		num_env_sh;
-	int		hv_backgrd;
 	int		hv_infile;
 	int		hv_outfile;
 	int		hv_redirect;
@@ -69,5 +68,6 @@ void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
 void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_exec(t_vars *vars);
+void	ft_init(t_vars *vars);
 
 #endif

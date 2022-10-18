@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc -g
 #remember to use the CFLAGS at the end!!
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
@@ -23,6 +23,7 @@ AF = ar rcs
 SRCS = \
 parsing/parseline.c\
 minish_utils.c\
+init_1.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)

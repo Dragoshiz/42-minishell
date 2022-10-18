@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:40:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/18 11:35:48 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:28:10 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	displayLinkedList(t_linkedList *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("%s\n", current->data);
+		// printf("%s\n", current->data);
 		current = current->next;
 	}
 }
@@ -94,5 +94,6 @@ void	initialize_env_sh_list(t_vars *vars, char *env[])
 // extract tokens from the line
 void	get_tokens(t_vars *vars)
 {
+	(void)vars;
 //	printf("Line: %s\n", vars->line);
 }

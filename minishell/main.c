@@ -6,11 +6,15 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 12:25:46 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:39:10 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//order
+//1-get num of commands
+//2-get num of metachar
 
 //function that checks for whitespace characters
 int	is_whitespace(char *line)
@@ -74,11 +78,17 @@ void	ft_count_args(t_vars *vars)
 
 	i = 0;
 	while (vars->args[i])
+	{
+		if (ft_isalpha(vars->args[i][0]))
+			vars->num_cmds++;
 		i++;
+	}
 	vars->num_args = i;
 }
 
 //function that check if command exists
+//function needs to be redone as we don't need to check
+//beforehand if command exist++++++++++++++++++++++++++
 int	ft_is_a_cmd(char **paths, char *arg)
 {
 	char	*cmd;
@@ -100,64 +110,60 @@ int	ft_is_a_cmd(char **paths, char *arg)
 }
 
 //it iterates through args and check if they exist
-void	ft_check_cmd(t_vars *vars)//1st function
+//function needs to be redone or replaced as we don't need to check
+//beforehand if command exist++++++++++++++++++++++++++
+void	ft_check_cmd(t_vars *vars)
 {
 	int		i;
+	int		j;
+	char	**cmd;
 
 	i = 0;
+	j = 0;
+	vars->cmds = malloc(sizeof(char *) * vars->num_cmds);//free vars->cmds
 	while (vars->args[i])
 	{
 		if (ft_isalpha(vars->args[i][0]))
 		{
-			vars->cmd = ft_split(vars->args[i], ' ');
-			if (!ft_is_a_cmd(vars->paths, vars->cmd[0]))
+			vars->cmds[j++] = ft_strdup(vars->args[i]);
+			cmd = ft_split(vars->args[i], ' ');
+			if (!ft_is_a_cmd(vars->paths, cmd[0]))
 			{
 				printf("minishell: command not found: %s", vars->args[i]);
 				exit(2);
 			}
-			ft_free_doublepoint(vars->cmd);
-			vars->num_cmds++;
+			ft_free_doublepoint(cmd);
 		}
 		i++;
 	}
+	i = 0;
 }
 
-// // FREE THE VARS->LINE, VARS->ARGS
-// void	ft_readline(t_vars *vars)
-// {
-// 	int	i;
-
-// 	vars->line = readline("minish$ ");
-// 	add_history(vars->line);
-// 	vars->args = ft_split(vars->line, '|');
-// 	i = 0;
-// 	while (vars->args[i])
-// 		printf("%s\n", vars->args[i++]);
-// }
-
-int	main(int argc, char *argv[], char *env[])
+int	main (int argc, char *argv[], char *env[])
 {
 	t_vars	vars;
 	int		i;
 
-	vars.args = malloc(sizeof(char *) * 5);
+	i = 0;
+	(void)argc;
+	(void)argv;
+	vars.args = malloc(sizeof(char *) * 3);
 	while (i < 1)
 		vars.args[i++] = malloc(sizeof(char) * 15);
 	vars.args[0] = "ls -la";
 	vars.args[1] = "|";
 	vars.args[2] = "grep mini";
-	vars.args[3] = "|";
-	vars.args[4] = "<";
+	ft_init(&vars);
 	ft_get_path(&vars, env);
-	ft_check_cmd(&vars);
 	ft_count_args(&vars);
+	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-	initialize_env_sh(&vars, env);
+	initialize_env_sh_list(&vars, env);
 	displayLinkedList(&vars.env_sh_list);
 	while (1)
 	{
-		vars.line = readline("minish$ ");
+		vars.line = readline("minish >");
 		if (*vars.line != '\0')
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
