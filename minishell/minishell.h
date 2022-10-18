@@ -22,6 +22,17 @@
 
 # define WHITESPACE " \t\r\n\v"
 
+typedef struct s_node {
+	void	*data;
+	struct	s_node *next;
+}	t_node;
+
+typedef struct s_linkedList {
+	t_node	*head;
+	t_node	*tail;
+	t_node	*current;
+}	t_linkedList;
+
 typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
@@ -31,22 +42,30 @@ typedef struct s_vars{
 	int		num_args;
 	int		num_cmds;
 	int		num_pipes;
+  int		num_env_sh;
 	int		hv_infile;
 	int		hv_outfile;
 	int		hv_redirect;
 	int		hv_heredoc;
+  t_linkedList	env_sh; // working ENV (minishell)
 }t_vars;
 
-/*
-parseline.c
-*/
+//Initialize
+void	initialize_env_sh(t_vars *vars, char *env[]);
 
-// returns cmd tree/line for the executor
+//Lexer
+void	get_tokens(t_vars *vars);
 
-void	parseline(t_vars *vars, char * env[]);
+// Export Builtin
+void	displayLinkedList(t_linkedList *list);
+
+// Cleanup
 void	ft_free_doublepoint(char **to_free);
+// free env_sh linkedList
+
 void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
 void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_exec(t_vars *vars);
+
 #endif

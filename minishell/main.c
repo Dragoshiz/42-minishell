@@ -154,13 +154,16 @@ int	main(int argc, char *argv[], char *env[])
 	ft_count_args(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
+  initialize_env_sh(&vars, env);
+	//ft_check_cmd(&vars);
+  displayLinkedList(&vars.env_sh);
 	while (1)
 	{
 		vars.line = readline("minish$ ");
 		if (*vars.line != '\0')
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			parseline(&vars, env);
+			get_tokens(&vars);
 		free(vars.line);
 	}
 	return (0);
