@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:32:53 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:48:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_free_doublepoint(char **to_free)
 {
