@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/20 16:14:30 by dimbrea          ###   ########.fr       */
+=======
+/*   Updated: 2022/10/20 14:45:52 by vfuhlenb         ###   ########.fr       */
+>>>>>>> 6a8b82b734d3c8095d99c77b6e8027fb6b1d07af
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +167,15 @@ int	main (int argc, char *argv[], char *env[])
 	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-	displayLinkedList(&vars.env_sh_list);
+	initialize_env_sh_list(&vars, env);
+	ft_env(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
 		if (vars.line)
 			add_history(vars.line);
-		if (vars.line && !is_whitespace(vars.line))
-			get_tokens(&vars);
+		// if (*vars.line != '\0' && !is_whitespace(vars.line))
+		// 	get_tokens(&vars);
 		free(vars.line);
 	}
 	return (0);

@@ -1,14 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parseline.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 12:40:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/19 16:41:45 by vfuhlenb         ###   ########.fr       */
+/*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
+/*   Updated: 2022/10/20 14:47:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// prints the ENV List
+void	ft_env(t_vars *vars)
+{
+	displayLinkedList(vars->env_sh_list);
+}

@@ -8,6 +8,7 @@
 		"mutex": "c",
 		"optional": "c",
 		"unordered_map": "c",
-		"vector": "c"
+		"vector": "c",
+		"minishell.h": "c"
 	}
 }
