@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:39:10 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:45:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,21 +153,21 @@ int	main (int argc, char *argv[], char *env[])
 	vars.args[0] = "ls -la";
 	vars.args[1] = "|";
 	vars.args[2] = "grep mini";
-	ft_init(&vars);
+	//ft_init(&vars);
 	ft_get_path(&vars, env);
 	ft_count_args(&vars);
 	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
 	initialize_env_sh_list(&vars, env);
-	displayLinkedList(&vars.env_sh_list);
+	ft_env(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
 		if (*vars.line != '\0')
 			add_history(vars.line);
-		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			get_tokens(&vars);
+		// if (*vars.line != '\0' && !is_whitespace(vars.line))
+		// 	get_tokens(&vars);
 		free(vars.line);
 	}
 	return (0);
