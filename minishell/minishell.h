@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:47:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:54:01 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_free_doublepoint(char **to_free);
 void	ft_cpy_env(t_vars *vars, char **env);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_exec(t_vars *vars);
-int		ft_double(t_vars *vars, char arg, int i);
+int		ft_double(t_vars *vars, int i);
 int		ft_check_pipes(t_vars *vars);
 void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
