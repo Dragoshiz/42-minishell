@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/20 16:14:30 by dimbrea          ###   ########.fr       */
-=======
-/*   Updated: 2022/10/20 14:45:52 by vfuhlenb         ###   ########.fr       */
->>>>>>> 6a8b82b734d3c8095d99c77b6e8027fb6b1d07af
+/*   Updated: 2022/10/20 16:30:04 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +157,12 @@ int	main (int argc, char *argv[], char *env[])
 	// vars.args[4] = ft_strdup("tee file4.txt");
 	// vars.args[3] = ft_strdup("< file3.txt");
 	ft_init(&vars);
-	initialize_env_sh_list(&vars, env);
+	// initialize_env_sh_list(&vars, env);
 	ft_get_path(&vars, env);
 	ft_count_args(&vars);
 	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-	initialize_env_sh_list(&vars, env);
 	ft_env(&vars);
 	while (1)
 	{

@@ -25,7 +25,6 @@ builtins/export.c\
 builtins/env.c\
 parsing/env_sh_list.c\
 parsing/parseline.c\
-parsing/env_sh_list.c\
 utils/minish_utils.c\
 utils/list_sh_utils.c\
 pipes.c\
