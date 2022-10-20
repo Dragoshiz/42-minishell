@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:39:10 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:14:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	ft_check_cmd(t_vars *vars)
 				printf("minishell: command not found: %s", vars->args[i]);
 				exit(2);
 			}
+			vars->one_cmd = i;
 			ft_free_doublepoint(cmd);
 		}
 		i++;
@@ -147,26 +148,28 @@ int	main (int argc, char *argv[], char *env[])
 	i = 0;
 	(void)argc;
 	(void)argv;
-	vars.args = malloc(sizeof(char *) * 3);
-	while (i < 1)
-		vars.args[i++] = malloc(sizeof(char) * 15);
-	vars.args[0] = "ls -la";
-	vars.args[1] = "|";
-	vars.args[2] = "grep mini";
+	vars.args = malloc(sizeof(char *) * 10);
+	vars.args[0] = ft_strdup("grep dodo");
+	vars.args[1] = ft_strdup("< file3.txt");
+	vars.args[2] = ft_strdup("< file4.txt");
+	vars.args[3] = ft_strdup("> file69.txt");
+	// vars.args[3] = ft_strdup("|");
+	// vars.args[4] = ft_strdup("tee file4.txt");
+	// vars.args[3] = ft_strdup("< file3.txt");
 	ft_init(&vars);
+	initialize_env_sh_list(&vars, env);
 	ft_get_path(&vars, env);
 	ft_count_args(&vars);
 	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-	initialize_env_sh_list(&vars, env);
 	displayLinkedList(&vars.env_sh_list);
 	while (1)
 	{
 		vars.line = readline("minish >");
-		if (*vars.line != '\0')
+		if (vars.line)
 			add_history(vars.line);
-		if (*vars.line != '\0' && !is_whitespace(vars.line))
+		if (vars.line && !is_whitespace(vars.line))
 			get_tokens(&vars);
 		free(vars.line);
 	}

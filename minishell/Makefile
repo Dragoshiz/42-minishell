@@ -22,10 +22,12 @@ AF = ar rcs
 
 SRCS = \
 builtins/export.c\
-parsing/initialize_env_sh_list.c\
 parsing/parseline.c\
+parsing/env_sh_list.c\
 utils/minish_utils.c\
 utils/list_sh_utils.c\
+pipes.c\
+init_1.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)

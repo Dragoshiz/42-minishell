@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:48:14 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:10:08 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_cleanup(t_vars *vars)
 	ft_free_doublepoint(vars->env_sh);
 	ft_free_doublepoint(vars->cmds);
 }
+
 //copies env in the vars->env
 //free vars->env at the end
 void	ft_cpy_env(t_vars *vars, char **env)
@@ -46,7 +47,6 @@ void	ft_cpy_env(t_vars *vars, char **env)
 		vars->env_sh[i] = ft_strdup(env[i]);
 		i++;
 	}
-	// vars->env_sh[i] = "\0"; //seems that does not have to be
 }
 
 //trying out should be implemented in ft_is_a_cmd()
@@ -67,156 +67,74 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	return (NULL);
 }
 
-// void	ft_exec(t_vars *vars)
-// {
-// 	int		pid;
-// 	char	*path;
-// 	char	**cmd;
-
-// 	cmd = ft_split(vars->args[0], ' ');
-// 	path = ft_find_arg_path(vars, cmd[0]);
-// 	pid = fork();
-// 	if (pid < 0)
-// 	{
-// 		printf("the forking failed\n");
-// 		exit(2);
-// 	}
-// 	if (pid == 0)
-// 	{
-// 		if (execve(path, cmd, vars->env_sh) == -1)
-// 		{
-// 			printf("command didn't execute\n");
-// 			exit(2);
-// 		}
-// 	}
-// 	waitpid(pid, NULL, 0);
-// }
-
-// void	ft_pipe(t_vars *vars, int i)
-// {
-// 	int		pid;
-// 	int		pid2;
-// 	int		fd[2];
-// 	int		fd_in;
-// 	int		fd_out;
-// 	char	*path;
-// 	char	**cmd;
-
-// 	if (!vars->args[i + 1])
-// 	{
-// 		printf("HERE\n");
-// 		return ;
-// 	}
-// 	if (pipe(fd) < 0)
-// 		printf("Error piping\n"); //and then exi
-// 	cmd = ft_split(vars->args[i - 1], ' ');
-// 	pid = fork();
-// 	if (pid < 0 )
-// 		printf("Forking failed\n"); //then exit
-// 	if (pid == 0)
-// 	{
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		close(fd[0]);
-// 		close(fd[1]);
-// 		if(!execve(ft_find_arg_path(vars,cmd[0]) , cmd, vars->env_sh))
-// 			printf("Error while executing\n");//then exit
-// 		printf("%s\n", cmd[0]);
-// 	}
-// 	ft_free_doublepoint(cmd);
-// 	free(path);
-// 	cmd = ft_split(vars->args[i + 1], ' ');
-// 	pid2 = fork();
-// 	if (pid2 < 0)
-// 		printf("Forking failed\n"); //then exit
-// 	if (pid2 == 0)
-// 	{
-// 		dup2(fd[0], STDIN_FILENO);
-// 		close(fd[0]);
-// 		close(fd[1]);
-// 		if (!execve(ft_find_arg_path(vars, cmd[0]), cmd, vars->env_sh))
-// 			printf("Error while executing\n");//then exit
-// 	}
-// 	close(fd[0]);
-// 	close(fd[1]);
-// 	waitpid(pid, NULL, 0);
-// 	waitpid(pid2, NULL, 0);
-// }
-
-//if comand doesn't exist put stdout to 0 or NULL
-//print to stderr and continue the piping
+//create tempfds  for infile and outfiles
 void	ft_exec(t_vars *vars)
 {
-	int	pid;
-	int	tmpin;
-	int	tmpout;
-	int	fdin;
-	int	fdout;
-	int	i;
-	int	fdpipe[2];
-	char **cmd;
+	char	**cmd;
+	int		cmd_count;
 
-	i = 0;
-	tmpin = dup(0);
-	tmpout = dup(1);
-	if (vars->hv_infile)
+	ft_create_pipes(vars);
+	cmd_count = 0;
+	while (cmd_count < vars->num_cmds)
 	{
-		fdin = open(vars->args[vars->hv_infile + 2], O_RDONLY);
-		if (fdin < 0)
-			printf("Err opening file\n");
+		if (cmd == NULL)
+			ft_free_doublepoint(cmd);
+		cmd = ft_split(vars->cmds[cmd_count], ' ');
+		vars->pid = fork();
+		ft_pipeio(vars, cmd, cmd_count);
+		cmd_count++;
 	}
-	else
-		fdin = dup(tmpin);
-	while (i < vars->num_cmds)
+	ft_close_pipes(vars);
+	waitpid(vars->pid, NULL, 0);
+}
+
+//exec for 1 command
+void	ft_exec1(t_vars *vars)
+{
+	char	**cmd;
+	int		pipefd[2];
+	int		tempin;
+	int		tempout;
+
+	cmd = ft_split(vars->args[vars->one_cmd], ' ');
+	pipe(pipefd);
+	if(fork() == 0)
 	{
-		dup2(fdin, 0);
-		close(fdin);
-		if (i == vars->num_cmds - 1)
+		if (vars->hv_infile)
 		{
-			if (vars->hv_outfile)
-			{
-				fdout = open(vars->args[vars->hv_outfile + 2], O_RDWR
-						| O_CREAT | O_TRUNC, 0777);
-				if (fdout < 0)
-					printf("Err opening file\n");
-			}
-			else
-				fdout = dup(tmpout);
+			tempin = open(ft_strtrim(vars->args[vars->hv_infile], "< "), O_RDONLY);
+			if (tempin < 0)
+				perror("");
+			if (dup2(tempin, STDIN_FILENO) < 0)
+				perror("");
+			// close(tempin);
 		}
 		else
+			tempin = dup(STDIN_FILENO);
+		if (vars->hv_outfile || vars->hv_redirect)
 		{
-			if (pipe(fdpipe) < 0)
-				printf("Error piping");
-			fdout = fdpipe[1];
-			fdin = fdpipe[0];
+			tempout = open(ft_strtrim(vars->args[vars->hv_outfile], "> "), O_RDWR | O_CREAT | O_TRUNC, 0777);
+			if (vars->hv_redirect)
+				tempout = open(ft_strtrim(vars->args[vars->hv_outfile], ">> "), O_RDWR | O_CREAT | O_APPEND, 0777);
+			if (tempout < 0)
+				perror("");
+			if (dup2(tempout, STDOUT_FILENO) < 0)
+				perror("");
+			close(tempout);
 		}
-		dup2(fdout, 1);
-		close(fdout);
-		pid = fork();
-		if (pid < 0)
-			printf("Error forking");
-		cmd = ft_split(vars->cmds[i],' ');//free cmd 
-		if (pid == 0)
-		{
-			if (!execve(ft_find_arg_path(vars, vars->cmds[i]), cmd, vars->env_sh))
-			{
-				perror("err Executing");
-				exit(1);
-			}
-		}
-		free(cmd);
-		dup2(tmpin, 0);
-		dup2(tmpout, 1);
-		close(tmpin);
-		close(tmpout);
-		waitpid(pid, NULL, 0);
-		i++;
+		else
+			tempout = dup(STDOUT_FILENO);
+		if (execve(ft_find_arg_path(vars, cmd[0]), cmd, vars->env_sh) < 0)
+			perror("here");
 	}
+	wait(NULL);
 }
 
 //check if there are 2 times the char
 int	ft_double(t_vars *vars, int i)
 {
-	if (vars->args[i + 1] == vars->args[i] && vars->args[i + 2] != vars->args[i])
+	if (vars->args[i + 1] == vars->args[i] 
+		&& vars->args[i + 2] != vars->args[i])
 		return (0);
 	return (1);
 }
@@ -238,14 +156,14 @@ void	ft_assign_symbs(t_vars *vars, char arg, int i)
 		printf("SMALLER at index %d\n", i);
 		if (ft_double(vars, i))
 			vars->hv_heredoc = 1;
-		vars->hv_infile = i + 2; //need function to find place of file
+		vars->hv_infile = i; //need function to find place of file
 	}
 	else if (arg == '>')
 	{
 		printf("BIGGER at index %d\n", i);
 		if (ft_double(vars, i))
 			vars->hv_redirect = 1;
-		vars->hv_outfile = i + 2;//need function to find place of file
+		vars->hv_outfile = i;//need function to find place of file
 	}
 	else if (arg == '\'')
 		printf("SINGLEQ at index %d\n", i);
@@ -253,10 +171,8 @@ void	ft_assign_symbs(t_vars *vars, char arg, int i)
 		printf("DOUBLEQ at index %d\n", i);
 	if (arg == '|')
 	{	
-		vars->num_pipes++;//need function to initialize struct variables
+		vars->num_pipes++;
 		ft_check_pipes(vars);
-		// ft_pipe(vars, i);
-		// printf("PIPE number =  %d\n", vars->num_pipes);
 	}
 }
 
@@ -281,6 +197,7 @@ void	ft_iter(t_vars *vars)
 		}
 		i++;
 	}
-	// if (i == 1 && vars->args[0][0] != '\0')
-	// ft_exec(vars);
+	if (vars->num_cmds <= 1)
+		ft_exec1(vars);
+	ft_exec(vars);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:47:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:56:11 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ typedef struct s_linkedList {
 typedef struct s_vars{
 	char	**paths; // ENV list
 	char	**args; // array of commands for the executor
-	char	**env_sh;
-	char	**cmds;
+	char	**env_sh;// cpy of env variable
+	char	**cmds;// array of commandse
+	int		**pipefds;// pipe file descriptors
 	char	*line;
+	pid_t	pid;
+	int		one_cmd;
 	int		num_paths;
 	int		num_args;
 	int		num_cmds;
@@ -77,9 +80,16 @@ void	ft_free_doublepoint(char **to_free);
 void	ft_cpy_env(t_vars *vars, char **env);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_exec(t_vars *vars);
-int		ft_double(t_vars *vars, char arg, int i);
+int		ft_double(t_vars *vars, int i);
 int		ft_check_pipes(t_vars *vars);
 void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
+void	ft_exec1(t_vars *vars);
+// init_1.c
+void	ft_init(t_vars *vars);
+// pipes.c
+void	ft_create_pipes(t_vars *vars);
+void	ft_close_pipes(t_vars *vars);
+void	ft_pipeio(t_vars *vars, char **cmd, int cmd_count);
 
 #endif
