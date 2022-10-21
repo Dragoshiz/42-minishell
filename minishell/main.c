@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/20 16:30:04 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:08:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,28 +149,28 @@ int	main (int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	vars.args = malloc(sizeof(char *) * 10);
-	vars.args[0] = ft_strdup("grep dodo");
-	vars.args[1] = ft_strdup("< file3.txt");
-	vars.args[2] = ft_strdup("< file4.txt");
-	vars.args[3] = ft_strdup("> file69.txt");
+	vars.args[0] = ft_strdup("ls");
+	vars.args[1] = ft_strdup(" |");
+	vars.args[2] = ft_strdup(" env");
+	// vars.args[3] = ft_strdup("> file69.txt");
 	// vars.args[3] = ft_strdup("|");
 	// vars.args[4] = ft_strdup("tee file4.txt");
 	// vars.args[3] = ft_strdup("< file3.txt");
 	ft_init(&vars);
-	// initialize_env_sh_list(&vars, env);
+	initialize_env_sh_list(&vars, env);
 	ft_get_path(&vars, env);
 	ft_count_args(&vars);
 	ft_check_cmd(&vars);
 	ft_cpy_env(&vars, env);
 	ft_iter(&vars);
-	ft_env(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
 		if (vars.line)
 			add_history(vars.line);
-		// if (*vars.line != '\0' && !is_whitespace(vars.line))
-		// 	get_tokens(&vars);
+		if (*vars.line != '\0' && !is_whitespace(vars.line))
+			//get_tokens(&vars);
+			ft_env(&vars);
 		free(vars.line);
 	}
 	return (0);

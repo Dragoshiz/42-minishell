@@ -38,6 +38,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		make -C libft
 		$(CC) -Llibft -lft -lreadline $(OBJS) -o $(NAME)
+		make clean
 
 clean:
 	$(RM) $(OBJS)

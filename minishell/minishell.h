@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/20 16:20:23 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:58:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_vars{
 	int		hv_outfile;
 	int		hv_redirect;
 	int		hv_heredoc;
-	t_linkedList	*env_sh_list; // working ENV (minishell)
+	t_linkedList	env_sh_list; // working ENV (minishell)
 }t_vars;
 
 /*
