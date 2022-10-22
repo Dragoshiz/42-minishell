@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_1.c                                           :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/18 15:58:11 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/18 16:46:01 by dimbrea          ###   ########.fr       */
+/*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
+/*   Updated: 2022/10/22 14:43:30 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	ft_init(t_vars *vars)
+void	parsing(t_vars *vars)
 {
-	vars->num_args = 0;
-	vars->num_cmds = 0;
-	vars->num_pipes = 0;
-	vars->num_env_sh = 0;
-	vars->hv_infile = 0;
-	vars->hv_outfile = 0;
-	vars->hv_redirect = 0;
-	vars->hv_heredoc = 0;
+	initialize_env_sh_list(vars, vars->env_sh);
+	ft_env(vars);
 }

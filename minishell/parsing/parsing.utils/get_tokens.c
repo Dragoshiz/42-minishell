@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/21 16:59:22 by vfuhlenb         ###   ########.fr       */
+/*   Created: 2022/10/19 13:34:56 by vfuhlenb          #+#    #+#             */
+/*   Updated: 2022/10/22 14:12:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-// prints the ENV List
-void	ft_env(t_vars *vars)
+// # of ENV Elements
+// create Link List for ENV
+// Strdup for each element
+
+// first pass: check for pipes -> quotes
+// second pass: expansion of variables
+// third pass: extract tokens
+
+// extract tokens from the line
+void	get_tokens(t_vars *vars)
 {
-	displayLinkedList(&vars->env_sh_list);
+	(void)vars;
+//	printf("Line: %s\n", vars->line);
 }

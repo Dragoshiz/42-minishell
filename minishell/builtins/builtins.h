@@ -1,14 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parseline.c                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 12:40:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/19 16:41:45 by vfuhlenb         ###   ########.fr       */
+/*   Created: 2022/10/22 13:15:43 by vfuhlenb          #+#    #+#             */
+/*   Updated: 2022/10/22 14:10:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
+void	ft_env(t_vars *vars);
+
+#endif

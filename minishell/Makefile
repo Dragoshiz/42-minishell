@@ -21,14 +21,16 @@ RM = rm -f
 AF = ar rcs
 
 SRCS = \
-builtins/export.c\
-builtins/env.c\
-parsing/env_sh_list.c\
-parsing/parseline.c\
-utils/minish_utils.c\
-utils/list_sh_utils.c\
-pipes.c\
-init_1.c\
+execution/execution.utils/minish_utils.c\
+execution/execution.utils/pipes.c\
+execution/execution.c\
+parsing/parsing.utils/env_sh_list.c\
+parsing/parsing.utils/get_tokens.c\
+parsing/parsing.utils/list_sh_utils.c\
+parsing/parsing.utils/parseline.c\
+parsing/parsing.c\
+builtins/ft_env.c\
+builtins/ft_export.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/20 16:10:08 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/22 14:31:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	ft_free_doublepoint(char **to_free)
 {
@@ -29,24 +29,6 @@ void	ft_cleanup(t_vars *vars)
 {
 	ft_free_doublepoint(vars->env_sh);
 	ft_free_doublepoint(vars->cmds);
-}
-
-//copies env in the vars->env
-//free vars->env at the end
-void	ft_cpy_env(t_vars *vars, char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	vars->env_sh = malloc(sizeof(char *) * i + 1);
-	i = 0;
-	while (env[i])
-	{
-		vars->env_sh[i] = ft_strdup(env[i]);
-		i++;
-	}
 }
 
 //trying out should be implemented in ft_is_a_cmd()
