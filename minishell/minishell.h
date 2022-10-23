@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/22 14:42:10 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:18:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_linkedList {
 typedef struct s_vars{
 	char			**paths; // ENV list
 	char			**args; // array of commands for the executor
-	char			**env_sh;// cpy of env variable
+	char			**env_sh;// cpy of env variable on startup
 	char			**cmds;// array of commandse
 	int				**pipefds;// pipe file descriptors
 	char			*line;
@@ -51,7 +51,7 @@ typedef struct s_vars{
 	int				hv_outfile;
 	int				hv_redirect;
 	int				hv_heredoc;
-	t_linkedList	*env_sh_list;
+	t_linkedList	*env_list; // working env list
 }t_vars;
 
 # include "execution/execution.h"

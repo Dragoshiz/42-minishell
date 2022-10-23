@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:38:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:53:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 
 void	parsing(t_vars *vars);
 
-// env_sh_list.c
-
-void	initialize_env_sh_list(t_vars *vars, char *env[]);
-
-// parseline.c
+void	env_list_create(t_vars *vars);
 
 void	get_tokens(t_vars *vars);
 

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/22 14:43:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/23 17:57:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	is_whitespace(char *line)
 
 void	ft_init_vars(t_vars *vars)
 {
+	vars->one_cmd = 0;
+	vars->num_paths = 0;
 	vars->num_args = 0;
 	vars->num_cmds = 0;
 	vars->num_pipes = 0;
@@ -63,14 +65,15 @@ int	main (int argc, char *argv[], char *env[])
 	(void)argv;
 	ft_init_vars(&vars);
 	ft_cpy_env(&vars, env);
+	//env_list_create(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
 		if (vars.line)
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			//parsing(&vars);
-			execution(&vars);
+			parsing(&vars);
+			//execution(&vars);
 		free(vars.line);
 	}
 	return (0);

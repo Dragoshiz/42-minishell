@@ -24,10 +24,9 @@ SRCS = \
 execution/execution.utils/minish_utils.c\
 execution/execution.utils/pipes.c\
 execution/execution.c\
-parsing/parsing.utils/env_sh_list.c\
+parsing/parsing.utils/env_list_create.c\
+parsing/parsing.utils/env_list_util.c\
 parsing/parsing.utils/get_tokens.c\
-parsing/parsing.utils/list_sh_utils.c\
-parsing/parsing.utils/parseline.c\
 parsing/parsing.c\
 builtins/ft_env.c\
 builtins/ft_export.c\
