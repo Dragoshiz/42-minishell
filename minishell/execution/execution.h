@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:28:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/23 15:17:06 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ int		ft_check_pipes(t_vars *vars);
 void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
 void	ft_iter(t_vars *vars);//try
 void	ft_exec1(t_vars *vars);
+int		ft_openfile(t_vars *vars);
+
 
 // pipes.c
 
 void	ft_create_pipes(t_vars *vars);
 void	ft_close_pipes(t_vars *vars);
-void	ft_pipeio(t_vars *vars, char **cmd, int cmd_count);
+void	ft_pipeio(t_vars *vars, char **cmd, int cmd_count, int i);
+//new approach
+void	ft_find_in(t_vars *vars);
+
+
 
 #endif

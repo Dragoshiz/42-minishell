@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-CC = gcc -g
+CC = cc
 #remember to use the CFLAGS at the end!!
 CFLAGS = -Wall -Wextra -Werror
 

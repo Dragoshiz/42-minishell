@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/22 14:42:10 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:12:11 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # define WHITESPACE " \t\r\n\v"
+# define NUMPIPES 50
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -38,6 +39,7 @@ typedef struct s_vars{
 	char			**args; // array of commands for the executor
 	char			**env_sh;// cpy of env variable
 	char			**cmds;// array of commandse
+	char			**cmdbypipes;
 	int				**pipefds;// pipe file descriptors
 	char			*line;
 	pid_t			pid;
@@ -46,10 +48,12 @@ typedef struct s_vars{
 	int				num_args;
 	int				num_cmds;
 	int				num_pipes;
+	int				index_pipe[NUMPIPES];
 	int				num_env_sh;
-	int				hv_infile;
+	int				outfd;
+	int				hv_infile_idx[2];
 	int				hv_outfile;
-	int				hv_redirect;
+	int				hv_append;
 	int				hv_heredoc;
 	t_linkedList	*env_sh_list;
 }t_vars;
