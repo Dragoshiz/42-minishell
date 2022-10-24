@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/23 15:19:21 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:35:21 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,42 +24,42 @@
 // 	return (fd);
 // }
 
-// void	ft_free_doublepoint(char **to_free)
-// {
-// 	int	i;
+void	ft_free_doublepoint(char **to_free)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (to_free[i])
-// 	{
-// 		free(to_free[i]);
-// 		i++;
-// 	}
-// 	free(to_free);
-// }
+	i = 0;
+	while (to_free[i])
+	{
+		free(to_free[i]);
+		i++;
+	}
+	free(to_free);
+}
 
-// void	ft_cleanup(t_vars *vars)
-// {
-// 	ft_free_doublepoint(vars->env_sh);
-// 	ft_free_doublepoint(vars->cmds);
-// }
+void	ft_cleanup(t_vars *vars)
+{
+	ft_free_doublepoint(vars->env_sh);
+	ft_free_doublepoint(vars->cmds);
+}
 
-// //trying out should be implemented in ft_is_a_cmd()
-// char	*ft_find_arg_path(t_vars *vars, char *arg)
-// {
-// 	int		i;
-// 	char	*cmd_path;
+//trying out should be implemented in ft_is_a_cmd()
+char	*ft_find_arg_path(t_vars *vars, char *arg)
+{
+	int		i;
+	char	*cmd_path;
 
-// 	i = 0;
-// 	while (vars->paths[i])
-// 	{
-// 		cmd_path = ft_strjoin(vars->paths[i], arg);
-// 		if (access(cmd_path, F_OK) == 0)
-// 			return (cmd_path);
-// 		free(cmd_path);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	i = 0;
+	while (vars->paths[i])
+	{
+		cmd_path = ft_strjoin(vars->paths[i], arg);
+		if (access(cmd_path, F_OK) == 0)
+			return (cmd_path);
+		free(cmd_path);
+		i++;
+	}
+	return (NULL);
+}
 
 //create tempfds  for infile and outfiles
 // void	ft_exec(t_vars *vars)

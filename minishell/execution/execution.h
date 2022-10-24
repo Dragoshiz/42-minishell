@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/23 15:17:06 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:15:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	ft_create_pipes(t_vars *vars);
 void	ft_close_pipes(t_vars *vars);
 void	ft_pipeio(t_vars *vars, char **cmd, int cmd_count, int i);
 //new approach
-void	ft_find_in(t_vars *vars);
+int		ft_find_in(t_vars *vars);
+char	*ft_get_filename(char *arg, int i);
+void	ft_count_args(t_vars *vars);
+void	ft_get_cmd(t_vars *vars, char *arg);
+void	ft_io(t_vars *vars);
 
 
 

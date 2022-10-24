@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-CC = cc
+CC = cc -g
 #remember to use the CFLAGS at the end!!
 CFLAGS = -Wall -Wextra -Werror
 
@@ -39,7 +39,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		make -C libft
-		$(CC) -Llibft -lft -lreadline $(OBJS) -o $(NAME)
+		$(CC) -Llibft -lft -lreadline $(OBJS) -g -o $(NAME)
 		make clean
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/23 16:39:48 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/24 19:33:02 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,15 @@ void	ft_get_path(t_vars *vars, char *env[])
 void	execution(t_vars *vars)
 {
 	vars->args = malloc(sizeof(char *) * 10);
-	vars->args[0] = ft_strdup("ls > file1");
-	vars->args[1] = ft_strdup("grep mini > file20> file3"); 
+	vars->args[0] = ft_strdup("ls > file1800");
+	vars->args[1] = ft_strdup("grep mini");
+	vars->args[2] = ft_strdup("wc");
+	vars->args[3] = 0;
 	// vars->args[3] = ft_strdup("grep mini");
 	// vars->args[4] = ft_strdup("> file2"); 
+	ft_count_args(vars);
 	ft_get_path(vars, vars->env_sh);
-	ft_find_in(vars);
-	printf("%d, %d", vars->hv_infile_idx[0], vars->hv_infile_idx[1]);
+	ft_io(vars);
 }
 
 // //function that checks for whitespace characters

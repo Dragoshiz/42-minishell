@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/23 16:12:11 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/24 09:22:24 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_vars{
 	int				index_pipe[NUMPIPES];
 	int				num_env_sh;
 	int				outfd;
+	int				hv_infile;
 	int				hv_infile_idx[2];
 	int				hv_outfile;
 	int				hv_append;
