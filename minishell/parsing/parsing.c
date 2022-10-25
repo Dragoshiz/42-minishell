@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/24 14:51:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:26:40 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	peek(char *line, char s)
 void	parsing(t_vars *vars)
 {
 	char	*line;
+	int		len_line;
 
 	line = ft_strdup(vars->line); // TODO protect 
 	if (peek(line, 39))
