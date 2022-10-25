@@ -3,34 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:28:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:08:46 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-void	execution(t_vars *vars);
+typedef struct s_iovars
+{
+	char	*cmd;
+	char	*filename;
+	char	*filename2;
+	int		tmpin;
+	int		tmpout;
+	int		fdin;
+	int		fdout;
+	int		i;
+	int		j;
+}t_iovars;
 
+void	execution(t_vars *vars, t_iovars *iov);
 // minish_utils.c
-
 void	ft_free_doublepoint(char **to_free);
-void	ft_cpy_env(t_vars *vars, char **env);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
-void	ft_exec(t_vars *vars);
-int		ft_double(t_vars *vars, int i);
-int		ft_check_pipes(t_vars *vars);
-void	ft_assign_symbs(t_vars *vars, char arg, int i);//try
-void	ft_iter(t_vars *vars);//try
-void	ft_exec1(t_vars *vars);
-
+void	ft_count_args(t_vars *vars);
+void	ft_dup2nclose(int fd, int std);
 // pipes.c
-
 void	ft_create_pipes(t_vars *vars);
 void	ft_close_pipes(t_vars *vars);
-void	ft_pipeio(t_vars *vars, char **cmd, int cmd_count);
+char	*ft_get_filename(char *arg, int i);
+void	ft_get_cmd(t_vars *vars, char *arg);
+void	ft_exec_cmd(t_vars *vars, t_iovars *iov);
+//searchers.c
+int		ft_find_in(t_vars *vars, t_iovars *iov);
+int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
+void	ft_find_io(t_vars *vars, char *arg);
 
 #endif

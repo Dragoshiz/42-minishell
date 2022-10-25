@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:47:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:09:21 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//order
-//1-get num of commands
-//2-get num of metachar
 
 //function that puts, "/" after being splitted for every path
 void	ft_put_backsl(t_vars *vars)
@@ -59,146 +55,70 @@ void	ft_get_path(t_vars *vars, char *env[])
 	free(path);
 }
 
-//function that count how many arguments there are
-void	ft_count_args(t_vars *vars)
+//part2 of exec function
+void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 {
-	int	i;
-
-	i = 0;
-	while (vars->args[i])
+	ft_find_io(vars, vars->args[numcmds]);
+	ft_get_cmd(vars, vars->args[numcmds]);
+	if (numcmds != 0)
 	{
-		if (ft_isalpha(vars->args[i][0]))
-			vars->num_cmds++;
-		i++;
+		close(vars->pipefds[numcmds - 1][1]);
+		iov->fdin = vars->pipefds[numcmds - 1][0];
 	}
-	vars->num_args = i;
+	ft_dup2nclose(iov->fdin, STDIN_FILENO);
+	if (vars->hv_outfile || vars->hv_append)
+		iov->fdout = ft_find_out(vars, iov, vars->args[numcmds]);
+	else
+		iov->fdout = dup(iov->tmpout);
+	if (numcmds != vars->num_args - 1)
+		if (!vars->hv_outfile && !vars->hv_append)
+			iov->fdout = vars->pipefds[numcmds][1];
+	ft_dup2nclose(iov->fdout, STDOUT_FILENO);
+	vars->pid = fork();
+	if (vars->pid == 0)
+		if (execve(ft_find_arg_path(vars, vars->cmds[0]) \
+		, vars->cmds, vars->env_sh) < 0)
+			perror("");
+	ft_free_doublepoint(vars->cmds);
+	vars->hv_append = 0;
+	vars->hv_outfile = 0;
 }
 
-//function that check if command exists
-//function needs to be redone as we don't need to check
-//beforehand if command exist++++++++++++++++++++++++++
-int	ft_is_a_cmd(char **paths, char *arg)
+//part1 of exec function
+void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 {
-	char	*cmd;
-	int		i;
+	int	numcmds;
 
-	i = 0;
-	while (paths[i])
+	iov->tmpin = dup(STDIN_FILENO);
+	iov->tmpout = dup(STDOUT_FILENO);
+	ft_find_in(vars, iov);
+	if (vars->hv_infile)
+		iov->fdin = ft_find_in(vars, iov);
+	else
+		iov->fdin = dup(iov->tmpin);
+	ft_create_pipes(vars);
+	numcmds = 0;
+	while (numcmds < vars->num_args)
 	{
-		cmd = ft_strjoin(paths[i], arg);
-		if (access(cmd, F_OK) == 0)
-		{
-			free(cmd);
-			return (1);
-		}
-		free(cmd);
-		i++;
+		ft_exec_utils(vars, iov, numcmds);
+		numcmds++;
 	}
-	return (0);
+	ft_dup2nclose(iov->tmpin, STDIN_FILENO);
+	ft_dup2nclose(iov->tmpout, STDOUT_FILENO);
+	ft_close_pipes(vars);
+	waitpid(vars->pid, NULL, 0);
 }
 
-//it iterates through args and check if they exist
-//function needs to be redone or replaced as we don't need to check
-//beforehand if command exist++++++++++++++++++++++++++
-void	ft_check_cmd(t_vars *vars)
-{
-	int		i;
-	int		j;
-	char	**cmd;
-
-	i = 0;
-	j = 0;
-	vars->cmds = malloc(sizeof(char *) * vars->num_cmds);//free vars->cmds
-	while (vars->args[i])
-	{
-		if (ft_isalpha(vars->args[i][0]))
-		{
-			vars->cmds[j++] = ft_strdup(vars->args[i]);
-			cmd = ft_split(vars->args[i], ' ');
-			if (!ft_is_a_cmd(vars->paths, cmd[0]))
-			{
-				printf("minishell: command not found: %s", vars->args[i]);
-				exit(2);
-			}
-			vars->one_cmd = i;
-			ft_free_doublepoint(cmd);
-		}
-		i++;
-	}
-	i = 0;
-}
-
-void	execution(t_vars *vars)
+void	execution(t_vars *vars, t_iovars *iov)
 {
 	vars->args = malloc(sizeof(char *) * 10);
 	vars->args[0] = ft_strdup("ls");
-	vars->args[1] = ft_strdup(" |");
-	vars->args[2] = ft_strdup(" env");
-	vars->args[3] = ft_strdup("> file69.txt");
-	vars->args[4] = ft_strdup("|");
-	vars->args[5] = ft_strdup("tee file4.txt");
-	vars->args[6] = ft_strdup("< file3.txt");
-	ft_get_path(vars, vars->env_sh);
+	vars->args[1] = ft_strdup("grep mini");
+	vars->args[2] = ft_strdup("wc");
+	vars->args[2] = 0;
+	// vars->args[3] = ft_strdup("grep mini");
+	// vars->args[4] = ft_strdup("> file2"); 
 	ft_count_args(vars);
-	ft_check_cmd(vars);
-	ft_iter(vars);
+	ft_get_path(vars, vars->env_sh);
+	ft_exec_cmd(vars, iov);
 }
-
-// //function that checks for whitespace characters
-// int	is_whitespace(char *line)
-// {
-// 	while (*line)
-// 	{
-// 		if (*line != 32 && !(*line >= 9 && *line <= 13))
-// 			return (0);
-// 		line++;
-// 	}
-// 	return (1);
-// }
-
-// void	ft_init(t_vars *vars)
-// {
-// 	vars->num_args = 0;
-// 	vars->num_cmds = 0;
-// 	vars->num_pipes = 0;
-// 	vars->num_env_sh = 0;
-// 	vars->hv_infile = 0;
-// 	vars->hv_outfile = 0;
-// 	vars->hv_redirect = 0;
-// 	vars->hv_heredoc = 0;
-// }
-
-// int	main (int argc, char *argv[], char *env[])
-// {
-// 	t_vars	vars;
-// 	int		i;
-
-// 	i = 0;
-// 	(void)argc;
-// 	(void)argv;
-// 	vars.args = malloc(sizeof(char *) * 10);
-// 	vars.args[0] = ft_strdup("ls");
-// 	vars.args[1] = ft_strdup(" |");
-// 	vars.args[2] = ft_strdup(" env");
-// 	vars.args[3] = ft_strdup("> file69.txt");
-// 	vars.args[3] = ft_strdup("|");
-// 	vars.args[4] = ft_strdup("tee file4.txt");
-// 	vars.args[3] = ft_strdup("< file3.txt");
-// 	ft_init(&vars);
-// 	ft_get_path(&vars, env);
-// 	ft_count_args(&vars);
-// 	ft_check_cmd(&vars);
-// 	ft_cpy_env(&vars, env);
-// 	ft_iter(&vars);
-// 	while (1)
-// 	{
-// 		vars.line = readline("minish >");
-// 		if (vars.line)
-// 			add_history(vars.line);
-// 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-// 			//parsing();
-// 			//execution();
-// 		free(vars.line);
-// 	}
-// 	return (0);
-// }
