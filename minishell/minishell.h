@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 16:54:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:01:19 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include "libft/libft.h"
 
 typedef struct s_node {
-	void	*data;
-	struct s_node *next;
+	void			*data;
+	struct s_node	*next;
 }	t_node;
 
 typedef struct s_linkedList {

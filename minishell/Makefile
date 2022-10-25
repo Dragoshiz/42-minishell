@@ -23,6 +23,7 @@ AF = ar rcs
 SRCS = \
 execution/execution.utils/minish_utils.c\
 execution/execution.utils/pipes.c\
+execution/execution.utils/searchers.c\
 execution/execution.c\
 parsing/parsing.utils/env_sh_list.c\
 parsing/parsing.utils/get_tokens.c\

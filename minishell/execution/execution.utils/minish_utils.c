@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 16:54:24 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:14:43 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,21 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 		i++;
 	}
 	return (NULL);
+}
+
+//counts number of arguments aka simple commands
+void	ft_count_args(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (vars->args[i])
+		i++;
+	vars->num_args = i;
+}
+
+void	ft_dup2nclose(int fd, int std)
+{
+	dup2(fd, std);
+	close(fd);
 }
