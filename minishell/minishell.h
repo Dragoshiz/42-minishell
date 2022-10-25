@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/24 09:22:24 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:54:51 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct s_node {
 	void	*data;
-	struct	s_node *next;
+	struct s_node *next;
 }	t_node;
 
 typedef struct s_linkedList {
@@ -39,20 +39,12 @@ typedef struct s_vars{
 	char			**args; // array of commands for the executor
 	char			**env_sh;// cpy of env variable
 	char			**cmds;// array of commandse
-	char			**cmdbypipes;
 	int				**pipefds;// pipe file descriptors
 	char			*line;
 	pid_t			pid;
-	int				one_cmd;
-	int				num_paths;
 	int				num_args;
-	int				num_cmds;
-	int				num_pipes;
-	int				index_pipe[NUMPIPES];
 	int				num_env_sh;
-	int				outfd;
 	int				hv_infile;
-	int				hv_infile_idx[2];
 	int				hv_outfile;
 	int				hv_append;
 	int				hv_heredoc;

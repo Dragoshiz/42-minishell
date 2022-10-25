@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/24 12:15:20 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:43:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_find_in(t_vars *vars);
 char	*ft_get_filename(char *arg, int i);
 void	ft_count_args(t_vars *vars);
 void	ft_get_cmd(t_vars *vars, char *arg);
-void	ft_io(t_vars *vars);
+void	ft_exec_cmd(t_vars *vars);
 
 
 
