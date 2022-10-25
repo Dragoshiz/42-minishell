@@ -6,71 +6,67 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 17:15:25 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:06:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 //check all of the cmd for infile
-int	ft_find_in(t_vars *vars)
+int	ft_find_in(t_vars *vars, t_iovars *iov)
 {
-	int		i;
-	int		j;
 	int		fd;
-	char	*filename;
 
-	i = 0;
-	while (vars->args[i])
+	iov->i = 0;
+	while (vars->args[iov->i])
 	{
-		j = 0;
-		while (vars->args[i][j])
+		iov->j = 0;
+		while (vars->args[iov->i][iov->j])
 		{
-			if (vars->args[i][j - 1] != '<' && vars->args[i][j] == '<'
-				&& vars->args[i][j + 1] == ' ')
+			if (vars->args[iov->i][iov->j - 1] != '<' && vars->args[iov->i] \
+				[iov->j] == '<' && vars->args[iov->i][iov->j + 1] == ' ')
 			{
 				vars->hv_infile = 1;
-				filename = ft_get_filename(vars->args[i], j + 2);
-				fd = open(filename, O_RDONLY);
+				iov->filename2 = ft_get_filename(vars->args[iov->i], \
+					iov->j + 2);
+				fd = open(iov->filename2, O_RDONLY);
 				if (fd < 0)
 					perror("");
-				free(filename);
+				free(iov->filename2);
 			}
-			j++;
+			iov->j++;
 		}
-		i++;
+		iov->i++;
 	}
 	return (fd);
 }
 
 //check if there is an outfile in the cmd and creates it
-int	ft_find_out(t_vars *vars, char *arg)
+int	ft_find_out(t_vars *vars, t_iovars *iov, char *arg)
 {
 	int		i;
 	int		fd;
-	char	*filename;
 
 	i = 0;
-	while (arg[i])
+	while (arg[i++])
 	{
 		if (arg[i - 1] == ' ' && arg[i] == '>' && arg[i + 1] == ' ')
 		{
 			vars->hv_outfile = 1;
-			filename = ft_get_filename(arg, i + 2);
-			fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-			free(filename);
+			iov->filename = ft_get_filename(arg, i + 2);
+			fd = open(iov->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			free(iov->filename);
 		}
 		else if (arg[i - 1] == ' ' && arg[i] == '>' && arg[i + 1] == '>'
 			&& arg[i + 2] == ' ')
 		{
 			vars->hv_append = 1;
-			filename = ft_get_filename(arg, i + 3);
-			fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
-			free(filename);
+			iov->filename = ft_get_filename(arg, i + 3);
+			fd = open(iov->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+			free(iov->filename);
 		}
 		if (fd < 0)
 			perror("");
-		i++;
 	}
 	return (fd);
 }
