@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 17:44:48 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/26 14:48:55 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_init_vars(t_vars *vars)
 	vars->hv_heredoc = 0;
 }
 
-int	main (int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
 	t_iovars	iov;

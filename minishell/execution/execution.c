@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/25 18:09:21 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/26 18:06:25 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_get_path(t_vars *vars, char *env[])
 //part2 of exec function
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 {
-	ft_find_io(vars, vars->args[numcmds]);
+	ft_find_io(vars, iov, vars->args[numcmds]);
 	ft_get_cmd(vars, vars->args[numcmds]);
 	if (numcmds != 0)
 	{
@@ -82,6 +82,7 @@ void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 	ft_free_doublepoint(vars->cmds);
 	vars->hv_append = 0;
 	vars->hv_outfile = 0;
+	vars->hv_heredoc = 0;
 }
 
 //part1 of exec function
@@ -92,8 +93,11 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 	iov->tmpin = dup(STDIN_FILENO);
 	iov->tmpout = dup(STDOUT_FILENO);
 	ft_find_in(vars, iov);
+	ft_find_hrdc(vars);
 	if (vars->hv_infile)
 		iov->fdin = ft_find_in(vars, iov);
+	// else if (vars->hv_heredoc)
+		// iov->fdin = ft_hrdoc(vars,)
 	else
 		iov->fdin = dup(iov->tmpin);
 	ft_create_pipes(vars);
@@ -112,10 +116,11 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 void	execution(t_vars *vars, t_iovars *iov)
 {
 	vars->args = malloc(sizeof(char *) * 10);
-	vars->args[0] = ft_strdup("ls");
-	vars->args[1] = ft_strdup("grep mini");
-	vars->args[2] = ft_strdup("wc");
-	vars->args[2] = 0;
+	vars->args[0] = ft_strdup("cat << hi > oufile");
+	// vars->args[1] = ft_strdup(">");
+	// vars->args[1] = ft_strdup("grep mini << hello");
+	// vars->args[2] = ft_strdup("wc");
+	// vars->args[3] = 0;
 	// vars->args[3] = ft_strdup("grep mini");
 	// vars->args[4] = ft_strdup("> file2"); 
 	ft_count_args(vars);
