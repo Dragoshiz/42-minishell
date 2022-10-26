@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 18:43:52 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:45:11 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main (int argc, char *argv[], char *env[])
 		if (vars.line)
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-			//parsing(&vars);
+			parsing(&vars);
 			execution(&vars, &iov);
 		free(vars.line);
 	}

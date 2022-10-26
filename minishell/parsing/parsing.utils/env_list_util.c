@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_sh_utils.c                                    :+:      :+:    :+:   */
+/*   env_list_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:12:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:21:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ void	addTail(t_linkedList *list, void *data)
 }
 
 // prints the list
+int	countLinkedList(t_linkedList *list)
+{
+	int		i;
+	t_node	*current;
+
+	current = list->head;
+	i = 0;
+	while (current != NULL)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+// prints the list
 void	displayLinkedList(t_linkedList *list)
 {
 	t_node *current;
@@ -60,7 +76,23 @@ void	displayLinkedList(t_linkedList *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("%s\n", current->data);
+		printf("%s$\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }
+
+// void	clearLinkedList(t_linkedList **lst, void (*del)(void*))
+// {
+// 	t_list	*temp;
+
+// 	if (!lst && !del)
+// 		return ;
+// 	while (*lst)
+// 	{
+// 		temp = (*lst)->next;
+// 		del((*lst)->content);
+// 		free(*lst);
+// 		*lst = temp;
+// 	}
+// 	*lst = NULL;
+// }

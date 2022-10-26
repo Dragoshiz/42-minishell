@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:34:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:12:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:19:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 // # of ENV Elements
 // create Link List for ENV
-// Strdup for each element
-
-// first pass: check for pipes -> quotes
-// second pass: expansion of variables
-// third pass: extract tokens
+// TODO Strdup for each element
 
 // extract tokens from the line
 void	get_tokens(t_vars *vars)
 {
 	(void)vars;
-//	printf("Line: %s\n", vars->line);
+//	printf("Line: %s\n", vars->line); 
 }
