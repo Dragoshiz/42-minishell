@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/26 18:45:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:10:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	peek(char *line, char s, int i)
 	return (-1);
 }
 
-void	separate_pipes(char *line, t_linkedList *pipeline)
+void	separate_pipes(char *line, t_linkedList *pipeline, int *line_len)
 {
 	int		i;
 	int		token;
@@ -47,7 +47,8 @@ void	separate_pipes(char *line, t_linkedList *pipeline)
 					i--;
 				line[i + 1] = '\0';
 				addTail(pipeline, ft_strdup(&line[token]));
-				token = i + 2;
+				if((i + 2) < *line_len)
+					token = i + 2;
 			}
 			else
 			{
@@ -85,12 +86,14 @@ void	parsing_pipeline(t_vars *vars)
 {
 	char			*line;
 	t_linkedList	*pipeline;
+	int				line_len;
 
 	pipeline = NULL;
 	line = ft_strdup(vars->line); // TODO protect
+	line_len = ft_strlen(line);
 	pipeline = (t_linkedList *) malloc(sizeof(t_linkedList));
 	initializeList(pipeline);
-	separate_pipes(line, pipeline);
+	separate_pipes(line, pipeline, &line_len);
 	fill_args(vars, pipeline);
 	//displayLinkedList(pipeline);
 	//clearLinkedList(pipeline);
@@ -101,17 +104,17 @@ void	parsing_pipeline(t_vars *vars)
 void	parsing(t_vars *vars)
 // TODO if || in line, then exit with error message "OR not implemented"
 {
-	// int	i;
+	int	i;
 
 	if (*vars->line == PIPE)
 		exit(printf("minish: syntax error near unexpected token `|'")); // TODO create perror instance
 	parsing_pipeline(vars);
-	// i = 0;
-	// while(i < vars->num_args)
-	// {
-	// 	printf("arg[%d]: %s $\n", i, vars->args[i]);
-	// 	i++;
-	// }
+	i = 0;
+	while(i < vars->num_args)
+	{
+		printf("arg[%d]: %s $\n", i, vars->args[i]);
+		i++;
+	}
 }
 
 
