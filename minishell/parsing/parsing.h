@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/26 17:13:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:19:43 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define PIPE '|'
 # define SQUOTE 39
 # define DQUOTE 34
-
+# define SPACE 32
 
 void	parsing_pipeline(t_vars *vars);
 void	parsing(t_vars *vars);

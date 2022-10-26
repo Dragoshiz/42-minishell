@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/26 20:10:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:20:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	peek(char *line, char s, int i)
 	{
 		while (line[i])
 		{
-			if(line[i] == s)
+			if (line[i] == s)
 				return (i);
 			i++;
 		}
@@ -32,32 +32,21 @@ void	separate_pipes(char *line, t_linkedList *pipeline, int *line_len)
 	int		i;
 	int		token;
 
+	(void)line_len;
 	i = 0;
 	token = 0;
-	while(line[i])
+	while (line[i])
 	{
-		if (line[i] == 32)
-			while (line[i] == 32)
+		if (line[i] == SPACE)
+			while (line[i] == SPACE)
 				i++;
 		if (line[i] && line[i] == PIPE)
 		{
-			if (line[i] == 32)
-			{
-				while (line[i] == 32)
-					i--;
-				line[i + 1] = '\0';
-				addTail(pipeline, ft_strdup(&line[token]));
-				if((i + 2) < *line_len)
-					token = i + 2;
-			}
-			else
-			{
-				line[i] = '\0';
-				addTail(pipeline, ft_strdup(&line[token]));
-				token = i + 1;
-			}
-			if (line[i] == 32)
-				while (line[i++] == 32);
+			line[i] = '\0';
+			addTail(pipeline, ft_strdup(&line[token]));
+			token = i + 1;
+			if (line[i] == SPACE)
+				while (line[i++] == SPACE);
 		}
 		i++;
 	}
@@ -72,7 +61,7 @@ void	fill_args(t_vars *vars, t_linkedList *pipeline)
 	vars->num_args = countLinkedList(pipeline);
 	vars->args = malloc(sizeof(char *) * vars->num_args);
 	i = 0;
-	while(i < vars->num_args)
+	while (i < vars->num_args)
 	{
 		vars->args[i] = ft_strdup(pipeline->current->data);
 		if (pipeline->current->next)
@@ -95,8 +84,8 @@ void	parsing_pipeline(t_vars *vars)
 	initializeList(pipeline);
 	separate_pipes(line, pipeline, &line_len);
 	fill_args(vars, pipeline);
-	//displayLinkedList(pipeline);
-	//clearLinkedList(pipeline);
+	//displayLinkedList(pipeline); // DEBUG
+	//clearLinkedList(pipeline); // TODO finish the function
 	free(line);
 }
 
@@ -110,14 +99,12 @@ void	parsing(t_vars *vars)
 		exit(printf("minish: syntax error near unexpected token `|'")); // TODO create perror instance
 	parsing_pipeline(vars);
 	i = 0;
-	while(i < vars->num_args)
+	while (i < vars->num_args)
 	{
 		printf("arg[%d]: %s $\n", i, vars->args[i]);
 		i++;
 	}
 }
-
-
 
 	// i = 0;
 	// if (!ft_strncmp(line, "ENV", 3)) // DEBUG
