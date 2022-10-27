@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searchers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/26 17:58:10 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/27 19:17:54 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 	while (arg[i] != dlm && arg[i])
 		i++;
 	diff = i - start;
+	iov->size_delim = diff;
 	iov->delim = malloc(sizeof(char) * diff + 1);
 	j = 0;
 	while (start < i)
@@ -99,7 +100,7 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 	return (iov->delim);
 }
 
-void	ft_find_hrdc(t_vars *vars)
+void	ft_find_hrdc(t_vars *vars, t_iovars *iov)
 {
 	int	i;
 
@@ -110,6 +111,7 @@ void	ft_find_hrdc(t_vars *vars)
 		vars->args[0][i + 1] == '<' && vars->args[0][i + 2] == ' ')
 		{
 			vars->hv_heredoc = 1;
+			ft_hrdoc(vars, iov, vars->args[0], i + 3);
 		}
 		i++;
 	}
@@ -128,8 +130,8 @@ void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg)
 			&& arg[i + 2] == ' ')
 			ft_find_out(vars, iov, arg);
 		else if (arg[i - 1] != '<' && arg[i] == '<' && arg[i + 1] == '<' \
-			&& arg[i + 2] == ' ')
-			iov->hrdc_fd = ft_hrdoc(vars, iov, arg, i + 3);
+			&& arg[i + 2] == ' ' && !vars->hv_heredoc)
+			ft_hrdoc(vars, iov, arg, i + 3);
 		i++;
 	}
 }

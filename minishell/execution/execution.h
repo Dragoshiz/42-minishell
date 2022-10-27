@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/26 18:03:06 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/27 16:34:42 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ typedef struct s_iovars
 	char	*filename;
 	char	*filename2;
 	char	*save;
-	int		hrdc_fd;
+	int		hrdc_pipe[2];
+	// int		hrdc_fd;
+	int		size_delim;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
@@ -53,6 +55,8 @@ int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i);
 // char	*ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
-void	ft_find_hrdc(t_vars *vars);
+void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
+int	ft_size_rl(char *line, t_iovars *iov);
+
 
 #endif
