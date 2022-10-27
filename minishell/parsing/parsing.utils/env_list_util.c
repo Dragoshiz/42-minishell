@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/26 17:21:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 19:24:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,27 @@ void	displayLinkedList(t_linkedList *list)
 	}
 }
 
-// void	clearLinkedList(t_linkedList **lst, void (*del)(void*))
-// {
-// 	t_list	*temp;
+void	deleteList(t_linkedList *list)
+{
+	t_node	*temp;
 
-// 	if (!lst && !del)
-// 		return ;
-// 	while (*lst)
-// 	{
-// 		temp = (*lst)->next;
-// 		del((*lst)->content);
-// 		free(*lst);
-// 		*lst = temp;
-// 	}
-// 	*lst = NULL;
-// }
+	if (list->current == list->head)
+	{
+		if (list->head->next == NULL)
+			list->head = list->tail = NULL;
+		else
+			list->head = list->head->next;
+	}
+	else
+	{
+		temp = list->head;
+		while (temp != NULL && temp->next != list->current)
+		{
+			temp = temp->next;
+		}
+		if (temp != NULL)
+			temp->next = list->current->next;
+	}
+	free(list->current);
+	free(list);
+}

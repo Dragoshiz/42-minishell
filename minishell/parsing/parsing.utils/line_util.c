@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_list_create.c                                  :+:      :+:    :+:   */
+/*   line_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/18 16:00:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/23 17:28:31 by vfuhlenb         ###   ########.fr       */
+/*   Created: 2022/10/27 15:54:48 by vfuhlenb          #+#    #+#             */
+/*   Updated: 2022/10/27 15:56:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// initializes ENV_SH_LIST on startup
-void	env_list_create(t_vars *vars) // free env_sh linkedList
+// return (1) if char s is present in string line, otherwise return (0)
+int	peek(char *line, char s, int i)
 {
-	int	i;
-
-	// check if env is valid and has content
-	initializeList(vars->env_list);
-	i = 0;
-	while (vars->env_sh[i])
+	if ((size_t)i <= ft_strlen(line))
 	{
-		addTail(vars->env_list, vars->env_sh[i]);
-		i++;
+		while (line[i])
+		{
+			if (line[i] == s)
+				return (i);
+			i++;
+		}
 	}
-	vars->num_env_sh = i;
+	return (-1);
 }

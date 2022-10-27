@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/25 18:43:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:09:12 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,20 @@
 # include <readline/history.h>
 # include "libft/libft.h"
 
+// typedef struct s_node {
+// 	void			*data;
+// 	struct s_node	*next;
+// }	t_node;
+
+// typedef struct s_linkedList {
+// 	t_node	*head;
+// 	t_node	*tail;
+// 	t_node	*current;
+// }	t_linkedList;
+
 typedef struct s_node {
 	void			*data;
+	int				type;
 	struct s_node	*next;
 }	t_node;
 

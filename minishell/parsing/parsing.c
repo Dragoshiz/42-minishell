@@ -6,112 +6,90 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/27 00:20:14 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:53:46 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// return (1) if char s is present in string line, otherwise return (0)
-int	peek(char *line, char s, int i)
-{
-	if ((size_t)i <= ft_strlen(line))
-	{
-		while (line[i])
-		{
-			if (line[i] == s)
-				return (i);
-			i++;
-		}
-	}
-	return (-1);
-}
-
-void	separate_pipes(char *line, t_linkedList *pipeline, int *line_len)
+void	separate_pipes(t_parsing *parsing)
 {
 	int		i;
 	int		token;
 
-	(void)line_len;
 	i = 0;
 	token = 0;
-	while (line[i])
+	while (parsing->line[i])
 	{
-		if (line[i] == SPACE)
-			while (line[i] == SPACE)
+		if (parsing->line[i] == SPACE)
+			while (parsing->line[i] == SPACE)
 				i++;
-		if (line[i] && line[i] == PIPE)
+		if (parsing->line[i] && parsing->line[i] == PIPE)
 		{
-			line[i] = '\0';
-			addTail(pipeline, ft_strdup(&line[token]));
+			parsing->line[i] = '\0';
+			addTail(parsing->pipeline, ft_strdup(&parsing->line[token]));
 			token = i + 1;
-			if (line[i] == SPACE)
-				while (line[i++] == SPACE);
+			if (parsing->line[i] == SPACE)
+			{
+				while (parsing->line[i] == SPACE)
+					i++;
+			}
 		}
 		i++;
 	}
-	addTail(pipeline, ft_strdup(&line[token]));
+	addTail(parsing->pipeline, ft_strdup(&parsing->line[token]));
 }
 
-void	fill_args(t_vars *vars, t_linkedList *pipeline)
+// frees all allocated memory
+static void	cleanup(t_parsing *parsing)
 {
-	int	i;
-
-	pipeline->current = pipeline->head;
-	vars->num_args = countLinkedList(pipeline);
-	vars->args = malloc(sizeof(char *) * vars->num_args);
-	i = 0;
-	while (i < vars->num_args)
-	{
-		vars->args[i] = ft_strdup(pipeline->current->data);
-		if (pipeline->current->next)
-			pipeline->current = pipeline->current->next;
-		i++;
-	}
+	deleteList(parsing->pipeline);
 }
 
 // process readline input and prepares args for the executor
-void	parsing_pipeline(t_vars *vars)
+static void	split_pipeline(t_parsing *parsing)
 {
-	char			*line;
-	t_linkedList	*pipeline;
-	int				line_len;
-
-	pipeline = NULL;
-	line = ft_strdup(vars->line); // TODO protect
-	line_len = ft_strlen(line);
-	pipeline = (t_linkedList *) malloc(sizeof(t_linkedList));
-	initializeList(pipeline);
-	separate_pipes(line, pipeline, &line_len);
-	fill_args(vars, pipeline);
+	separate_pipes(parsing);
 	//displayLinkedList(pipeline); // DEBUG
 	//clearLinkedList(pipeline); // TODO finish the function
-	free(line);
+	fill_args(parsing);
+	free(parsing->line);
 }
 
-// initial checks
-void	parsing(t_vars *vars)
-// TODO if || in line, then exit with error message "OR not implemented"
+// Initialize parsing struct
+static void	initialize(t_parsing *parsing, t_vars *vars)
 {
-	int	i;
-
 	if (*vars->line == PIPE)
 		exit(printf("minish: syntax error near unexpected token `|'")); // TODO create perror instance
-	parsing_pipeline(vars);
+	parsing->line_len = 0;
+	parsing->pipeline = NULL;
+	parsing->s_vars = vars;
+	parsing->line = ft_strdup(parsing->s_vars->line); // TODO protect
+	parsing->line_len = ft_strlen(parsing->line);
+	parsing->pipeline = (t_linkedList *) malloc(sizeof(t_linkedList));
+	initializeList(parsing->pipeline);
+}
+
+// DEBUG print args
+static void	debug_print_args(char *args[], int num_args)
+{
+	int			i;
+
 	i = 0;
-	while (i < vars->num_args)
+	while (i < num_args) // DEBUG
 	{
-		printf("arg[%d]: %s $\n", i, vars->args[i]);
+		printf("arg[%d]: %s $\n", i, args[i]);
 		i++;
 	}
 }
 
-	// i = 0;
-	// if (!ft_strncmp(line, "ENV", 3)) // DEBUG
-	// {
-	// 	while (vars->env_sh[i])
-	// 		printf("%s\n", vars->env_sh[i++]);
-	// }
-	// else
-	// 	printf("copy of line: %s\n", line);
-	//displayLinkedList(vars->env_list);
+// Main function for Parsing & initial checks
+void	parsing(t_vars *vars) // TODO if || in line, then exit with error message "OR not implemented"
+{
+	t_parsing	parsing;
+
+	initialize(&parsing, vars);
+	split_pipeline(&parsing);
+	cleanup(&parsing);
+	debug_print_args(parsing.s_vars->args, parsing.s_vars->num_args); // DEBUG
+}
