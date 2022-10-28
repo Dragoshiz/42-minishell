@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searchers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 19:17:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/28 09:50:16 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_find_in(t_vars *vars, t_iovars *iov)
 				iov->filename2 = ft_get_filename(vars->args[i], \
 					j + 2);
 				fd = open(iov->filename2, O_RDONLY);
+				fprintf(stderr, "HERE\n");
 				if (fd < 0)
 					perror("");
 				free(iov->filename2);

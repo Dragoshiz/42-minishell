@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/27 19:19:40 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/28 10:15:03 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 {
 	ft_find_io(vars, iov, vars->args[numcmds]);
 	ft_get_cmd(vars, vars->args[numcmds]);
+	// fprintf(stderr, "%s\n", vars->cmds[0]);
+	// fprintf(stderr, "%d", numcmds);
 	if (numcmds != 0)
 	{
 		close(vars->pipefds[numcmds - 1][1]);
 		iov->fdin = vars->pipefds[numcmds - 1][0];
 	}
 	ft_dup2nclose(iov->fdin, STDIN_FILENO);
-	close(iov->fdin);
 	if (vars->hv_outfile || vars->hv_append)
 		iov->fdout = ft_find_out(vars, iov, vars->args[numcmds]);
 	else
@@ -75,12 +76,15 @@ void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 		if (!vars->hv_outfile && !vars->hv_append)
 			iov->fdout = vars->pipefds[numcmds][1];
 	ft_dup2nclose(iov->fdout, STDOUT_FILENO);
-	
 	vars->pid = fork();
 	if (vars->pid == 0)
 		if (execve(ft_find_arg_path(vars, vars->cmds[0]) \
 		, vars->cmds, vars->env_sh) < 0)
+		{
+			close(iov->hrdc_pipe[0]);
 			perror("");
+
+		}
 	ft_free_doublepoint(vars->cmds);
 	vars->hv_append = 0;
 	vars->hv_outfile = 0;
@@ -97,7 +101,7 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 	ft_find_in(vars, iov);
 	ft_find_hrdc(vars, iov);
 	if (vars->hv_infile)
-		iov->fdin = ft_find_in(vars, iov);
+			iov->fdin = ft_find_in(vars, iov);
 	else if (vars->hv_heredoc)
 		iov->fdin = iov->hrdc_pipe[0];
 	else
@@ -120,8 +124,8 @@ void	execution(t_vars *vars, t_iovars *iov)
 	vars->args = malloc(sizeof(char *) * 10);
 	vars->args[0] = ft_strdup("cat << hi");
 	vars->args[1] = ft_strdup("grep alone > file2");
-	vars->args[2] = ft_strdup("cat file2");	
-	vars->args[3] = 0;
+	// vars->args[2] = ft_strdup("cat file2");	
+	vars->args[2] = 0;
 	// vars->args[1] = ft_strdup("grep mini << hello");
 	// vars->args[2] = ft_strdup("wc");
 	// vars->args[3] = 0;

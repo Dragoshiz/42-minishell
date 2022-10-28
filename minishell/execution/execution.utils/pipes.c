@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:16:46 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 19:02:35 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/28 10:14:26 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_create_pipes(t_vars *vars)
 		vars->pipefds = malloc(sizeof(int *) * vars->num_args - 1);
 		while (i < vars->num_args - 1)
 		{
+			// fprintf(stderr, "making pipes\n");
 			vars->pipefds[i] = malloc(sizeof(int) * 2);
 			if (pipe(vars->pipefds[i]) < 0)
 			{
@@ -44,6 +45,7 @@ void	ft_create_pipes(t_vars *vars)
 				exit(2);
 			}
 			i++;
+			
 		}
 	}
 }
@@ -103,7 +105,6 @@ int	ft_size_rl(char *line, t_iovars *iov)
 	return (i);
 }
 
-
 int	ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i)
 {
 	char	*line;
@@ -118,7 +119,7 @@ int	ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i)
 		if (ft_strncmp(line, iov->delim, size) == 0)
 			break ;
 		line = ft_strjoin(line, "\n");
-		write(iov->hrdc_pipe[1], line, ft_size_rl(line,iov));
+		write(iov->hrdc_pipe[1], line, ft_size_rl(line, iov));
 		free (line);
 	}
 	free(line);
