@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/27 18:53:59 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:37:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 typedef struct s_parsing {
 	t_linkedList	*pipeline;
 	int				line_len;
-	char			*line;
+	// char			*line; // TODO delete
 	struct s_vars	*s_vars;
+	char			*p_start;
+	char			*p_end;
+	char			*line_end;
 }	t_parsing;
 
 void	parsing(t_vars *vars);
@@ -37,7 +40,9 @@ void	fill_args(t_parsing *parsing);
 
 // LINE UTIL
 
-int		peek(char *line, char s, int i);
+void	quote_range(t_parsing *parsing);
+char	*dup_range(char *p_start, char *p_end);
+char	*peek(char *p_start, char *l_end, char s);
 
 // LIST UTIL
 

@@ -6,23 +6,65 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:54:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/27 15:56:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:22:11 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// return (1) if char s is present in string line, otherwise return (0)
-int	peek(char *line, char s, int i)
+void	quote_range(t_parsing *parsing)
 {
-	if ((size_t)i <= ft_strlen(line))
+	char	*p_temp;
+	int		i;
+
+	i = 0;
+	while (parsing->p_start != parsing->line_end)
 	{
-		while (line[i])
-		{
-			if (line[i] == s)
-				return (i);
-			i++;
-		}
+		
 	}
-	return (-1);
+	// 	// TODO quotes range and cpy str-range to pipeline
+		
+}
+
+// duplicates str-range from p_start to p_end and gives back a pointer to it.
+char	*dup_range(char *p_start, char *p_end)
+{
+	int		i;
+	char	*p;
+	int		len;
+
+	len = 0;
+	while(p_start[len] != *p_end)
+		len++;
+	p = malloc(sizeof(char) * len + 1);
+	if (p == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		p[i] = p_start[i];
+		i++;
+	}
+	p[len] = '\0';
+	return (p);
+}
+
+// search s between p_start and end of line and return pointer to first occurence
+char	*peek(char *p_start, char *line_end, char s)
+{
+	char	*p;
+	int		i;
+
+	i = 0;
+	p = NULL;
+	while (p_start[i] != *line_end)
+	{
+		if (p_start[i] == s)
+		{
+			p = &p_start[i];
+			return (p);
+		}
+		i++;
+	}
+	return (p);
 }

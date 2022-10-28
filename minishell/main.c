@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 19:13:35 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:46:13 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	ft_init_vars(t_vars *vars)
 int	main (int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
-//	t_iovars	iov;
+	//t_iovars	iov;
 
 	(void)argc;
 	(void)argv;
 	ft_init_vars(&vars);
 	ft_cpy_env(&vars, env);
-	// env_list_create(&vars);
+	//env_list_create(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
@@ -70,7 +70,7 @@ int	main (int argc, char *argv[], char *env[])
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
 		{
 			parsing(&vars);
-	//		execution(&vars, &iov);
+		//	execution(&vars, &iov);
 		}
 		free(vars.line);
 		//deleteList(vars.env_list);
