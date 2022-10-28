@@ -6,25 +6,11 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:54:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/28 15:22:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:27:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	quote_range(t_parsing *parsing)
-{
-	char	*p_temp;
-	int		i;
-
-	i = 0;
-	while (parsing->p_start != parsing->line_end)
-	{
-		
-	}
-	// 	// TODO quotes range and cpy str-range to pipeline
-		
-}
 
 // duplicates str-range from p_start to p_end and gives back a pointer to it.
 char	*dup_range(char *p_start, char *p_end)

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/28 14:37:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:27:12 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	fill_args(t_parsing *parsing);
 
 // LINE UTIL
 
-void	quote_range(t_parsing *parsing);
 char	*dup_range(char *p_start, char *p_end);
 char	*peek(char *p_start, char *l_end, char s);
 

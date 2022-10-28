@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/28 11:39:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:55:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	deleteList(t_linkedList *list)
 		temp = list->head;
 		while (temp != NULL && temp->next != list->current)
 		{
+			// TODO Free all char pointers
 			temp = temp->next;
 		}
 		if (temp != NULL)

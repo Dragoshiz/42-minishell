@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/28 14:54:10 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:37:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,63 @@
 // process readline input and prepares args for the executor
 static void	split_pipeline(t_parsing *parsing)
 {
-	int		i;
-	int		token;
-
-	i = 0;
-	token = 0;
-	while (parsing->s_vars->line[i])
+	/*
+	if pipe found outside quotes, then split
+	
+	while p_start < line_end
 	{
-		if (parsing->s_vars->line[i] == SPACE)
-			while (parsing->s_vars->line[i] == SPACE)
-				i++;
-		if (parsing->s_vars->line[i] && parsing->s_vars->line[i] == PIPE)
-		{
-			parsing->s_vars->line[i] = '\0';
-			addTail(parsing->pipeline, ft_strdup(&parsing->s_vars->line[token]));
-			token = i + 1;
-			if (parsing->s_vars->line[i] == SPACE)
-			{
-				while (parsing->s_vars->line[i] == SPACE)
-					i++;
-			}
-		}
+		- iterate string until finds quote character [[peek]]
+			- if pipe symbol, then split [[add node]]
+				- only if pipe stands alone [[check]], otherwise syntax error
+			- if single or double quote
+				- search for matching closing quote until reaches end of string.
+					- if no closing quote found -> return (syntax error)
+				- set p_end
+				- use *dup_range to copy range to pipe node
+				- set marker as new start after the closing quote [[set marker]]
+			- if \0 then return
 		i++;
 	}
-	addTail(parsing->pipeline, ft_strdup(&parsing->s_vars->line[token]));
+
+	- create sub-list for each pipe
+		- while p_start < line_end
+			- if single quote
+				iterate till closing quote and copy whole to one argument
+			- if double quote
+				- iterate till closing quote
+					- only recognize $
+						- if found then copy expanded string in one argument
+							- use str-len to measure how long i need the argument to be
+			- after encouter a white space, put it to another argument, but without any preceding and trailing empty spaces
+
+	*/
+
+	
+	
+	// int		i;
+	// int		token;
+
+	// i = 0;
+	// token = 0;
+	// while (parsing->s_vars->line[i])
+	// {
+	// 	if (parsing->s_vars->line[i] == SPACE)
+	// 		while (parsing->s_vars->line[i] == SPACE)
+	// 			i++;
+	// 	if (parsing->s_vars->line[i] && parsing->s_vars->line[i] == PIPE)
+	// 	{
+	// 		parsing->s_vars->line[i] = '\0';
+	// 		addTail(parsing->pipeline, ft_strdup(&parsing->s_vars->line[token]));
+	// 		token = i + 1;
+	// 		if (parsing->s_vars->line[i] == SPACE)
+	// 		{
+	// 			while (parsing->s_vars->line[i] == SPACE)
+	// 				i++;
+	// 		}
+	// 	}
+	// 	i++;
+	// }
+	// addTail(parsing->pipeline, ft_strdup(&parsing->s_vars->line[token]));
 	//displayLinkedList(pipeline); // DEBUG
 	//clearLinkedList(pipeline); // TODO finish the function
 }
