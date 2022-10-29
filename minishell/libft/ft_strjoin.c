@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:46:31 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/01/08 17:18:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 16:01:37 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ string, which is the result of the concatenation
 of ’s1’ and ’s2’.
 */
 #include "libft.h"
+#include <stdio.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*p;
 	int		i;

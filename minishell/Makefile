@@ -12,9 +12,9 @@
 
 NAME = minishell
 
-CC = gcc -g
+CC = cc
 #remember to use the CFLAGS at the end!!
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 RM = rm -f
 
@@ -22,7 +22,10 @@ AF = ar rcs
 
 SRCS = \
 execution/execution.utils/minish_utils.c\
+execution/execution.utils/exec_utils.c\
+execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
+execution/execution.utils/searchers.c\
 execution/execution.c\
 parsing/parsing.utils/env_sh_list.c\
 parsing/parsing.utils/get_tokens.c\
@@ -39,8 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		make -C libft
-		$(CC) -Llibft -lft -lreadline $(OBJS) -o $(NAME)
-		make clean
+		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

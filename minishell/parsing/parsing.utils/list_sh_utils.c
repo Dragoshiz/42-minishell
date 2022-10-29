@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_sh_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:12:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:55:47 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	displayLinkedList(t_linkedList *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("%s\n", current->data);
+		printf("%p\n", current->data);
 		current = current->next;
 	}
 }

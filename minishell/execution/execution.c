@@ -3,202 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/22 14:47:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 20:06:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//order
-//1-get num of commands
-//2-get num of metachar
-
-//function that puts, "/" after being splitted for every path
-void	ft_put_backsl(t_vars *vars)
+//sets stdin and stdout
+void	ft_set_stdin(t_iovars *iov)
 {
-	int	i;
-
-	i = 0;
-	while (vars->paths[i])
+	iov->tmpin = dup(STDIN_FILENO);
+	iov->tmpout = dup(STDOUT_FILENO);
+	if (iov->tmpin < 0 || iov->tmpout < 0)
 	{
-		vars->paths[i] = ft_strjoin(vars->paths[i], "/");
-		i++;
+		perror("");
+		exit(2);
 	}
 }
 
-//function that splits and stores the PATH variable into struct vars->paths
-void	ft_get_path(t_vars *vars, char *env[])
+//uses the fork function and executes
+void	ft_forknexec(t_vars *vars, t_iovars *iov)
 {
-	char	*path;
-	int		i;
-	int		k;
-	int		j;
-
-	i = 0;
-	while (env[i])
+	vars->pid = fork();
+	if (vars->pid == 0)
 	{
-		if (!ft_strncmp(env[i], "PATH", 4))
-			path = ft_strdup(env[i]);
-		i++;
-	}
-	vars->paths = ft_split(path, ':');
-	i = 5;
-	k = ft_strlen(vars->paths[0]);
-	j = 0;
-	while (i <= k)
-	{
-		vars->paths[0][j] = vars->paths[0][i];
-		i++;
-		j++;
-	}
-	vars->paths[0][j] = '\0';
-	ft_put_backsl(vars);
-	free(path);
-}
-
-//function that count how many arguments there are
-void	ft_count_args(t_vars *vars)
-{
-	int	i;
-
-	i = 0;
-	while (vars->args[i])
-	{
-		if (ft_isalpha(vars->args[i][0]))
-			vars->num_cmds++;
-		i++;
-	}
-	vars->num_args = i;
-}
-
-//function that check if command exists
-//function needs to be redone as we don't need to check
-//beforehand if command exist++++++++++++++++++++++++++
-int	ft_is_a_cmd(char **paths, char *arg)
-{
-	char	*cmd;
-	int		i;
-
-	i = 0;
-	while (paths[i])
-	{
-		cmd = ft_strjoin(paths[i], arg);
-		if (access(cmd, F_OK) == 0)
+		iov->cmd = ft_find_arg_path(vars, vars->cmds[0]);
+		if (!iov->cmd)
+			ft_errmsg(vars, 0);
+		else
 		{
-			free(cmd);
-			return (1);
+			if (vars->hv_heredoc)
+				close(iov->hrdc_pipe[0]);
+			if (execve(iov->cmd, vars->cmds, vars->env_sh) < 0)
+				ft_errmsg(vars, 1);
 		}
-		free(cmd);
-		i++;
 	}
-	return (0);
 }
 
-//it iterates through args and check if they exist
-//function needs to be redone or replaced as we don't need to check
-//beforehand if command exist++++++++++++++++++++++++++
-void	ft_check_cmd(t_vars *vars)
+//part2 of exec function
+void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 {
-	int		i;
-	int		j;
-	char	**cmd;
-
-	i = 0;
-	j = 0;
-	vars->cmds = malloc(sizeof(char *) * vars->num_cmds);//free vars->cmds
-	while (vars->args[i])
+	ft_find_io(vars, iov, vars->args[numcmds]);
+	ft_get_cmd(vars, vars->args[numcmds]);
+	if (numcmds != 0)
 	{
-		if (ft_isalpha(vars->args[i][0]))
-		{
-			vars->cmds[j++] = ft_strdup(vars->args[i]);
-			cmd = ft_split(vars->args[i], ' ');
-			if (!ft_is_a_cmd(vars->paths, cmd[0]))
-			{
-				printf("minishell: command not found: %s", vars->args[i]);
-				exit(2);
-			}
-			vars->one_cmd = i;
-			ft_free_doublepoint(cmd);
-		}
-		i++;
+		close(vars->pipefds[numcmds - 1][1]);
+		iov->fdin = vars->pipefds[numcmds - 1][0];
 	}
-	i = 0;
+	ft_dup2nclose(iov->fdin, STDIN_FILENO);
+	if (vars->hv_outfile || vars->hv_append)
+		iov->fdout = ft_find_out(vars, iov, vars->args[numcmds]);
+	else
+		iov->fdout = dup(iov->tmpout);
+	if (numcmds != vars->num_args - 1)
+		if (!vars->hv_outfile && !vars->hv_append)
+			iov->fdout = vars->pipefds[numcmds][1];
+	ft_dup2nclose(iov->fdout, STDOUT_FILENO);
+	ft_forknexec(vars, iov);
+	ft_free_doublepoint(vars->cmds);
+	ft_set_redir(vars);
 }
 
-void	execution(t_vars *vars)
+// //part1 of exec function
+void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 {
-	vars->args = malloc(sizeof(char *) * 10);
-	vars->args[0] = ft_strdup("ls");
-	vars->args[1] = ft_strdup(" |");
-	vars->args[2] = ft_strdup(" env");
-	vars->args[3] = ft_strdup("> file69.txt");
-	vars->args[4] = ft_strdup("|");
-	vars->args[5] = ft_strdup("tee file4.txt");
-	vars->args[6] = ft_strdup("< file3.txt");
-	ft_get_path(vars, vars->env_sh);
+	int	numcmds;
+
+	ft_set_stdin(iov);
+	ft_find_in(vars);
+	ft_find_hrdc(vars, iov);
+	if (vars->hv_heredoc)
+		iov->fdin = iov->hrdc_pipe[0];
+	else if (vars->hv_infile)
+			iov->fdin = ft_find_in(vars);
+	else
+		iov->fdin = dup(iov->tmpin);
+	ft_create_pipes(vars);
+	numcmds = 0;
+	while (numcmds < vars->num_args)
+	{
+		ft_exec_utils(vars, iov, numcmds);
+		numcmds++;
+	}
+	ft_dup2nclose(iov->tmpin, STDIN_FILENO);
+	ft_dup2nclose(iov->tmpout, STDOUT_FILENO);
+	ft_close_pipes(vars);
+	waitpid(vars->pid, NULL, 0);
+}
+
+void	execution(t_vars *vars, t_iovars *iov)
+{
+	vars->args = malloc(sizeof(char *) * 3);
+	vars->args[0] = "cat << hi";
+	vars->args[1] = "grep hei > file2";
+	vars->args[2] = NULL;
 	ft_count_args(vars);
-	ft_check_cmd(vars);
-	ft_iter(vars);
+	ft_get_path(vars, vars->env_sh);
+	ft_set_stdin(iov);
+	ft_exec_cmd(vars, iov);
 }
-
-// //function that checks for whitespace characters
-// int	is_whitespace(char *line)
-// {
-// 	while (*line)
-// 	{
-// 		if (*line != 32 && !(*line >= 9 && *line <= 13))
-// 			return (0);
-// 		line++;
-// 	}
-// 	return (1);
-// }
-
-// void	ft_init(t_vars *vars)
-// {
-// 	vars->num_args = 0;
-// 	vars->num_cmds = 0;
-// 	vars->num_pipes = 0;
-// 	vars->num_env_sh = 0;
-// 	vars->hv_infile = 0;
-// 	vars->hv_outfile = 0;
-// 	vars->hv_redirect = 0;
-// 	vars->hv_heredoc = 0;
-// }
-
-// int	main (int argc, char *argv[], char *env[])
-// {
-// 	t_vars	vars;
-// 	int		i;
-
-// 	i = 0;
-// 	(void)argc;
-// 	(void)argv;
-// 	vars.args = malloc(sizeof(char *) * 10);
-// 	vars.args[0] = ft_strdup("ls");
-// 	vars.args[1] = ft_strdup(" |");
-// 	vars.args[2] = ft_strdup(" env");
-// 	vars.args[3] = ft_strdup("> file69.txt");
-// 	vars.args[3] = ft_strdup("|");
-// 	vars.args[4] = ft_strdup("tee file4.txt");
-// 	vars.args[3] = ft_strdup("< file3.txt");
-// 	ft_init(&vars);
-// 	ft_get_path(&vars, env);
-// 	ft_count_args(&vars);
-// 	ft_check_cmd(&vars);
-// 	ft_cpy_env(&vars, env);
-// 	ft_iter(&vars);
-// 	while (1)
-// 	{
-// 		vars.line = readline("minish >");
-// 		if (vars.line)
-// 			add_history(vars.line);
-// 		if (*vars.line != '\0' && !is_whitespace(vars.line))
-// 			//parsing();
-// 			//execution();
-// 		free(vars.line);
-// 	}
-// 	return (0);
-// }

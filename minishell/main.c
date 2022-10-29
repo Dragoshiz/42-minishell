@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/22 14:43:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:01:51 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	ft_cpy_env(t_vars *vars, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	vars->env_sh = malloc(sizeof(char *) * i + 1);
+	vars->env_sh = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (env[i])
 	{
 		vars->env_sh[i] = ft_strdup(env[i]);
 		i++;
 	}
+	vars->env_sh[i] = NULL;
 }
 
 //function that checks for whitespace characters
@@ -46,18 +47,18 @@ int	is_whitespace(char *line)
 void	ft_init_vars(t_vars *vars)
 {
 	vars->num_args = 0;
-	vars->num_cmds = 0;
-	vars->num_pipes = 0;
 	vars->num_env_sh = 0;
-	vars->hv_infile = 0;
+	vars->hv_append = 0;
 	vars->hv_outfile = 0;
-	vars->hv_redirect = 0;
 	vars->hv_heredoc = 0;
+	vars->hv_infile = 0;
+	vars->env_sh = NULL;
 }
 
-int	main (int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *env[])
 {
-	t_vars	vars;
+	t_vars		vars;
+	t_iovars	iov;
 
 	(void)argc;
 	(void)argv;
@@ -70,7 +71,7 @@ int	main (int argc, char *argv[], char *env[])
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
 			//parsing(&vars);
-			execution(&vars);
+			execution(&vars, &iov);
 		free(vars.line);
 	}
 	return (0);

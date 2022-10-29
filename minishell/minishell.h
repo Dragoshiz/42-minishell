@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/22 14:42:10 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:55:38 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 # define MINISHELL_H
 
 # define WHITESPACE " \t\r\n\v"
+# define NUMPIPES 50
 
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
 
 typedef struct s_node {
-	void	*data;
-	struct	s_node *next;
+	void			*data;
+	struct s_node	*next;
 }	t_node;
 
 typedef struct s_linkedList {
@@ -41,15 +43,11 @@ typedef struct s_vars{
 	int				**pipefds;// pipe file descriptors
 	char			*line;
 	pid_t			pid;
-	int				one_cmd;
-	int				num_paths;
 	int				num_args;
-	int				num_cmds;
-	int				num_pipes;
 	int				num_env_sh;
 	int				hv_infile;
 	int				hv_outfile;
-	int				hv_redirect;
+	int				hv_append;
 	int				hv_heredoc;
 	t_linkedList	*env_sh_list;
 }t_vars;

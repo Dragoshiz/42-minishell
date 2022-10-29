@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 19:57:16 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/01/04 14:49:27 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 15:13:46 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(const char *src)
 	int		len;
 
 	len = ft_strlen(src);
-	p = malloc(sizeof(char) * len + 1);
+	p = malloc(sizeof(char) * (len + 1));
 	if (p == NULL)
 		return (NULL);
 	i = 0;
