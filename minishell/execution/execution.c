@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:06:20 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:24:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,14 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 
 void	execution(t_vars *vars, t_iovars *iov)
 {
-	vars->args = malloc(sizeof(char *) * 3);
-	vars->args[0] = "cat << hi";
-	vars->args[1] = "grep hei > file2";
-	vars->args[2] = NULL;
-	ft_count_args(vars);
+	// vars->args = malloc(sizeof(char *) * 10);
+	// vars->args[0] = ft_strdup("ls");
+	// vars->args[1] = ft_strdup("grep mini");
+	// vars->args[2] = ft_strdup("wc");
+	// vars->args[2] = 0;
+	// vars->args[3] = ft_strdup("grep mini");
+	// vars->args[4] = ft_strdup("> file2"); 
+	// ft_count_args(vars); // TODO Redundant
 	ft_get_path(vars, vars->env_sh);
 	ft_set_stdin(iov);
 	ft_exec_cmd(vars, iov);

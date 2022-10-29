@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_sh_utils.c                                    :+:      :+:    :+:   */
+/*   env_list_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/27 10:55:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:24:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ void	addTail(t_linkedList *list, void *data)
 }
 
 // prints the list
+int	countLinkedList(t_linkedList *list)
+{
+	int		i;
+	t_node	*current;
+
+	current = list->head;
+	i = 0;
+	while (current != NULL)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+// prints the list
 void	displayLinkedList(t_linkedList *list)
 {
 	t_node *current;
@@ -60,7 +76,34 @@ void	displayLinkedList(t_linkedList *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("%p\n", current->data);
+		printf("lst[#]: $%s$\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
+}
+
+void	deleteList(t_linkedList *list)
+{
+	t_node	*temp;
+
+	if (list->current == list->head)
+	{
+		if (list->head->next == NULL)
+			list->head = list->tail = NULL;
+		else
+			list->head = list->head->next;
+	}
+	else
+	{
+		temp = list->head;
+		while (temp != NULL && temp->next != list->current)
+		{
+			// TODO Free all char pointers
+			free (temp->data);
+			temp = temp->next;
+		}
+		if (temp != NULL)
+			temp->next = list->current->next;
+	}
+	free(list->current);
+	free(list);
 }

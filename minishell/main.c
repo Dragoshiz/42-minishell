@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 19:01:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:22:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	ft_init_vars(&vars);
 	ft_cpy_env(&vars, env);
+	//env_list_create(&vars);
 	while (1)
 	{
 		vars.line = readline("minish >");
@@ -73,6 +74,7 @@ int	main(int argc, char *argv[], char *env[])
 			//parsing(&vars);
 			execution(&vars, &iov);
 		free(vars.line);
+		//deleteList(vars.env_list);
 	}
 	return (0);
 }

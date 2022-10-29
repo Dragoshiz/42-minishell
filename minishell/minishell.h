@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 10:55:38 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:23:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,20 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 
+// typedef struct s_node {
+// 	void			*data;
+// 	struct s_node	*next;
+// }	t_node;
+
+// typedef struct s_linkedList {
+// 	t_node	*head;
+// 	t_node	*tail;
+// 	t_node	*current;
+// }	t_linkedList;
+
 typedef struct s_node {
 	void			*data;
+	int				type;
 	struct s_node	*next;
 }	t_node;
 
@@ -38,7 +50,7 @@ typedef struct s_linkedList {
 typedef struct s_vars{
 	char			**paths; // ENV list
 	char			**args; // array of commands for the executor
-	char			**env_sh;// cpy of env variable
+	char			**env_sh;// cpy of env variable on startup
 	char			**cmds;// array of commandse
 	int				**pipefds;// pipe file descriptors
 	char			*line;
@@ -49,7 +61,7 @@ typedef struct s_vars{
 	int				hv_outfile;
 	int				hv_append;
 	int				hv_heredoc;
-	t_linkedList	*env_sh_list;
+	t_linkedList	*env_list; // working env list
 }t_vars;
 
 # include "execution/execution.h"

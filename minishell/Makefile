@@ -27,10 +27,9 @@ execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
 execution/execution.utils/searchers.c\
 execution/execution.c\
-parsing/parsing.utils/env_sh_list.c\
-parsing/parsing.utils/get_tokens.c\
-parsing/parsing.utils/list_sh_utils.c\
-parsing/parsing.utils/parseline.c\
+parsing/parsing.utils/env_list_util.c\
+parsing/parsing.utils/line_util.c\
+parsing/parsing.utils/pipeline_util.c\
 parsing/parsing.c\
 builtins/ft_env.c\
 builtins/ft_export.c\
