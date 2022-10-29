@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 22:10:06 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 01:15:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	split_pipeline(t_parsing *parsing)
 		if (parsing->q_open == NULL && parsing->s_vars->line[i] == PIPE)
 		{
 			if (parsing->s_vars->line[i + 1] == PIPE)
-				exit(printf("minish: syntax error near unexpected token `|'")); // TODO create perror instance
+				exit(printf("minish: syntax error near unexpected token `|'\n")); // TODO create perror instance
 			parsing->p_end = &parsing->s_vars->line[i];
 			add_tail(parsing->pipeline, \
 			dup_range(parsing->p_start, parsing->p_end));
@@ -52,7 +52,7 @@ static void	split_pipeline(t_parsing *parsing)
 static void	initialize(t_parsing *parsing, t_vars *vars)
 {
 	if (*vars->line == PIPE)
-		exit(printf("minish: syntax error near unexpected token `|'")); // TODO create perror instance
+		exit(printf("minish: syntax error near unexpected token `|'\n")); // TODO create perror instance
 	parsing->s_vars = vars;
 	parsing->line_len = ft_strlen(vars->line);
 	parsing->line_end = &vars->line[parsing->line_len];
