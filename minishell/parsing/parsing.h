@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:01:52 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 20:47:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define PIPE '|'
 # define SQUOTE 39
 # define DQUOTE 34
-# define SPACE 32
+// # define SPACE 32
 
 typedef struct s_parsing {
 	struct s_vars	*s_vars;
