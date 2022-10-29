@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:26:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:08:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc, char *argv[], char *env[])
 			parsing(&vars);
 			execution(&vars, &iov);
 		free(vars.line);
-		//deleteList(vars.env_list);
+		//delete_list(vars.env_list);
 	}
 	return (0);
 }

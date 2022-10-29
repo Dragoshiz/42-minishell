@@ -6,14 +6,14 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:24:53 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:11:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 // initializes the list
-void	initializeList(t_linkedList *list)
+void	initialize_list(t_linkedList *list)
 {
 	list->head = NULL;
 	list->tail = NULL;
@@ -21,9 +21,9 @@ void	initializeList(t_linkedList *list)
 }
 
 // adds a node at the top
-void	addHead(t_linkedList *list, void *data)
+void	add_head(t_linkedList *list, void *data)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = (t_node *) malloc(sizeof(t_node));
 	node->data = data;
@@ -38,9 +38,9 @@ void	addHead(t_linkedList *list, void *data)
 }
 
 // adds a node at the tail
-void	addTail(t_linkedList *list, void *data)
+void	add_tail(t_linkedList *list, void *data)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = (t_node *) malloc(sizeof(t_node));
 	node->data = data;
@@ -53,7 +53,7 @@ void	addTail(t_linkedList *list, void *data)
 }
 
 // prints the list
-int	countLinkedList(t_linkedList *list)
+int	count_linked_list(t_linkedList *list)
 {
 	int		i;
 	t_node	*current;
@@ -68,10 +68,10 @@ int	countLinkedList(t_linkedList *list)
 	return (i);
 }
 
-// prints the list
-void	displayLinkedList(t_linkedList *list)
+// DEBUG prints the list
+void	display_linked_list(t_linkedList *list)
 {
-	t_node *current;
+	t_node	*current;
 
 	current = list->head;
 	while (current != NULL)
@@ -81,7 +81,7 @@ void	displayLinkedList(t_linkedList *list)
 	}
 }
 
-void	deleteList(t_linkedList *list)
+void	delete_list(t_linkedList *list)
 {
 	t_node	*temp;
 
@@ -97,7 +97,6 @@ void	deleteList(t_linkedList *list)
 		temp = list->head;
 		while (temp != NULL && temp->next != list->current)
 		{
-			// TODO Free all char pointers
 			free (temp->data);
 			temp = temp->next;
 		}

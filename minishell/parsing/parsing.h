@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:47:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:10:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_parsing {
 	char			*p_end;
 	char			*line_end;
 	char			*q_open;
-	// char			*q_close;
 	char			quote;
 }	t_parsing;
 
@@ -47,11 +46,11 @@ void	check_quotes(t_parsing *parsing, int i);
 
 // LIST UTIL
 
-void	addHead(t_linkedList *list, void *data);
-void	addTail(t_linkedList *list, void *data);
-void	displayLinkedList(t_linkedList *list);
-void	initializeList(t_linkedList *list);
-int		countLinkedList(t_linkedList *list);
-void	deleteList(t_linkedList *list); // TODO
+void	add_head(t_linkedList *list, void *data);
+void	add_tail(t_linkedList *list, void *data);
+void	display_linked_list(t_linkedList *list);
+void	initialize_list(t_linkedList *list);
+int		count_linked_list(t_linkedList *list);
+void	delete_list(t_linkedList *list); // TODO
 
 #endif
