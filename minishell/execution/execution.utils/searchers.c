@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 18:16:03 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 19:53:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,16 @@ int	ft_opn_fout(t_iovars *iov, int g)
 {
 	int	fd;
 
+	fd = 0;
 	if (g == 1)
 		fd = open(iov->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	else
+	else if (g == 2)
 		fd = open(iov->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 	free(iov->filename);
 	return (fd);
 }
 
-//check if there is an outfile in the cmd and creates it
+//check if there is an > in the cmd and creates it
 int	ft_find_out(t_vars *vars, t_iovars *iov, char *arg)
 {
 	int		i;
@@ -81,14 +82,14 @@ int	ft_find_out(t_vars *vars, t_iovars *iov, char *arg)
 		{
 			vars->hv_outfile = 1;
 			iov->filename = ft_get_filename(arg, i + 2);
-			ft_opn_fout(iov, 1);
+			fd = ft_opn_fout(iov, 1);
 		}
 		else if (arg[i - 1] == ' ' && arg[i] == '>' && arg[i + 1] == '>'
 			&& arg[i + 2] == ' ')
 		{
 			vars->hv_append = 1;
 			iov->filename = ft_get_filename(arg, i + 3);
-			ft_opn_fout(iov, 2);
+			fd = ft_opn_fout(iov, 2);
 		}
 		if (fd < 0)
 			perror("");

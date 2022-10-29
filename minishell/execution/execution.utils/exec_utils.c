@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 17:36:51 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 17:50:29 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:08:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ void	ft_errmsg(t_vars *vars, int i)
 	if (i == 1)
 		perror("");
 	else
-		write(2, "command not found", 17);
+		write(2, "command not found\n", 18);
 }
-
 
 char	*ft_custom_strjoin(char *s1, char *s2)
 {

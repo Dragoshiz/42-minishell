@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 19:09:38 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 20:06:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	ft_forknexec(t_vars *vars, t_iovars *iov)
 //part2 of exec function
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
 {
-	// ft_find_hrdc(vars, iov);
 	ft_find_io(vars, iov, vars->args[numcmds]);
 	ft_get_cmd(vars, vars->args[numcmds]);
 	if (numcmds != 0)
