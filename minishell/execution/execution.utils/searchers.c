@@ -6,15 +6,31 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/28 09:50:16 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 18:16:03 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+int	ft_opn_fin(char *arg, int i)
+{
+	char	*filename;
+	int		fd;
+
+	filename = ft_get_filename(arg, i);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("");
+		exit(2);
+	}
+	free(filename);
+	return (fd);
+}
+
 //check all of the cmd for infile
 //need to change for exit statuses;
-int	ft_find_in(t_vars *vars, t_iovars *iov)
+int	ft_find_in(t_vars *vars)
 {
 	int		fd;
 	int		i;
@@ -30,18 +46,24 @@ int	ft_find_in(t_vars *vars, t_iovars *iov)
 				[j] == '<' && vars->args[i][j + 1] == ' ')
 			{
 				vars->hv_infile = 1;
-				iov->filename2 = ft_get_filename(vars->args[i], \
-					j + 2);
-				fd = open(iov->filename2, O_RDONLY);
-				fprintf(stderr, "HERE\n");
-				if (fd < 0)
-					perror("");
-				free(iov->filename2);
+				fd = ft_opn_fin(vars->args[i], j + 2);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (fd);
+}
+
+int	ft_opn_fout(t_iovars *iov, int g)
+{
+	int	fd;
+
+	if (g == 1)
+		fd = open(iov->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	else
+		fd = open(iov->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+	free(iov->filename);
 	return (fd);
 }
 
@@ -52,22 +74,21 @@ int	ft_find_out(t_vars *vars, t_iovars *iov, char *arg)
 	int		fd;
 
 	i = 0;
+	fd = 0;
 	while (arg[i++])
 	{
 		if (arg[i - 1] == ' ' && arg[i] == '>' && arg[i + 1] == ' ')
 		{
 			vars->hv_outfile = 1;
 			iov->filename = ft_get_filename(arg, i + 2);
-			fd = open(iov->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-			free(iov->filename);
+			ft_opn_fout(iov, 1);
 		}
 		else if (arg[i - 1] == ' ' && arg[i] == '>' && arg[i + 1] == '>'
 			&& arg[i + 2] == ' ')
 		{
 			vars->hv_append = 1;
 			iov->filename = ft_get_filename(arg, i + 3);
-			fd = open(iov->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
-			free(iov->filename);
+			ft_opn_fout(iov, 2);
 		}
 		if (fd < 0)
 			perror("");
@@ -99,40 +120,4 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 		iov->delim[j++] = arg[start++];
 	iov->delim[j] = '\0';
 	return (iov->delim);
-}
-
-void	ft_find_hrdc(t_vars *vars, t_iovars *iov)
-{
-	int	i;
-
-	i = 0;
-	while (vars->args[0][i])
-	{
-		if (vars->args[0][i - 1] != '<' && vars->args[0][i] == '<' && \
-		vars->args[0][i + 1] == '<' && vars->args[0][i + 2] == ' ')
-		{
-			vars->hv_heredoc = 1;
-			ft_hrdoc(vars, iov, vars->args[0], i + 3);
-		}
-		i++;
-	}
-}
-
-void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i - 1] != '>' && arg[i] == '>' && arg[i + 1] == ' ')
-			ft_find_out(vars, iov, arg);
-		else if (arg[i - 1] != '>' && arg[i] == '>' && arg[i + 1] == '>' \
-			&& arg[i + 2] == ' ')
-			ft_find_out(vars, iov, arg);
-		else if (arg[i - 1] != '<' && arg[i] == '<' && arg[i + 1] == '<' \
-			&& arg[i + 2] == ' ' && !vars->hv_heredoc)
-			ft_hrdoc(vars, iov, arg, i + 3);
-		i++;
-	}
 }

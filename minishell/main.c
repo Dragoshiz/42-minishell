@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/26 14:48:55 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 19:01:51 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	ft_cpy_env(t_vars *vars, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	vars->env_sh = malloc(sizeof(char *) * i + 1);
+	vars->env_sh = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (env[i])
 	{
 		vars->env_sh[i] = ft_strdup(env[i]);
 		i++;
 	}
+	vars->env_sh[i] = NULL;
 }
 
 //function that checks for whitespace characters
@@ -50,6 +51,8 @@ void	ft_init_vars(t_vars *vars)
 	vars->hv_append = 0;
 	vars->hv_outfile = 0;
 	vars->hv_heredoc = 0;
+	vars->hv_infile = 0;
+	vars->env_sh = NULL;
 }
 
 int	main(int argc, char *argv[], char *env[])

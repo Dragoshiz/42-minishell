@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:46:31 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 14:03:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 16:01:37 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	p[i] = '\0';
-	if(*s1)
-		free(s1);
 	return (p);
 }

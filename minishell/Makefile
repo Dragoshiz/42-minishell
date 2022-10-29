@@ -22,6 +22,8 @@ AF = ar rcs
 
 SRCS = \
 execution/execution.utils/minish_utils.c\
+execution/execution.utils/exec_utils.c\
+execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
 execution/execution.utils/searchers.c\
 execution/execution.c\
@@ -41,7 +43,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		make -C libft
 		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
-		make clean
 
 clean:
 	$(RM) $(OBJS)

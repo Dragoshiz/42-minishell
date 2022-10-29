@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:16:46 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/28 10:14:26 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/29 17:50:33 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_create_pipes(t_vars *vars)
 		vars->pipefds = malloc(sizeof(int *) * vars->num_args - 1);
 		while (i < vars->num_args - 1)
 		{
-			// fprintf(stderr, "making pipes\n");
 			vars->pipefds[i] = malloc(sizeof(int) * 2);
 			if (pipe(vars->pipefds[i]) < 0)
 			{
@@ -45,7 +44,6 @@ void	ft_create_pipes(t_vars *vars)
 				exit(2);
 			}
 			i++;
-			
 		}
 	}
 }
@@ -60,7 +58,7 @@ void	ft_get_cmd(t_vars *vars, char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '<' && arg[i] != '>' && arg[i] != '$')
 		i++;
-	tempcmd = malloc(sizeof(char) * i);
+	tempcmd = malloc(sizeof(char) * (i + 1));
 	j = 0;
 	while (j < i)
 	{
@@ -81,15 +79,16 @@ char	*ft_get_filename(char *arg, int i)
 	char	*filename;
 
 	start = i;
-	while (arg[i] != ' ')
+	while (arg[i] && arg[i] != ' ')
 		i++;
 	diff = i - start;
-	filename = malloc(sizeof(char) * diff);
+	filename = malloc(sizeof(char) * (diff + 1));
 	if (!filename)
 		perror("");
 	j = 0;
 	while (j < diff)
 		filename[j++] = arg[start++];
+	filename[j] = '\0';
 	return (filename);
 }
 
@@ -103,26 +102,4 @@ int	ft_size_rl(char *line, t_iovars *iov)
 	if (i < iov->size_delim)
 		return (iov->size_delim);
 	return (i);
-}
-
-int	ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i)
-{
-	char	*line;
-	int		size;
-
-	ft_find_delim (vars, iov, arg, i);
-	pipe(iov->hrdc_pipe);
-	while (1)
-	{
-		line = readline("> ");
-		size = ft_size_rl(line, iov);
-		if (ft_strncmp(line, iov->delim, size) == 0)
-			break ;
-		line = ft_strjoin(line, "\n");
-		write(iov->hrdc_pipe[1], line, ft_size_rl(line, iov));
-		free (line);
-	}
-	free(line);
-	close(iov->hrdc_pipe[1]);
-	return (1);
 }
