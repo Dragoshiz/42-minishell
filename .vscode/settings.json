@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"*.py": "python",
-		"algorithm": "c",
-		"functional": "c",
-		"cstdio": "c",
-		"complex": "c"
-	}
-}
