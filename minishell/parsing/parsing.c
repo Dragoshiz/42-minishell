@@ -6,16 +6,20 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 16:06:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:20:02 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// static void	split_pipe(t_parsing *parsing)
-// {
+static void	split_pipe(t_parsing *parsing)
+{
+	int	i;
+
+	i = 0;
+	initialize_line(parsing);
 	
-// }
+}
 
 static void	split_pipeline(t_parsing *parsing)
 {
@@ -46,7 +50,7 @@ static void	split_pipeline(t_parsing *parsing)
 }
 
 // Initialize parsing struct
-static void	initialize(t_parsing *parsing, t_vars *vars)
+static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 {
 	parsing->s_vars = vars;
 	parsing->line_len = ft_strlen(vars->line);
@@ -55,9 +59,6 @@ static void	initialize(t_parsing *parsing, t_vars *vars)
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
 	parsing->quote = '\0';
-	parsing->pipeline = NULL;
-	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list)); // WHY does the struct not malloc it already?
-	initialize_list(parsing->pipeline);
 }
 
 // displays error message. 1:near unexpected token 2:unclosed quote
@@ -75,7 +76,7 @@ static void	debug_print_args(char *args[], int num_args)
 	int	i;
 
 	i = 0;
-	while (i < num_args) // DEBUG
+	while (i < num_args)
 	{
 		printf("arg[%d]: $%s$\n", i, args[i]);
 		i++;
@@ -87,9 +88,11 @@ void	parsing(t_vars *vars)
 {
 	t_parsing	parsing;
 
-	initialize(&parsing, vars);
+	initialize_parsing(&parsing, vars);
+	initialize_pipeline(&parsing);
 	split_pipeline(&parsing);
-	fill_args(&parsing); // TODO update function
+	split_pipe(&parsing);
+	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.s_vars->args, parsing.s_vars->num_args); // DEBUG
 	//display_linked_list(parsing.pipeline); // DEBUG
 	delete_list(parsing.pipeline);

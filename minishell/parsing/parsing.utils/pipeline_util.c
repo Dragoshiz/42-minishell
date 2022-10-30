@@ -6,11 +6,18 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 15:34:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:43:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	initialize_pipeline(t_parsing *parsing)
+{
+	parsing->pipeline = NULL;
+	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list)); // WHY does the struct not malloc it already?
+	initialize_list(parsing->pipeline);
+}
 
 // transfers strings from linked list to arg array
 void	fill_args(t_parsing *parsing)

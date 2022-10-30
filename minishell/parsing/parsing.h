@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 14:32:46 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:01:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ void	parsing(t_vars *vars);
 
 // PIPELINE UTILITIES
 
+void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
 
 // LINE UTIL
 
+void	initialize_line(t_parsing *parsing);
 char	*dup_range(char *p_start, char *p_end);
 void	check_quotes(t_parsing *parsing, int i);
 
