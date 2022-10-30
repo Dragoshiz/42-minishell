@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 22:09:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:34:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,16 @@ void	fill_args(t_parsing *parsing)
 			parsing->pipeline->current = parsing->pipeline->current->next;
 		i++;
 	}
+}
+
+void	check_quotes(t_parsing *parsing, int i)
+{
+	if ((parsing->s_vars->line[i] == SQUOTE || \
+	parsing->s_vars->line[i] == DQUOTE) && (parsing->q_open == NULL))
+	{
+		parsing->q_open = &parsing->s_vars->line[i];
+		parsing->quote = parsing->s_vars->line[i];
+	}
+	else if (parsing->quote == parsing->s_vars->line[i])
+		parsing->q_open = NULL;
 }

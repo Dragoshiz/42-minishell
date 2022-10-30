@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:23:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:32:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,20 @@
 // 	t_node	*head;
 // 	t_node	*tail;
 // 	t_node	*current;
-// }	t_linkedList;
+// }	t_linked_ist;
 
 typedef struct s_node {
-	void			*data;
-	int				type;
-	struct s_node	*next;
+	void					*data;
+	void					*type;
+	struct s_node			*next;
+	struct s_linked_list	*sublist;
 }	t_node;
 
-typedef struct s_linkedList {
+typedef struct s_linked_list {
 	t_node	*head;
 	t_node	*tail;
 	t_node	*current;
-}	t_linkedList;
+}	t_linked_list;
 
 typedef struct s_vars{
 	char			**paths; // ENV list
@@ -61,7 +62,9 @@ typedef struct s_vars{
 	int				hv_outfile;
 	int				hv_append;
 	int				hv_heredoc;
-	t_linkedList	*env_list; // working env list
+	int				syntax_error;
+	int				exit_status;
+	t_linked_list	*env_list; // working env list
 }t_vars;
 
 # include "execution/execution.h"

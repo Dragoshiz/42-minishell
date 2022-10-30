@@ -6,14 +6,14 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 22:11:59 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 10:28:00 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 // initializes the list
-void	initialize_list(t_linkedList *list)
+void	initialize_list(t_linked_list *list)
 {
 	list->head = NULL;
 	list->tail = NULL;
@@ -21,7 +21,7 @@ void	initialize_list(t_linkedList *list)
 }
 
 // adds a node at the top
-void	add_head(t_linkedList *list, void *data)
+void	add_head(t_linked_list *list, void *data)
 {
 	t_node	*node;
 
@@ -38,7 +38,7 @@ void	add_head(t_linkedList *list, void *data)
 }
 
 // adds a node at the tail
-void	add_tail(t_linkedList *list, void *data)
+void	add_tail(t_linked_list *list, void *data)
 {
 	t_node	*node;
 
@@ -53,7 +53,7 @@ void	add_tail(t_linkedList *list, void *data)
 }
 
 // prints the list
-int	count_linked_list(t_linkedList *list)
+int	count_linked_list(t_linked_list *list)
 {
 	int		i;
 	t_node	*current;
@@ -69,7 +69,7 @@ int	count_linked_list(t_linkedList *list)
 }
 
 // DEBUG prints the list
-void	display_linked_list(t_linkedList *list)
+void	display_linked_list(t_linked_list *list)
 {
 	t_node	*current;
 
@@ -81,7 +81,7 @@ void	display_linked_list(t_linkedList *list)
 	}
 }
 
-void	delete_list(t_linkedList *list)
+void	delete_list(t_linked_list *list)
 {
 	t_node	*temp;
 
