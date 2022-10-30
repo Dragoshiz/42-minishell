@@ -6,7 +6,6 @@ obj_lft
 *.so
 *.a
 .DS_Store
-pipex
 infile
 outfile
 minishell
