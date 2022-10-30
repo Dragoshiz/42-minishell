@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:47:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:32:46 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,25 @@
 # define PIPE '|'
 # define SQUOTE 39
 # define DQUOTE 34
-// # define SPACE 32
+# define EMPTY_SPACE 32
 
 typedef struct s_parsing {
 	struct s_vars	*s_vars;
-	t_linkedList	*pipeline;
+	t_linked_list	*pipeline;
 	int				line_len;
 	char			*p_start;
 	char			*p_end;
 	char			*line_end;
 	char			*q_open;
-	// char			*q_close;
 	char			quote;
 }	t_parsing;
 
 void	parsing(t_vars *vars);
 
-// PARSING UTILITIES
-
-void	line_classifier(t_parsing *parsing);
-
 // PIPELINE UTILITIES
 
 void	fill_args(t_parsing *parsing);
+void	check_quotes(t_parsing *parsing, int i);
 
 // LINE UTIL
 
@@ -47,11 +43,11 @@ void	check_quotes(t_parsing *parsing, int i);
 
 // LIST UTIL
 
-void	addHead(t_linkedList *list, void *data);
-void	addTail(t_linkedList *list, void *data);
-void	displayLinkedList(t_linkedList *list);
-void	initializeList(t_linkedList *list);
-int		countLinkedList(t_linkedList *list);
-void	deleteList(t_linkedList *list); // TODO
+void	add_head(t_linked_list *list, void *data);
+void	add_tail(t_linked_list *list, void *data);
+void	display_linked_list(t_linked_list *list);
+void	initialize_list(t_linked_list *list);
+int		count_linked_list(t_linked_list *list);
+void	delete_list(t_linked_list *list); // TODO also delete sub-list
 
 #endif

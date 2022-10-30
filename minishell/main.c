@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:26:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:52:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_init_vars(t_vars *vars)
 	vars->hv_outfile = 0;
 	vars->hv_heredoc = 0;
 	vars->hv_infile = 0;
-	vars->env_sh = NULL;
+	vars->syntax_error = 0;
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -62,19 +62,24 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
-	ft_init_vars(&vars);
-	ft_cpy_env(&vars, env);
 	//env_list_create(&vars);
+	vars.env_sh = NULL;
+	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
+	ft_cpy_env(&vars, env);
 	while (1)
 	{
 		vars.line = readline("minish >");
-		if (vars.line)
+		if (*vars.line && vars.line && !is_whitespace(vars.line))
+		{
 			add_history(vars.line);
-		if (*vars.line != '\0' && !is_whitespace(vars.line))
+			ft_init_vars(&vars);
 			parsing(&vars);
-			execution(&vars, &iov);
-		free(vars.line);
-		//deleteList(vars.env_list);
+			if (!vars.syntax_error)
+				execution(&vars, &iov); 
+			//delete_list(vars.env_list);
+		}
+		if (vars.line)
+			free(vars.line);
 	}
 	return (0);
 }
