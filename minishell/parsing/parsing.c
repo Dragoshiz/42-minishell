@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 17:15:15 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:28:07 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	split_pipe(t_parsing *parsing)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	initialize_line(parsing);
 	
 }
