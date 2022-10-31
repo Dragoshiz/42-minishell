@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 12:54:10 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 08:41:28 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	initialize_pipeline(t_parsing *parsing)
+{
+	parsing->pipeline = NULL;
+	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list)); // WHY does the struct not malloc it already?
+	initialize_list(parsing->pipeline);
+}
 
 // transfers strings from linked list to arg array
 void	fill_args(t_parsing *parsing)
@@ -18,8 +25,8 @@ void	fill_args(t_parsing *parsing)
 	int	i;
 
 	parsing->pipeline->current = parsing->pipeline->head;
-	parsing->s_vars->num_args = countLinkedList(parsing->pipeline);
-	parsing->s_vars->args = malloc(sizeof(char *) * (parsing->s_vars->num_args + 1));
+	parsing->s_vars->num_args = count_linked_list(parsing->pipeline);
+	parsing->s_vars->args = malloc(sizeof(char *) * parsing->s_vars->num_args + 1);
 	i = 0;
 	while (i < parsing->s_vars->num_args)
 	{
@@ -30,4 +37,16 @@ void	fill_args(t_parsing *parsing)
 	}
 	parsing->s_vars->args[i] = NULL ;
 	
+}
+
+void	check_quotes(t_parsing *parsing, int i)
+{
+	if ((parsing->s_vars->line[i] == SQUOTE || \
+	parsing->s_vars->line[i] == DQUOTE) && (parsing->q_open == NULL))
+	{
+		parsing->q_open = &parsing->s_vars->line[i];
+		parsing->quote = parsing->s_vars->line[i];
+	}
+	else if (parsing->quote == parsing->s_vars->line[i])
+		parsing->q_open = NULL;
 }
