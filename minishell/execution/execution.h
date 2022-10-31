@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 17:32:19 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 09:45:17 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# define MAX_PATH_LEN 256
 
 
 //iov stand for Input Output Variables
@@ -61,4 +62,7 @@ void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 
 void	ft_init_exc(t_iovars *iov);
+void	ft_builtins(t_vars *vars, int i);
+void	ft_built_env(t_vars *vars);
+void	ft_built_pwd(void);
 #endif
