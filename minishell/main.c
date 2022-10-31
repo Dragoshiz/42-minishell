@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 17:23:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 18:33:03 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,20 @@ static int	check_builtins(t_vars *vars)
 
 void	ft_ctrl_c(int sig)
 {
-	rl_replace_line("", sig);
+	(void)sig;
+	rl_replace_line("", 0);
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
 }
 
+void	ft_ctrl_d(int sig)
+{
+	(void)sig;
+	printf("exit\n");
+	sleep(1);
+	exit(0);
+}
 int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
@@ -97,6 +108,9 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	//env_list_create(&vars);
+	signal(SIGINT,ft_ctrl_c);
+	// signal(SIGKILL, ft_ctrl_d);
+	// signal(SIGKILL, ft_ctrl);
 	vars.env_sh = NULL;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
 	ft_cpy_env(&vars, env);
@@ -104,7 +118,6 @@ int	main(int argc, char *argv[], char *env[])
 	while (1)
 	{
 		vars.line = readline("minish >");
-		signal(SIGINT,ft_ctrl_c);
 		if (!vars.line)
 			break ;
 		if (*vars.line && vars.line && !is_whitespace(vars.line))

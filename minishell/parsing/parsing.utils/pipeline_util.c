@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 17:29:38 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:34:39 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	fill_args(t_parsing *parsing)
 	parsing->pipeline->current = parsing->pipeline->head;
 	parsing->vars->num_args = count_linked_list(parsing->pipeline);
 	parsing->vars->args = malloc(sizeof(char *) \
-	* parsing->vars->num_args + 1);
+	* (parsing->vars->num_args + 1));
 	i = 0;
 	while (i < parsing->vars->num_args)
 	{
