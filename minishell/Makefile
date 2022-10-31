@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = cc
-#remember to use the CFLAGS at the end!!
+# TODO remember to use the CFLAGS at the end!!
 CFLAGS = -Wall -Wextra -Werror -g
 
 RM = rm -f
@@ -40,9 +40,13 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
+# $(NAME): $(OBJS)
+# 		make -C libft
+# 		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
+
 $(NAME): $(OBJS)
 		make -C libft
-		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
+		$(CC) $(OBJS) -Llibft -lft -I ~/goinfre/.brew/opt/readline/include/ -L ~/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

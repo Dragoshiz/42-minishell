@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 10:40:02 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 15:49:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 # define EMPTY_SPACE 32
 
 typedef struct s_parsing {
-	struct s_vars	*s_vars;
-	t_linked_list	*pipeline;
-	int				line_len;
-	char			*p_start;
-	char			*p_end;
-	char			*line_end;
-	char			*q_open;
-	char			quote;
+	t_vars					*s_vars;
+	t_linked_list			*pipeline;
+	int						line_len;
+	char					*p_start;
+	char					*p_end;
+	char					*line_end;
+	char					*q_open;
+	char					quote;
 }	t_parsing;
 
 void	parsing(t_vars *vars);

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 18:20:02 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:49:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ void	parsing(t_vars *vars)
 	initialize_parsing(&parsing, vars);
 	initialize_pipeline(&parsing);
 	split_pipeline(&parsing);
+	printf("pipeline: %p \n", &parsing.pipeline);
+	printf("pipeline: %p \n", &parsing.pipeline->head);
+	printf("pipeline: %p \n", &parsing.pipeline->tail);
+	printf("pipeline: %p \n", &parsing.pipeline->current);
 	split_pipe(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.s_vars->args, parsing.s_vars->num_args); // DEBUG

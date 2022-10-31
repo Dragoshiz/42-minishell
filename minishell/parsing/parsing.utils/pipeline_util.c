@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 10:40:30 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:48:00 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	initialize_pipeline(t_parsing *parsing)
 {
 	parsing->pipeline = NULL;
-	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list)); // WHY does the struct not malloc it already?
+	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list));
 	initialize_list(parsing->pipeline);
 }
 
@@ -26,7 +26,8 @@ void	fill_args(t_parsing *parsing)
 
 	parsing->pipeline->current = parsing->pipeline->head;
 	parsing->s_vars->num_args = count_linked_list(parsing->pipeline);
-	parsing->s_vars->args = malloc(sizeof(char *) * parsing->s_vars->num_args + 1);
+	parsing->s_vars->args = malloc(sizeof(char *) \
+	* parsing->s_vars->num_args + 1);
 	i = 0;
 	while (i < parsing->s_vars->num_args)
 	{
@@ -35,6 +36,7 @@ void	fill_args(t_parsing *parsing)
 			parsing->pipeline->current = parsing->pipeline->current->next;
 		i++;
 	}
+	parsing->s_vars->args[i] = NULL;
 }
 
 void	check_quotes(t_parsing *parsing, int i)

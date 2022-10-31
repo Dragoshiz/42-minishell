@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 10:40:09 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 11:44:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ void	delete_list(t_linked_list *list)
 			temp->next = list->current->next;
 	}
 	free(list->current);
-	free(list);
+	if (list)
+		free(list);
 }
