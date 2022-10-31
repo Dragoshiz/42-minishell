@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:24:53 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/29 20:35:32 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	displayLinkedList(t_linkedList *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("lst[#]: $%s$\n", current->data); // DEBUG remove $ for production
+		printf("lst[#]: $%p$\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }

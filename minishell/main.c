@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:26:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:24:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	ft_init_vars(&vars);
+	ft_init_exc(&iov);
 	ft_cpy_env(&vars, env);
 	//env_list_create(&vars);
 	while (1)
@@ -71,8 +72,10 @@ int	main(int argc, char *argv[], char *env[])
 		if (vars.line)
 			add_history(vars.line);
 		if (*vars.line != '\0' && !is_whitespace(vars.line))
+		{
 			parsing(&vars);
 			execution(&vars, &iov);
+		}
 		free(vars.line);
 		//deleteList(vars.env_list);
 	}

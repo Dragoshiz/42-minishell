@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searchers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 19:53:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/30 19:25:08 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_opn_fin(char *arg, int i)
 	if (fd < 0)
 	{
 		perror("");
-		exit(2);
 	}
 	free(filename);
 	return (fd);
@@ -42,11 +41,13 @@ int	ft_find_in(t_vars *vars)
 		j = 0;
 		while (vars->args[i][j])
 		{
-			if (vars->args[i][j - 1] != '<' && vars->args[i] \
-				[j] == '<' && vars->args[i][j + 1] == ' ')
+			if (vars->args[i][j] == '<')
 			{
-				vars->hv_infile = 1;
-				fd = ft_opn_fin(vars->args[i], j + 2);
+				if (vars->args[i][j - 1] != '<' && vars->args[i][j + 1] == ' ')
+				{
+					vars->hv_infile = 1;
+					fd = ft_opn_fin(vars->args[i], j + 2);
+				}
 			}
 			j++;
 		}
@@ -120,5 +121,6 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 	while (start < i)
 		iov->delim[j++] = arg[start++];
 	iov->delim[j] = '\0';
+	while (arg[i] != dlm &&  )
 	return (iov->delim);
 }

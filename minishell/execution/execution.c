@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/29 20:24:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:40:19 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 	int	numcmds;
 
 	ft_set_stdin(iov);
-	ft_find_in(vars);
 	ft_find_hrdc(vars, iov);
+	ft_find_in(vars);
 	if (vars->hv_heredoc)
 		iov->fdin = iov->hrdc_pipe[0];
 	else if (vars->hv_infile)
@@ -94,16 +94,19 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 	waitpid(vars->pid, NULL, 0);
 }
 
+void	ft_init_exc(t_iovars *iov)
+{
+	iov->filename = NULL;
+	iov->size_delim = 0;
+	iov->tmpin = 0;
+	iov->tmpout = 0;
+	iov->fdin = 0;
+	iov->fdout = 0;
+	
+}
+
 void	execution(t_vars *vars, t_iovars *iov)
 {
-	// vars->args = malloc(sizeof(char *) * 10);
-	// vars->args[0] = ft_strdup("ls");
-	// vars->args[1] = ft_strdup("grep mini");
-	// vars->args[2] = ft_strdup("wc");
-	// vars->args[2] = 0;
-	// vars->args[3] = ft_strdup("grep mini");
-	// vars->args[4] = ft_strdup("> file2"); 
-	// ft_count_args(vars); // TODO Redundant
 	ft_get_path(vars, vars->env_sh);
 	ft_set_stdin(iov);
 	ft_exec_cmd(vars, iov);

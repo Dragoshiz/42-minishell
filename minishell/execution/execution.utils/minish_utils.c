@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:24:15 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:33:58 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	char	*cmd_path;
 
 	i = 0;
+	cmd_path = NULL;
 	while (vars->paths[i])
 	{
 		cmd_path = ft_strjoin(vars->paths[i], arg);
