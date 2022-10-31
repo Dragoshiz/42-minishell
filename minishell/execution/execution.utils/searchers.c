@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searchers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 08:30:40 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:15:53 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ft_opn_fin(char *arg, int i)
 }
 
 //check all of the cmd for infile
-//need to change for exit statuses;
 int	ft_find_in(t_vars *vars)
 {
 	int		fd;

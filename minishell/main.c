@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 10:39:41 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:23:51 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	check_builtins(t_vars *vars)
 	builtins[4] = "unset\0";
 	builtins[5] = "env\0";
 	builtins[6] = "exit\0";
-	builtins[7] = "\0";
+	builtins[7] = NULL;
 	i = 0;
 	len = ft_strlen(vars->args[0]);
 	while (builtins[i])
@@ -82,6 +82,11 @@ static int	check_builtins(t_vars *vars)
 		i++;
 	}
 	return (0);
+}
+
+void	ft_ctrl_c(int sig)
+{
+	rl_replace_line("", sig);
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -99,6 +104,9 @@ int	main(int argc, char *argv[], char *env[])
 	while (1)
 	{
 		vars.line = readline("minish >");
+		signal(SIGINT,ft_ctrl_c);
+		if (!vars.line)
+			break ;
 		if (*vars.line && vars.line && !is_whitespace(vars.line))
 		{
 			add_history(vars.line);
