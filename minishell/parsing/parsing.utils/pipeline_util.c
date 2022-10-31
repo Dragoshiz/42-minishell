@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 08:41:28 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 10:40:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	fill_args(t_parsing *parsing)
 			parsing->pipeline->current = parsing->pipeline->current->next;
 		i++;
 	}
-	parsing->s_vars->args[i] = NULL ;
-	
 }
 
 void	check_quotes(t_parsing *parsing, int i)
