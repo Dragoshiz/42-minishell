@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 15:49:48 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:14:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define EMPTY_SPACE 32
 
 typedef struct s_parsing {
-	t_vars					*s_vars;
+	t_vars					*vars;
 	t_linked_list			*pipeline;
 	int						line_len;
 	char					*p_start;

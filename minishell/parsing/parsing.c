@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 15:49:59 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:15:15 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ static void	split_pipeline(t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	if (*parsing->s_vars->line == PIPE)
-		parsing->s_vars->syntax_error = 1;
+	if (*parsing->vars->line == PIPE)
+		parsing->vars->syntax_error = 1;
 	while (i < parsing->line_len)
 	{
 		check_quotes(parsing, i);
-		if (parsing->q_open == NULL && parsing->s_vars->line[i] == PIPE)
+		if (parsing->q_open == NULL && parsing->vars->line[i] == PIPE)
 		{
-			if (parsing->s_vars->line[i + 1] == PIPE)
-				parsing->s_vars->syntax_error = 1;
-			parsing->p_end = &parsing->s_vars->line[i];
+			if (parsing->vars->line[i + 1] == PIPE)
+				parsing->vars->syntax_error = 1;
+			parsing->p_end = &parsing->vars->line[i];
 			add_tail(parsing->pipeline, \
 			dup_range(parsing->p_start, parsing->p_end));
 			parsing->p_start = &parsing->p_end[1];
@@ -46,13 +46,13 @@ static void	split_pipeline(t_parsing *parsing)
 		i++;
 	}
 	if (parsing->q_open != NULL)
-		parsing->s_vars->syntax_error = 2;
+		parsing->vars->syntax_error = 2;
 }
 
 // Initialize parsing struct
 static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 {
-	parsing->s_vars = vars;
+	parsing->vars = vars;
 	parsing->line_len = ft_strlen(vars->line);
 	parsing->line_end = &vars->line[parsing->line_len];
 	parsing->p_start = vars->line;
@@ -64,9 +64,9 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 // displays error message. 1:near unexpected token 2:unclosed quote
 static void	syntax_errors(t_parsing *parsing)
 {
-	if (parsing->s_vars->syntax_error == 1)
+	if (parsing->vars->syntax_error == 1)
 		printf("minish: syntax error near unexpected token '|' \n");
-	if (parsing->s_vars->syntax_error == 2)
+	if (parsing->vars->syntax_error == 2)
 		printf("minish: syntax error unclosed quote \n");
 }
 
@@ -91,16 +91,12 @@ void	parsing(t_vars *vars)
 	initialize_parsing(&parsing, vars);
 	initialize_pipeline(&parsing);
 	split_pipeline(&parsing);
-	printf("pipeline: %p \n", &parsing.pipeline);
-	printf("pipeline: %p \n", &parsing.pipeline->head);
-	printf("pipeline: %p \n", &parsing.pipeline->tail);
-	printf("pipeline: %p \n", &parsing.pipeline->current);
 	split_pipe(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
-	debug_print_args(parsing.s_vars->args, parsing.s_vars->num_args); // DEBUG
+	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
 	//display_linked_list(parsing.pipeline); // DEBUG
 	delete_list(parsing.pipeline);
 	syntax_errors(&parsing);
-	// if (!parsing.s_vars->syntax_error)
+	// if (!parsing.vars->syntax_error)
 	// 	delete_sub_list(parsing.pipeline); // TODO implement
 }
