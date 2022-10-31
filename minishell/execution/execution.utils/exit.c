@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:47:09 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/30 14:01:42 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 08:32:58 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../minishell.h"
+#include "../../minishell.h"
 
 // void	ft_exit(t_vars *vars)
 // {
@@ -19,6 +19,7 @@
 // 	i = 0;
 // 	while (vars->args[i])
 // 	{
+		
 // 	}
 	
 // }

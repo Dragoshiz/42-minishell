@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   searchers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/30 19:25:08 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/31 08:30:40 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,5 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 	while (start < i)
 		iov->delim[j++] = arg[start++];
 	iov->delim[j] = '\0';
-	while (arg[i] != dlm &&  )
 	return (iov->delim);
 }
