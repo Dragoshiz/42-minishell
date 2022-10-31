@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 10:17:14 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:39:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ static int	check_builtins(t_vars *vars)
 	while (builtins[i])
 	{
 		if (ft_strncmp(vars->args[0], builtins[i], len) == 0)
-			return (printf("execute builtin: %s \n", builtins[i]));
+		{
+			ft_builtins(vars, i);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -92,6 +95,7 @@ int	main(int argc, char *argv[], char *env[])
 	vars.env_sh = NULL;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
 	ft_cpy_env(&vars, env);
+	ft_init_exc(&iov);
 	while (1)
 	{
 		vars.line = readline("minish >");

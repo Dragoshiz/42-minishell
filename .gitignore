@@ -11,3 +11,4 @@ outfile
 minishell
 *.dSYM
 *.vscode
+.vscode/launch.json
