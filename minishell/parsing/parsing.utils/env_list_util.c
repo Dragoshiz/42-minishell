@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 10:28:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:17:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	display_linked_list(t_linked_list *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("lst[#]: $%s$\n", current->data); // DEBUG remove $ for production
+		printf("lst[#]: $%p$\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }

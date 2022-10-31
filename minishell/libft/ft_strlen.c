@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 11:00:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/27 13:38:17 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/10/30 17:35:00 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ size_t	ft_strlen(const char *str)
 	size_t	n;
 
 	n = 0;
+	if (!str)
+		return (n);
 	while (str[n] != '\0')
 		n++;
 	return (n);
