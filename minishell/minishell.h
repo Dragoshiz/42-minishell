@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 10:15:36 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:44:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_vars{
 	t_linked_list	*env_list; // working env list
 }t_vars;
 
-# include "execution/execution.h"
+# include "execution/execution.h" // TODO before submitting move this up and integrate other header files into this one
 # include "parsing/parsing.h"
 # include "builtins/builtins.h"
 
