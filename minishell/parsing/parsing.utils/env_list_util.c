@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 10:26:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:13:45 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	add_tail(t_linked_list *list, void *data)
 	node = calloc(1, sizeof(t_node));
 	node->data = data;
 	node->next = NULL;
+	node->token_list = NULL;
 	if (list->head == NULL)
 		list->head = node;
 	else
@@ -69,14 +70,14 @@ int	count_linked_list(t_linked_list *list)
 }
 
 // DEBUG prints the list
-void	display_linked_list(t_linked_list *list)
+void	display_token_list(t_token_list *list)
 {
-	t_node	*current;
+	t_token	*current;
 
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("lst[#]: $%p$\n", current->data); // DEBUG remove $ for production
+		printf("token[#]: $%s$\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }

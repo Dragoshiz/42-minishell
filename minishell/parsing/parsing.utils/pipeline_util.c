@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 17:29:38 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 10:37:02 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	initialize_pipeline(t_parsing *parsing)
 {
 	parsing->pipeline = NULL;
-	parsing->pipeline = (t_linked_list *) malloc(sizeof(t_linked_list));
+	parsing->pipeline = calloc(1, sizeof(t_linked_list));
 	initialize_list(parsing->pipeline);
 }
 
@@ -26,8 +26,7 @@ void	fill_args(t_parsing *parsing)
 
 	parsing->pipeline->current = parsing->pipeline->head;
 	parsing->vars->num_args = count_linked_list(parsing->pipeline);
-	parsing->vars->args = malloc(sizeof(char *) \
-	* parsing->vars->num_args + 1);
+	parsing->vars->args = calloc((parsing->vars->num_args + 1), sizeof(char *));
 	i = 0;
 	while (i < parsing->vars->num_args)
 	{

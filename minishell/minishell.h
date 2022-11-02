@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 10:24:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:34:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,23 @@
 # include <signal.h>
 # include "libft/libft.h"
 
-// typedef struct s_node {
-// 	void			*data;
-// 	struct s_node	*next;
-// }	t_node;
+typedef struct s_token {
+	void			*data;
+	void			*type;
+	int				pipe_nbr;
+	struct s_token	*next;
+}	t_token;
 
-// typedef struct s_linkedList {
-// 	t_node	*head;
-// 	t_node	*tail;
-// 	t_node	*current;
-// }	t_linked_ist;
+typedef struct s_token_list {
+	t_token	*head;
+	t_token	*tail;
+	t_token	*current;
+}	t_token_list;
 
 typedef struct s_node {
-	void					*data;
-	void					*type;
-	struct s_node			*next;
+	void				*data;
+	void				*token_list;
+	struct s_node		*next;
 }	t_node;
 
 typedef struct s_linked_list {
@@ -67,7 +69,7 @@ typedef struct s_vars{
 	int				syntax_error;
 	int				exit_status;
 	t_linked_list	*env_list; // working env list
-}t_vars;
+}	t_vars;
 
 # include "execution/execution.h" // TODO before submitting move this up and integrate other header files into this one
 # include "parsing/parsing.h"

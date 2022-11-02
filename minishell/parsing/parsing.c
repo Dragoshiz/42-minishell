@@ -6,19 +6,52 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 17:28:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:16:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	split_pipe(t_parsing *parsing)
+static void	split_tokens(t_parsing *parsing)
 {
-	// int	i;
+	int		i;
+	int		j;
+	char	*str;
+	int		len;
+	t_node	*current;
 
-	// i = 0;
-	initialize_line(parsing);
-	
+	current = parsing->pipeline->head;
+	j = 0;
+	while (current)
+	{
+		str = current->data;
+		len = ft_strlen(str);
+		parsing->p_start = str;
+		parsing->p_end = &str[len];
+		parsing->line_end = &str[len];
+		parsing->q_open = NULL;
+		parsing->quote = '\0';
+		i = 0;
+		while(str[i])
+		{
+			check_token_quotes(parsing, str, i);
+			if (parsing->q_open == NULL && !is_whitespace_char(str[i]) && is_whitespace_char(str[i + 1]))
+			{
+				parsing->p_end = &str[i + 1];
+				add_token(parsing->token_list, dup_range(parsing->p_start, parsing->p_end));
+				parsing->p_start = &parsing->p_end[1];
+			}
+			if (str[i + 1] == '\0')
+				add_token(parsing->token_list, dup_range(parsing->p_start, parsing->line_end));
+			i++;
+		}
+		if (parsing->q_open != NULL)
+			parsing->vars->syntax_error = 2;
+		// printf("TOKEN-STR %d: %s\n", i, str);
+		current = current->next;
+		i = 0;
+		j++;
+	}
 }
 
 static void	split_pipeline(t_parsing *parsing)
@@ -91,10 +124,11 @@ void	parsing(t_vars *vars)
 	initialize_parsing(&parsing, vars);
 	initialize_pipeline(&parsing);
 	split_pipeline(&parsing);
-	split_pipe(&parsing);
+	initialize_token_list(&parsing);
+	split_tokens(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
-	//display_linked_list(parsing.pipeline); // DEBUG
+	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
 	syntax_errors(&parsing);
 	// if (!parsing.vars->syntax_error)
