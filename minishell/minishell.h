@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 17:34:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:57:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_token_list {
 
 typedef struct s_node {
 	void				*data;
-	void				*token_list;
 	struct s_node		*next;
 }	t_node;
 
@@ -70,6 +69,11 @@ typedef struct s_vars{
 	int				exit_status;
 	t_linked_list	*env_list; // working env list
 }	t_vars;
+
+// BUILTINS
+
+void	env_list_create(t_vars *vars);
+void	ft_env(t_vars *vars);
 
 # include "execution/execution.h" // TODO before submitting move this up and integrate other header files into this one
 # include "parsing/parsing.h"

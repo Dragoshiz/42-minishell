@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 10:28:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:41:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_cpy_env(t_vars *vars, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	vars->env_sh = malloc(sizeof(char *) * (i + 1));
+	vars->env_sh = ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (env[i])
 	{
@@ -30,6 +30,7 @@ void	ft_cpy_env(t_vars *vars, char **env)
 		i++;
 	}
 	vars->env_sh[i] = NULL;
+	vars->num_env_sh = i;
 }
 
 //function that checks for whitespace characters
@@ -96,10 +97,9 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
-	//env_list_create(&vars);
-	vars.env_sh = NULL;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
 	ft_cpy_env(&vars, env);
+	env_list_create(&vars);
 	// ft_init_exc(&iov);
 	while (1)
 	{

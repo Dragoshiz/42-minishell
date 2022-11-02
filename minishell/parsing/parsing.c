@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 20:11:20 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:04:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void	split_tokens(t_parsing *parsing)
 			if (parsing->q_open == NULL && !is_whitespace_char(str[i]) && is_whitespace_char(str[i + 1]))
 			{
 				parsing->p_end = &str[i + 1];
-				add_token(parsing->token_list, dup_range(parsing->p_start, parsing->p_end));
+				add_token(parsing, dup_range(parsing->p_start, parsing->p_end));
 				parsing->p_start = &parsing->p_end[1];
 			}
 			if (str[i + 1] == '\0' && !is_whitespace_char(str[i]))
-				add_token(parsing->token_list, dup_range(parsing->p_start, parsing->line_end));
+				add_token(parsing, dup_range(parsing->p_start, parsing->line_end));
 			i++;
 		}
 		if (parsing->q_open != NULL)
@@ -51,6 +51,7 @@ static void	split_tokens(t_parsing *parsing)
 		current = current->next;
 		i = 0;
 		j++;
+		parsing->num_pipes = j;
 	}
 }
 
@@ -89,6 +90,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->p_start = vars->line;
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
+	parsing->num_pipes = 0;
 	parsing->quote = '\0';
 }
 

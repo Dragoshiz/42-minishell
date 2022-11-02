@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 19:51:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:01:55 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ typedef struct s_parsing {
 	char			*line_end;
 	char			*q_open;
 	char			quote;
+	int				num_pipes;
 }	t_parsing;
 
 void	parsing(t_vars *vars);
 
 // TOKEN UTILITIES
 
-void	add_token(t_token_list *list, void *data);
+void	add_token(t_parsing *parsing, void *data);
 int		is_whitespace_char(char c);
-char	*dup_range_token(char *p_start, char *p_end);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	display_token_list(t_token_list *list); // DEBUG

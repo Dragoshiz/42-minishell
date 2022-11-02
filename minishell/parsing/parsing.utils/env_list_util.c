@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 19:40:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:57:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	add_tail(t_linked_list *list, void *data)
 	node = calloc(1, sizeof(t_node));
 	node->data = data;
 	node->next = NULL;
-	node->token_list = NULL;
 	if (list->head == NULL)
 		list->head = node;
 	else
