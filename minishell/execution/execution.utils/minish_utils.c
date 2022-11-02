@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/30 17:33:58 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:34:02 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,10 @@ void	ft_dup2nclose(int fd, int std)
 {
 	dup2(fd, std);
 	close(fd);
+}
+
+void	ft_executable(t_vars *vars, t_iovars *iov)
+{
+	vars->call_minish += 1;
+	ft_execution(vars, iov);
 }

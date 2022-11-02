@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.C                                       :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 17:36:51 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 20:08:20 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 10:36:21 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	ft_get_path(t_vars *vars, char *env[])
 //writes when an error happens
 void	ft_errmsg(t_vars *vars, int i)
 {
-	write(2, "minishell :", 11);
+	write(2, "minishell: ", 11);
 	write(2, vars->cmds[0], ft_strlen(vars->cmds[0]));
-	write(2, " :", 2);
+	write(2, ": ", 2);
 	if (i == 1)
 		perror("");
 	else

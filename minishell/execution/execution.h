@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 09:45:17 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:05:48 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ typedef struct s_iovars
 void	ft_exec_cmd(t_vars *vars, t_iovars *iov);
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds);
 void	ft_get_path(t_vars *vars, char *env[]);
-void	execution(t_vars *vars, t_iovars *iov);
+void	ft_start_exec(t_vars *vars, t_iovars *iov);
 void	ft_put_backsl(t_vars *vars);
+void	ft_execution(t_vars *vars, t_iovars *iov);
 // minish_utils.c
 void	ft_free_doublepoint(char **to_free);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
@@ -62,7 +63,16 @@ void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 
 void	ft_init_exc(t_iovars *iov);
-void	ft_builtins(t_vars *vars, int i);
+void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
 void	ft_built_env(t_vars *vars);
 void	ft_built_pwd(void);
+void	ft_executable(t_vars *vars, t_iovars *iov);
+
+// other
+int		is_whitespace(char *line);
+void	ft_cpy_env(t_vars *vars, char **env);
+void	ft_init_vars(t_vars *vars);
+int		check_builtins(t_vars *vars, t_iovars *iov);
+void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
+
 #endif

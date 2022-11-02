@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 17:40:19 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:36:22 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,32 @@ void	ft_init_exc(t_iovars *iov)
 	iov->tmpout = 0;
 	iov->fdin = 0;
 	iov->fdout = 0;
-	
 }
 
-void	execution(t_vars *vars, t_iovars *iov)
+void	ft_start_exec(t_vars *vars, t_iovars *iov)
 {
 	ft_get_path(vars, vars->env_sh);
 	ft_set_stdin(iov);
 	ft_exec_cmd(vars, iov);
+}
+
+void	ft_execution(t_vars *vars, t_iovars *iov)
+{
+	while (1)
+	{
+		vars->line = readline("minish >");
+		if (!vars->line)
+			break ;
+		if (*vars->line && vars->line && !is_whitespace(vars->line))
+		{
+			add_history(vars->line);
+			ft_init_vars(vars);
+			parsing(vars);
+			if (!vars->syntax_error && !check_builtins(vars, iov))
+				ft_start_exec(vars, iov);
+			//delete_list(vars->env_list);
+		}
+		if (vars->line)
+			free(vars->line);
+	}
 }

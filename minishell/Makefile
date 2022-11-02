@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = cc
-# TODO remember to use the CFLAGS at the end!!
+
 CFLAGS = -Wall -Wextra -Werror -g
 
 RM = rm -f
@@ -39,10 +39,6 @@ main.c\
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
-
-# $(NAME): $(OBJS)
-# 		make -C libft
-# 		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
 
 $(NAME): $(OBJS)
 		make -C libft
