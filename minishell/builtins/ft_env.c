@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 20:25:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:51:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	env_list_create(t_vars *vars) // TODO free env_sh linkedList
 
 	// TODO check if env is valid and has content
 	vars->env_list = NULL;
-	vars->env_list = calloc(1, sizeof(t_linked_list));
+	vars->env_list = ft_calloc(1, sizeof(t_linked_list));
 	initialize_list(vars->env_list);
 	i = 0;
 	while (i < vars->num_env_sh)

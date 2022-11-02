@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 20:24:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:51:33 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	initialize_pipeline(t_parsing *parsing)
 {
 	parsing->pipeline = NULL;
-	parsing->pipeline = calloc(1, sizeof(t_linked_list));
+	parsing->pipeline = ft_calloc(1, sizeof(t_linked_list));
 	initialize_list(parsing->pipeline);
 }
 

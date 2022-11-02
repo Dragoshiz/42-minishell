@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 21:01:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 22:14:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	display_token_list(t_token_list *list); // DEBUG
+void	delete_token_list(t_token_list *list);
+void	expand_tokens(t_parsing *parsing);
 
 // PIPELINE UTILITIES
 

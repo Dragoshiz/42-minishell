@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 20:57:50 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 22:29:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "libft/libft.h"
 
 typedef struct s_token {
-	void			*data;
+	char			*data;
 	void			*type;
 	int				pipe_nbr;
 	struct s_token	*next;

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 20:57:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:51:55 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	add_head(t_linked_list *list, void *data)
 {
 	t_node	*node;
 
-	node = calloc(1, sizeof(t_node));
+	node = ft_calloc(1, sizeof(t_node));
 	node->data = data;
 	if (list->head == NULL)
 	{
@@ -42,7 +42,7 @@ void	add_tail(t_linked_list *list, void *data)
 {
 	t_node	*node;
 
-	node = calloc(1, sizeof(t_node));
+	node = ft_calloc(1, sizeof(t_node));
 	node->data = data;
 	node->next = NULL;
 	if (list->head == NULL)
