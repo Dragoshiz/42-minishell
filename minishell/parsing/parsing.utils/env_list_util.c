@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 19:13:45 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:40:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int	count_linked_list(t_linked_list *list)
 }
 
 // DEBUG prints the list
-void	display_token_list(t_token_list *list)
+void	display_linked_list(t_linked_list *list)
 {
-	t_token	*current;
+	t_node	*current;
 
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("token[#]: $%s$\n", current->data); // DEBUG remove $ for production
+		printf("%s\n", current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }

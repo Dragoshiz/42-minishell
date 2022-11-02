@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 17:53:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:42:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void	env_list_create(t_vars *vars) // TODO free env_sh linkedList
 // prints the ENV List
 void	ft_env(t_vars *vars)
 {
-	(void)vars;
+	display_linked_list(vars->env_list);
 }
