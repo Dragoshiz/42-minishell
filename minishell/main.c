@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 17:23:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 10:28:55 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,33 @@ void	ft_init_vars(t_vars *vars)
 }
 
 // TODO checks first argument against list of builtins and returns >0 if true
-static int	check_builtins(t_vars *vars)
-{
-	int			i;
-	int			len;
-	const char	*builtins[8];
+// static int	check_builtins(t_vars *vars)
+// {
+// 	int			i;
+// 	int			len;
+// 	const char	*builtins[8];
 
-	builtins[0] = "echo\0";
-	builtins[1] = "cd\0";
-	builtins[2] = "pwd\0";
-	builtins[3] = "export\0";
-	builtins[4] = "unset\0";
-	builtins[5] = "env\0";
-	builtins[6] = "exit\0";
-	builtins[7] = NULL;
-	i = 0;
-	len = ft_strlen(vars->args[0]);
-	while (builtins[i])
-	{
-		if (ft_strncmp(vars->args[0], builtins[i], len) == 0)
-		{
-			ft_builtins(vars, i);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+// 	builtins[0] = "echo\0";
+// 	builtins[1] = "cd\0";
+// 	builtins[2] = "pwd\0";
+// 	builtins[3] = "export\0";
+// 	builtins[4] = "unset\0";
+// 	builtins[5] = "env\0";
+// 	builtins[6] = "exit\0";
+// 	builtins[7] = NULL;
+// 	i = 0;
+// 	len = ft_strlen(vars->args[0]);
+// 	while (builtins[i])
+// 	{
+// 		if (ft_strncmp(vars->args[0], builtins[i], len) == 0)
+// 		{
+// 			ft_builtins(vars, i);
+// 			return (1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 void	ft_ctrl_c(int sig)
 {
@@ -92,7 +92,7 @@ void	ft_ctrl_c(int sig)
 int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
-	t_iovars	iov;
+	// t_iovars	iov;
 
 	(void)argc;
 	(void)argv;
@@ -100,11 +100,11 @@ int	main(int argc, char *argv[], char *env[])
 	vars.env_sh = NULL;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
 	ft_cpy_env(&vars, env);
-	ft_init_exc(&iov);
+	// ft_init_exc(&iov);
 	while (1)
 	{
 		vars.line = readline("minish >");
-		signal(SIGINT,ft_ctrl_c);
+		// signal(SIGINT,ft_ctrl_c);
 		if (!vars.line)
 			break ;
 		if (*vars.line && vars.line && !is_whitespace(vars.line))
@@ -112,8 +112,8 @@ int	main(int argc, char *argv[], char *env[])
 			add_history(vars.line);
 			ft_init_vars(&vars);
 			parsing(&vars);
-			if (!vars.syntax_error && !check_builtins(&vars))
-				execution(&vars, &iov);
+			// if (!vars.syntax_error && !check_builtins(&vars))
+			// 	execution(&vars, &iov);
 			//delete_list(vars.env_list);
 		}
 		if (vars.line)

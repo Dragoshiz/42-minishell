@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/31 17:27:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 10:24:40 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_node {
 	void					*data;
 	void					*type;
 	struct s_node			*next;
-	struct s_linked_list	*sublist;
 }	t_node;
 
 typedef struct s_linked_list {
