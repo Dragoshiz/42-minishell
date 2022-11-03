@@ -6,11 +6,33 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 20:33:53 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:16:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	token_trim_quotes(t_parsing *parsing)
+{
+	t_token		*current;
+	char		*p;
+	char		d_quote;
+	char		s_quote;
+
+	d_quote = DQUOTE;
+	s_quote = SQUOTE;
+	current = parsing->token_list->head;
+	while (current)
+	{
+		if (current->data[0] == d_quote || current->data[0] == s_quote)
+		{
+			p = ft_substr(current->data, 1, (ft_strlen(current->data) - 2));
+			free (current->data);
+			current->data = p;
+		}
+		current = current->next;
+	}
+}
 
 void	token_trim_white(t_parsing *parsing)
 {
@@ -174,6 +196,7 @@ void	parsing(t_vars *vars)
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
 	expand_tokens(&parsing);
 	token_trim_white(&parsing);
+	token_trim_quotes(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults
