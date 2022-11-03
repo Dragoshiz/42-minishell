@@ -6,19 +6,81 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 10:41:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 10:49:44 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	split_pipe(t_parsing *parsing)
+// Cleans Tokens from Whitespace and expands Variables
+void	expand_tokens(t_parsing *parsing)
 {
-	// int	i;
+	int		i;
+	int		len;
+	t_token	*current;
+	char	*var;
+	int		var_len;
+	int		quote_nbr;
 
-	// i = 0;
-	initialize_line(parsing);
-	
+	current = parsing->token_list->head;
+	while (current != NULL)
+	{
+		i = 0;
+		quote_nbr = 0;
+		len = ft_strlen(current->data);
+		while (current->data[i])
+		{
+			if (current->data[i] == DQUOTE && quote_nbr == 0)
+				quote_nbr++;
+			if (current->data[i] == '$' && quote_nbr < 2)
+				// TODO Here 
+		}
+		printf("token[pipe#%d]: $%s$\n", current->pipe_nbr, current->data); // DEBUG remove $ for production
+		current = current->next;
+	}
+}
+
+static void	split_tokens(t_parsing *parsing)
+{
+	int		i;
+	int		j;
+	char	*str;
+	int		len;
+	t_node	*current;
+
+	current = parsing->pipeline->head;
+	j = 0;
+	while (current)
+	{
+		str = current->data;
+		len = ft_strlen(str);
+		parsing->p_start = str;
+		parsing->p_end = &str[len];
+		parsing->line_end = &str[len];
+		parsing->q_open = NULL;
+		parsing->quote = '\0';
+		i = 0;
+		while(str[i])
+		{
+			check_token_quotes(parsing, str, i);
+			if (parsing->q_open == NULL && !is_whitespace_char(str[i]) && is_whitespace_char(str[i + 1]))
+			{
+				parsing->p_end = &str[i + 1];
+				add_token(parsing, dup_range(parsing->p_start, parsing->p_end));
+				parsing->p_start = &parsing->p_end[1];
+			}
+			if (str[i + 1] == '\0' && !is_whitespace_char(str[i]))
+				add_token(parsing, dup_range(parsing->p_start, parsing->line_end));
+			i++;
+		}
+		if (parsing->q_open != NULL)
+			parsing->vars->syntax_error = 2;
+		// printf("TOKEN-STR %d: %s\n", i, str);
+		current = current->next;
+		i = 0;
+		j++;
+		parsing->num_pipes = j;
+	}
 }
 
 static void	split_pipeline(t_parsing *parsing)
@@ -36,13 +98,11 @@ static void	split_pipeline(t_parsing *parsing)
 			if (parsing->vars->line[i + 1] == PIPE)
 				parsing->vars->syntax_error = 1;
 			parsing->p_end = &parsing->vars->line[i];
-			add_tail(parsing->pipeline, \
-			dup_range(parsing->p_start, parsing->p_end));
+			add_tail(parsing->pipeline, dup_range(parsing->p_start, parsing->p_end));
 			parsing->p_start = &parsing->p_end[1];
 		}
 		if (i + 1 == parsing->line_len)
-			add_tail(parsing->pipeline, \
-			dup_range(parsing->p_start, parsing->line_end));
+			add_tail(parsing->pipeline, dup_range(parsing->p_start, parsing->line_end));
 		i++;
 	}
 	if (parsing->q_open != NULL)
@@ -58,6 +118,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->p_start = vars->line;
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
+	parsing->num_pipes = 0;
 	parsing->quote = '\0';
 }
 
@@ -91,11 +152,14 @@ void	parsing(t_vars *vars)
 	initialize_parsing(&parsing, vars);
 	initialize_pipeline(&parsing);
 	split_pipeline(&parsing);
-	split_pipe(&parsing);
+	initialize_token_list(&parsing);
+	split_tokens(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
-	//display_linked_list(parsing.pipeline); // DEBUG
+	expand_tokens(&parsing);
+	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
+	//delete_token_list(parsing.token_list); // TODO Segfaults
 	syntax_errors(&parsing);
 	ft_exec_file(vars);
 	// if (!parsing.vars->syntax_error)
