@@ -6,42 +6,40 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 11:39:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:46:31 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// Cleans Tokens from Whitespace and expands Variables
-// void	expand_tokens(t_parsing *parsing)
-// {
-// 	int		i;
-// 	int		len;
-// 	t_token	*current;
-// 	char	*var;
-// 	int		var_len;
-// 	int		status;
-// 	char	quote;
+// expands variables in tokens
+void	expand_tokens(t_parsing *parsing)
+{
+	int		i;
+	t_token	*current;
+	int		status;
+	char	quote;
 
-// 	current = parsing->token_list->head;
-// 	while (current != NULL)
-// 	{
-// 		i = 0;
-// 		status = 0;
-// 		quote = '\0';
-// 		len = ft_strlen(current->data);
-// 		while (current->data[i])
-// 		{
-// 			check_expansion_quotes(&quote, &status, current->data[i]);
-// 			if (quote == SQUOTE && status != 0 && current->data[i] == DOLLAR && current->data[i + 1] != )
-// 				// TODO Expand string
-// 			i++;
-// 			len = i;
-// 		}
-// 		printf("token[pipe#%d]: $%s$\n", current->pipe_nbr, current->data); // DEBUG remove $ for production
-// 		current = current->next;
-// 	}
-// }
+	current = parsing->token_list->head;
+	while (current != NULL)
+	{
+		i = 0;
+		status = 0;
+		quote = '\0';
+		while (current->data[i])
+		{
+			check_expansion_quotes(&quote, &status, current->data[i]);
+			if (status == 0 && current->data[i] == DOLLAR && is_variable_char(current->data[i + 1]))
+			{
+				current->data = insert_expanded_string(parsing->vars->env_list, current->data, i);
+				// printf("\nexpanded token: %s\n", current->data); // DEBUG remove $ for production
+				break;
+			}
+			i++;
+		}
+		current = current->next;
+	}
+}
 
 void	split_tokens(t_parsing *parsing)
 {
@@ -159,7 +157,7 @@ void	parsing(t_vars *vars)
 	split_tokens(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
-	// expand_tokens(&parsing);
+	expand_tokens(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults

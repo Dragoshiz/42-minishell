@@ -6,25 +6,64 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 11:13:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:04:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// void	expand_var()
+char	*insert_expanded_string(t_linked_list *env_list, void *data, int index)
+{
+	char	*str;
+	t_node	*current;
+	int		i;
+	int		var_name_len;
+	char	*var_name;
+	char	*var_value;
+	
 
-// void	check_expansion_quotes(char *quote, int *status, char c)
-// {
-// 	if ((c == SQUOTE || \
-// 	c == DQUOTE) && (status == NULL))
-// 	{
-// 		status = 1;
-// 		quote = c;
-// 	}
-// 	else if (quote == c)
-// 		status = 0;
-// }
+	i = index + 1; // + 1 to pass $ sign
+	current = env_list->head;
+	str = ft_strdup(data);
+	var_name_len = 0;
+	var_value = NULL;
+	while (str[i]) // get variable name length and set null character 
+	{
+		if (!is_variable_char(str[i]))
+		{
+			str[i] = '\0';
+			break;
+		}
+		var_name_len++;
+		i++;
+	}
+	var_name = ft_strdup(&str[index + 1]);
+	free (str);
+	while (current)
+	{
+		if (ft_strncmp(current->data, var_name, var_name_len) == 0)
+		{
+			var_value = ft_strdup(&current->data[var_name_len + 1]);
+			break;
+		}
+		current = current->next;
+	}
+	
+	return (var_value);
+}
+
+void	check_expansion_quotes(char *quote, int *status, char c)
+{
+	if (c == DQUOTE && (*status == 0))
+		*quote = c;
+	if (c == SQUOTE && (*status == 0) && *quote != DQUOTE)
+	{
+		*status = 1;
+		*quote = c;
+	}
+	else if (*quote == c)
+		*status = 0;
+}
 
 void	check_token_quotes(t_parsing *parsing, char *str, int i)
 {
@@ -42,6 +81,14 @@ void	check_token_quotes(t_parsing *parsing, char *str, int i)
 int	is_whitespace_char(char c)
 {
 	if (c != 32 && !(c >= 9 && c <= 13))
+		return (0);
+	return (1);
+}
+
+//function that checks for whitespace characters
+int	is_variable_char(char c)
+{
+	if (c != 95 && !(c >= 48 && c <= 57) && !(c >= 65 && c <= 90) && !(c >= 97 && c <= 122))
 		return (0);
 	return (1);
 }
