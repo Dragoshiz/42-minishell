@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = cc
-#remember to use the CFLAGS at the end!!
+
 CFLAGS = -Wall -Wextra -Werror -g
 
 RM = rm -f
@@ -27,6 +27,7 @@ execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
 execution/execution.utils/searchers.c\
 execution/execution.utils/exit.c\
+execution/execution.utils/exec_file.c\
 execution/execution.c\
 parsing/parsing.utils/env_list_util.c\
 parsing/parsing.utils/line_util.c\
@@ -42,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		make -C libft
-		$(CC) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -I ~/goinfre/.brew/opt/readline/include/ -L ~/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

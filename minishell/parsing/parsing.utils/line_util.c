@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:54:48 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/30 17:45:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:51:59 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Initialize parsing struct
 void	initialize_line(t_parsing *parsing)
 {
-	parsing->p_start = parsing->s_vars->line;
+	parsing->p_start = parsing->vars->line;
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
 	parsing->quote = '\0';
@@ -31,7 +31,7 @@ char	*dup_range(char *p_start, char *p_end)
 	len = 0;
 	while (&p_start[len] != p_end)
 		len++;
-	p = malloc(sizeof(char) * len + 1);
+	p = ft_calloc((len + 1), sizeof(char));
 	if (p == NULL)
 		return (NULL);
 	i = 0;
