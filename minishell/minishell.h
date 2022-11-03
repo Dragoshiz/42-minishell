@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 20:51:41 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:33:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 typedef struct s_token {
 	char			*data;
-	void			*type;
+	int				type;
 	int				pipe_nbr;
 	struct s_token	*next;
 }	t_token;

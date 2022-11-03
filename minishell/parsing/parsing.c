@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 21:16:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:34:00 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	token_trim_quotes(t_parsing *parsing)
 	{
 		if (current->data[0] == d_quote || current->data[0] == s_quote)
 		{
+			current->type = 1;
 			p = ft_substr(current->data, 1, (ft_strlen(current->data) - 2));
 			free (current->data);
 			current->data = p;
