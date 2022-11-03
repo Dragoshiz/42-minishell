@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 14:48:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:49:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,18 +163,21 @@ void	ft_exec_file(t_parsing *parsing);
 
 void	parsing(t_vars *vars);
 
-// TOKEN UTILITIES
+// EXPANSION UTILITIES
 
 char	*insert_expanded_string(t_linked_list *env_list, void *data, int i);
+void	check_expansion_quotes(char *quote, int *status, char c);
+void	expand_tokens(t_parsing *parsing);
+int		is_variable_char(char c);
+
+// TOKEN UTILITIES
+
 void	add_token(t_parsing *parsing, void *data);
 int		is_whitespace_char(char c);
-int		is_variable_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
-void	check_expansion_quotes(char *quote, int *status, char c);
 void	display_token_list(t_token_list *list); // DEBUG
 void	delete_token_list(t_token_list *list);
-void	expand_tokens(t_parsing *parsing);
 void	split_tokens(t_parsing *parsing);
 
 // PIPELINE UTILITIES
