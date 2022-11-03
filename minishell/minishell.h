@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 10:49:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:04:31 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ typedef struct s_vars{
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
 
-# include "execution/execution.h" // TODO before submitting move this up and integrate other header files into this one
 # include "parsing/parsing.h"
+# include "execution/execution.h" // TODO before submitting move this up and integrate other header files into this one
 # include "builtins/builtins.h"
 
 #endif

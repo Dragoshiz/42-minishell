@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 10:39:04 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:01:11 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_H
 # define MAX_PATH_LEN 256
 
+# include "../parsing/parsing.h"
 
 //iov stand for Input Output Variables
 typedef struct s_iovars
@@ -74,6 +75,6 @@ void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_init_vars(t_vars *vars);
 int		check_builtins(t_vars *vars, t_iovars *iov);
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
-void	ft_exec_file(t_vars *vars);
+void	ft_exec_file(t_parsing *parsing);
 
 #endif
