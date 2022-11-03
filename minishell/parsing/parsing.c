@@ -6,39 +6,42 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 22:49:39 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:13:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // Cleans Tokens from Whitespace and expands Variables
-void	expand_tokens(t_parsing *parsing)
-{
-	int		i;
-	int		len;
-	t_token	*current;
-	char	*var;
-	int		var_len;
-	int		quote_nbr;
+// void	expand_tokens(t_parsing *parsing)
+// {
+// 	int		i;
+// 	int		len;
+// 	t_token	*current;
+// 	char	*var;
+// 	int		var_len;
+// 	int		status;
+// 	char	quote;
 
-	current = parsing->token_list->head;
-	while (current != NULL)
-	{
-		i = 0;
-		quote_nbr = 0;
-		len = ft_strlen(current->data);
-		while (current->data[i])
-		{
-			if (current->data[i] == DQUOTE && quote_nbr == 0)
-				quote_nbr++;
-			if (current->data[i] == '$' && quote_nbr < 2)
-				// TODO Here 
-		}
-		printf("token[pipe#%d]: $%s$\n", current->pipe_nbr, current->data); // DEBUG remove $ for production
-		current = current->next;
-	}
-}
+// 	current = parsing->token_list->head;
+// 	while (current != NULL)
+// 	{
+// 		i = 0;
+// 		status = 0;
+// 		quote = '\0';
+// 		len = ft_strlen(current->data);
+// 		while (current->data[i])
+// 		{
+// 			check_expansion_quotes(&quote, &status, current->data[i]);
+// 			if (quote == SQUOTE && status != 0 && current->data[i] == DOLLAR && current->data[i + 1] != )
+// 				// TODO Expand string
+// 			i++;
+// 			len = i;
+// 		}
+// 		printf("token[pipe#%d]: $%s$\n", current->pipe_nbr, current->data); // DEBUG remove $ for production
+// 		current = current->next;
+// 	}
+// }
 
 static void	split_tokens(t_parsing *parsing)
 {
@@ -156,7 +159,7 @@ void	parsing(t_vars *vars)
 	split_tokens(&parsing);
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
-	expand_tokens(&parsing);
+	// expand_tokens(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults

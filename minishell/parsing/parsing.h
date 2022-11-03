@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:39:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 22:14:18 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:32:28 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define SQUOTE 39
 # define DQUOTE 34
 # define EMPTY_SPACE 32
+# define DOLLAR 36
 
 typedef struct s_parsing {
 	t_vars			*vars;
@@ -39,9 +40,10 @@ void	add_token(t_parsing *parsing, void *data);
 int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
+void	check_expansion_quotes(char *quote, int *status, char c);
 void	display_token_list(t_token_list *list); // DEBUG
 void	delete_token_list(t_token_list *list);
-void	expand_tokens(t_parsing *parsing);
+ void	expand_tokens(t_parsing *parsing);
 
 // PIPELINE UTILITIES
 
