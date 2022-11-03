@@ -42,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 		make -C libft
-		$(CC) $(OBJS) -Llibft -lft -I ~/goinfre/.brew/opt/readline/include/ -L ~/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -I ~/goinfre/.brew/opt/readline/include/ -L ~/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 12:36:22 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/02 17:06:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,23 @@ void	ft_set_stdin(t_iovars *iov)
 //uses the fork function and executes
 void	ft_forknexec(t_vars *vars, t_iovars *iov)
 {
+	(void)iov;
+	(void)vars;
+	iov->cmd = ft_find_arg_path(vars, vars->cmds[0]);
+	if (!iov->cmd)
+	{
+		ft_errmsg(vars, 0);
+		return ;
+	}
 	vars->pid = fork();
 	if (vars->pid == 0)
 	{
-		iov->cmd = ft_find_arg_path(vars, vars->cmds[0]);
-		if (!iov->cmd)
-			ft_errmsg(vars, 0);
-		else
-		{
-			if (vars->hv_heredoc)
-				close(iov->hrdc_pipe[0]);
-			if (execve(iov->cmd, vars->cmds, vars->env_sh) < 0)
-				ft_errmsg(vars, 1);
-		}
+		if (vars->hv_heredoc)
+			close(iov->hrdc_pipe[0]);
+		if (execve(iov->cmd, vars->cmds, vars->env_sh) < 0)
+			ft_errmsg(vars, 1);
 	}
+	waitpid(vars->pid, NULL, 0);
 }
 
 //part2 of exec function
@@ -91,7 +94,6 @@ void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
 	ft_dup2nclose(iov->tmpin, STDIN_FILENO);
 	ft_dup2nclose(iov->tmpout, STDOUT_FILENO);
 	ft_close_pipes(vars);
-	waitpid(vars->pid, NULL, 0);
 }
 
 void	ft_init_exc(t_iovars *iov)
@@ -118,16 +120,16 @@ void	ft_execution(t_vars *vars, t_iovars *iov)
 		vars->line = readline("minish >");
 		if (!vars->line)
 			break ;
-		if (*vars->line && vars->line && !is_whitespace(vars->line))
+		if (*vars->line && !is_whitespace(vars->line))
 		{
 			add_history(vars->line);
 			ft_init_vars(vars);
 			parsing(vars);
 			if (!vars->syntax_error && !check_builtins(vars, iov))
 				ft_start_exec(vars, iov);
-			//delete_list(vars->env_list);
+			// delete_list(vars->env_list);
 		}
-		if (vars->line)
-			free(vars->line);
+		// if (vars->line)
+		free(vars->line);
 	}
 }
