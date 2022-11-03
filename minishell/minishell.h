@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 18:49:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 20:29:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int		is_variable_char(char c);
 
 // TOKEN UTILITIES
 
+void	token_trim_white(t_parsing *parsing);
 void	add_token(t_parsing *parsing, void *data);
 int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);

@@ -6,11 +6,26 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 16:46:31 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 20:33:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	token_trim_white(t_parsing *parsing)
+{
+	t_token		*current;
+	char		*p;
+
+	current = parsing->token_list->head;
+	while (current)
+	{
+		p = ft_strtrim(current->data, " ");
+		free (current->data);
+		current->data = p;
+		current = current->next;
+	}
+}
 
 // expands variables in tokens
 void	expand_tokens(t_parsing *parsing)
@@ -158,6 +173,7 @@ void	parsing(t_vars *vars)
 	fill_args(&parsing); // TODO update function to cpy from sublist
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
 	expand_tokens(&parsing);
+	token_trim_white(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults
