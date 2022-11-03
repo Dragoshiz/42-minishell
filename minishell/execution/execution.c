@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 17:06:45 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 10:43:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	ft_execution(t_vars *vars, t_iovars *iov)
 {
 	while (1)
 	{
+		(void)iov;
 		vars->line = readline("minish >");
 		if (!vars->line)
 			break ;
@@ -125,8 +126,8 @@ void	ft_execution(t_vars *vars, t_iovars *iov)
 			add_history(vars->line);
 			ft_init_vars(vars);
 			parsing(vars);
-			if (!vars->syntax_error && !check_builtins(vars, iov))
-				ft_start_exec(vars, iov);
+			// if (!vars->syntax_error && !check_builtins(vars, iov))
+				// ft_start_exec(vars, iov);
 			// delete_list(vars->env_list);
 		}
 		// if (vars->line)

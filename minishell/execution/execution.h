@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:14:09 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 12:05:48 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 10:39:04 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_init_vars(t_vars *vars);
 int		check_builtins(t_vars *vars, t_iovars *iov);
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
+void	ft_exec_file(t_vars *vars);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 18:51:51 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 10:31:33 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,12 @@ int	main(int argc, char *argv[], char *env[])
 	signal(SIGINT, ft_ctrl);
 	signal(SIGQUIT, SIG_IGN);
 	vars.call_minish = 1;
-	// signal(SIGKILL, ft_ctrl);
 	vars.env_sh = NULL;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
-	execve("/Users/dimbrea/Documents/hell",NULL,NULL);
-	perror("");
-	// ft_cpy_env(&vars, env);
-	// ft_init_exc(&iov);
-	// ft_execution(&vars, &iov);
+	// execve("/Users/dimbrea/Documents/hello",NULL,NULL);
+	// perror("");
+	ft_cpy_env(&vars, env);
+	ft_init_exc(&iov);
+	ft_execution(&vars, &iov);
 	return (0);
 }

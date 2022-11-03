@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/10/31 17:28:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:41:47 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	parsing(t_vars *vars)
 	//display_linked_list(parsing.pipeline); // DEBUG
 	delete_list(parsing.pipeline);
 	syntax_errors(&parsing);
+	ft_exec_file(vars);
 	// if (!parsing.vars->syntax_error)
 	// 	delete_sub_list(parsing.pipeline); // TODO implement
 }
