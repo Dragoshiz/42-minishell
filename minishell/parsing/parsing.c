@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 11:06:03 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:19:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,24 @@
 // 	int		len;
 // 	t_token	*current;
 // 	char	*var;
-// 	// int		var_len;
-// 	int		quote_nbr;
+// 	int		var_len;
+// 	int		status;
+// 	char	quote;
 
 // 	current = parsing->token_list->head;
 // 	while (current != NULL)
 // 	{
 // 		i = 0;
-// 		quote_nbr = 0;
+// 		status = 0;
+// 		quote = '\0';
 // 		len = ft_strlen(current->data);
 // 		while (current->data[i])
 // 		{
-// 			if (current->data[i] == DQUOTE && quote_nbr == 0)
-// 				quote_nbr++;
-// 			// if (current->data[i] == '$' && quote_nbr < 2)
-// 				// TODO Here 
+// 			check_expansion_quotes(&quote, &status, current->data[i]);
+// 			if (quote == SQUOTE && status != 0 && current->data[i] == DOLLAR && current->data[i + 1] != )
+// 				// TODO Expand string
+// 			i++;
+// 			len = i;
 // 		}
 // 		printf("token[pipe#%d]: $%s$\n", current->pipe_nbr, current->data); // DEBUG remove $ for production
 // 		current = current->next;
