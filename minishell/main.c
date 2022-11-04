@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 13:19:20 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 11:18:02 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	(void)env;
 	// (void)iov;
-	//env_list_create(&vars);
 	signal(SIGINT, ft_ctrl);
 	signal(SIGQUIT, SIG_IGN);
 	vars.call_minish = 1;
@@ -135,6 +134,7 @@ int	main(int argc, char *argv[], char *env[])
 	// execve("/Users/dimbrea/Documents/hello",NULL,NULL);
 	// perror("");
 	ft_cpy_env(&vars, env);
+	env_list_create(&vars);
 	ft_init_exc(&iov);
 	ft_execution(&vars, &iov);
 	return (0);
