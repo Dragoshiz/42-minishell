@@ -29,6 +29,7 @@ execution/execution.utils/searchers.c\
 execution/execution.utils/exit.c\
 execution/execution.utils/exec_file.c\
 execution/execution.c\
+execution/new_exec.c\
 parsing/parsing.utils/env_list_util.c\
 parsing/parsing.utils/line_util.c\
 parsing/parsing.utils/pipeline_util.c\

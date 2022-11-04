@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 11:18:23 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 13:41:00 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	split_tokens(t_parsing *parsing)
 		current = current->next;
 		i = 0;
 		j++;
-		parsing->num_pipes = j;
+		parsing->num_cmds = j;
 	}
 }
 
@@ -157,7 +157,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->p_start = vars->line;
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
-	parsing->num_pipes = 0;
+	parsing->num_cmds = 0;
 	parsing->quote = '\0';
 }
 
@@ -199,6 +199,7 @@ void	parsing(t_vars *vars)
 	token_trim_white(&parsing);
 	token_trim_quotes(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
+	printf("total cmds: %d\n", parsing.num_cmds);
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults
 	syntax_errors(&parsing);
