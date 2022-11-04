@@ -1,14 +1,2 @@
-a.out
-obj
-obj_lft
-*.o
-*.d
-*.so
-*.a
 .DS_Store
-infile
-outfile
-minishell
-*.dSYM
 *.vscode
-.vscode/launch.json
