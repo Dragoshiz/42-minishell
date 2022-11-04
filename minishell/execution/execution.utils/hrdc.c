@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:14:31 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 16:04:43 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 14:34:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_find_hrdc(t_vars *vars, t_iovars *iov)
 			if (vars->args[0][i + 1] == '<' && vars->args[0][i + 2] == ' ')
 			{
 				vars->hv_heredoc = 1;
-				ft_hrdoc(vars, iov, vars->args[0], i + 3);
+				if (!ft_hrdoc(vars, iov, vars->args[0], i + 3))
+					return ;
 			}
 		}
 		i++;

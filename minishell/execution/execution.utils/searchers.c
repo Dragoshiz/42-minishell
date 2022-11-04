@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:09:34 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 15:49:30 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 13:49:26 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i)
 		dlm = '\"';
 	while (arg[i] != dlm && arg[i])
 		i++;
+	if (!arg[i + 1])
+		return (NULL);
 	diff = i - start;
 	iov->size_delim = diff;
 	iov->delim = malloc(sizeof(char) * diff + 1);

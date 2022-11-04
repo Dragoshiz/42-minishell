@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 11:19:45 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 13:04:44 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	parsing(t_vars *vars)
 	delete_list(parsing.pipeline);
 	//delete_token_list(parsing.token_list); // TODO Segfaults
 	syntax_errors(&parsing);
-	ft_exec_file(&parsing);
+	// ft_exec_file(&parsing);
 	// if (!parsing.vars->syntax_error)
 	// 	delete_sub_list(parsing.pipeline); // TODO implement
 }

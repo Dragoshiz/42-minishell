@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 12:34:02 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:20:11 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	cmd_path = NULL;
 	while (vars->paths[i])
 	{
+		if (access(arg, F_OK) == 0)
+			return (arg);
 		cmd_path = ft_strjoin(vars->paths[i], arg);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
@@ -63,8 +65,10 @@ void	ft_count_args(t_vars *vars)
 
 void	ft_dup2nclose(int fd, int std)
 {
+	// (void)std;
 	dup2(fd, std);
 	close(fd);
+	// close(std);
 }
 
 void	ft_executable(t_vars *vars, t_iovars *iov)
