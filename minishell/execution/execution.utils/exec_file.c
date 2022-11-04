@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:12:35 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 13:06:18 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 12:12:02 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,8 @@ int	ft_exec_file(t_parsing *parsing)
 	}
 	return (0);
 }
+
+// void	ft_free_all(t_vars *vars, t_iovars *iov)
+// {
+	
+// }

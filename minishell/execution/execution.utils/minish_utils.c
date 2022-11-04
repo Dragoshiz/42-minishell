@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 16:20:11 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 12:03:57 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ void	ft_dup2nclose(int fd, int std)
 
 void	ft_executable(t_vars *vars, t_iovars *iov)
 {
-	vars->call_minish += 1;
 	ft_execution(vars, iov);
 }

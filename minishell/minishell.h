@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 11:54:13 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 13:43:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_parsing {
 	char			*line_end;
 	char			*q_open;
 	char			quote;
-	int				num_pipes;
+	int				num_cmds;
 }	t_parsing;
 
 // BUILTINS
