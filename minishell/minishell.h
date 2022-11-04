@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 21:33:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:54:13 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include "libft/libft.h"
-
 
 typedef struct s_token {
 	char			*data;
@@ -156,8 +155,7 @@ void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_init_vars(t_vars *vars);
 int		check_builtins(t_vars *vars, t_iovars *iov);
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
-void	ft_exec_file(t_parsing *parsing);
-
+int		ft_exec_file(t_parsing *parsing);
 
 // PARSING
 
