@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 12:13:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 22:10:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
 	t_iovars	iov;
+	t_parsing	parse;
 
 	(void)argc;
 	(void)argv;
@@ -134,5 +135,6 @@ int	main(int argc, char *argv[], char *env[])
 	env_list_create(&vars);
 	ft_init_exc(&iov);
 	ft_execution(&vars, &iov);
+	parsing_cleanup(&parse);
 	return (0);
 }

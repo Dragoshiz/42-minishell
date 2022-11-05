@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   new_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 14:48:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:08:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
+/*
 int	ft_get_hrdoc(t_token *data)
 {
 	
@@ -78,3 +78,4 @@ void	ft_execv2(t_parsing *parsing, t_iovars *iov)
 		
 	}
 }
+*/

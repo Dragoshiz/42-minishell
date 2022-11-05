@@ -3,37 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 13:41:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 01:19:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	token_trim_quotes(t_parsing *parsing)
+int	remove_quote_pair(char *p, char *str, int m1, int m2)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while(str[i])
+	{
+		if (i != m1 && i != m2)
+		{
+			p[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return (j);
+	// p[i] = '\0';
+}
+
+void	token_trim_quotes(t_parsing *parsing) // TODO possible leaks
 {
 	t_token		*current;
 	char		*p;
 	char		d_quote;
 	char		s_quote;
+	int			len;
+	int			m1;
+	int			m2;
+	char		quote;
+	int			i;
+	int			len_p;
 
 	d_quote = DQUOTE;
 	s_quote = SQUOTE;
 	current = parsing->token_list->head;
+	len = 0;
 	while (current)
 	{
-		if (current->data[0] == d_quote || current->data[0] == s_quote)
+		m1 = -1;
+		m2 = -1;
+		i = 0;
+		quote = '\0';
+		len_p = 0;
+		while (current->data[i])
 		{
-			current->type = 1;
-			p = ft_substr(current->data, 1, (ft_strlen(current->data) - 2));
-			free (current->data);
-			current->data = p;
+			if ((current->data[i] == d_quote || current->data[i] == s_quote) && m1 < 0)
+			{
+				quote = current->data[i];
+				m1 = i;
+			}
+			else if (current->data[i] == quote && m2 < 0)
+			{
+				len = ft_strlen(current->data);
+				p = calloc(len, sizeof(char));
+				m2 = i;
+				len_p = remove_quote_pair(p, current->data, m1, m2);
+				current->type = 1;
+				m1 = -1;
+				m2 = -1;
+				quote = '\0';
+				current->data = p;
+			}
+			i++;
 		}
+		current->data[len_p + 1] = '\0';
 		current = current->next;
 	}
 }
+
+// void	token_trim_quotes(t_parsing *parsing)
+// {
+// 	t_token		*current;
+// 	char		*p;
+// 	char		d_quote;
+// 	char		s_quote;
+// 	int			len;
+
+// 	d_quote = DQUOTE;
+// 	s_quote = SQUOTE;
+// 	current = parsing->token_list->head;
+// 	len = 0;
+// 	while (current)
+// 	{
+// 		len = ft_strlen(current->data);
+// 		if ((current->data[0] == d_quote || current->data[0] == s_quote) \
+// 		&& (current->data[len - 1] == d_quote || current->data[len - 1] == s_quote))
+// 		{
+// 			current->type = 1;
+// 			p = ft_substr(current->data, 1, len - 2);
+// 			free (current->data);
+// 			current->data = p;
+// 		}
+// 		current = current->next;
+// 	}
+// }
 
 void	token_trim_white(t_parsing *parsing)
 {
@@ -51,29 +125,44 @@ void	token_trim_white(t_parsing *parsing)
 }
 
 // expands variables in tokens
-void	expand_tokens(t_parsing *parsing)
+void	expand_tokens(t_parsing *parsing) // TODO not working
 {
 	int		i;
 	t_token	*current;
 	int		status;
 	char	quote;
+	char	*p;
+	int		check;
+	int		len;
 
 	current = parsing->token_list->head;
 	while (current != NULL)
 	{
+		check = 0;
 		i = 0;
 		status = 0;
 		quote = '\0';
-		while (current->data[i])
+		while (1)
 		{
-			check_expansion_quotes(&quote, &status, current->data[i]);
-			if (status == 0 && current->data[i] == DOLLAR && is_variable_char(current->data[i + 1]))
+			len = ft_strlen(current->data);
+			while (current->data[i])
 			{
-				current->data = insert_expanded_string(parsing->vars->env_list, current->data, i);
-				// printf("\nexpanded token: %s\n", current->data); // DEBUG remove $ for production
-				break;
+				check = 0;
+				check_expansion_quotes(&quote, &status, current->data[i]);
+				if (status == 0 && current->data[i] == DOLLAR && is_variable_char(current->data[i + 1]))
+				{
+					p = insert_expanded_string(parsing->vars->env_list, current->data, i);
+					// printf("\nexpanded token: %s\n", current->data); // DEBUG remove $ for production
+					free (current->data);
+					current->data = p;
+					check = 1;
+					break;
+				}
+				i++;
 			}
-			i++;
+			if (i == len && check == 0)
+				break;
+			i = 0;
 		}
 		current = current->next;
 	}
@@ -183,6 +272,18 @@ static void	debug_print_args(char *args[], int num_args)
 	}
 }
 
+void	parsing_cleanup(t_parsing *parsing)
+{
+	delete_list(parsing->pipeline);
+	delete_list(parsing->vars->env_list);
+	delete_token_list(parsing->token_list); // TODO Segfaults
+	if (parsing->token_list)
+		free(parsing->token_list);
+	ft_free_doublepoint(parsing->vars->args);
+	if (parsing->vars->args)
+		free(parsing->vars->args);
+}
+
 // Main function for Parsing & initial checks
 void	parsing(t_vars *vars)
 {
@@ -193,17 +294,14 @@ void	parsing(t_vars *vars)
 	split_pipeline(&parsing);
 	initialize_token_list(&parsing);
 	split_tokens(&parsing);
-	fill_args(&parsing); // TODO update function to cpy from sublist
+	fill_args(&parsing); // DEBUG
 	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
 	expand_tokens(&parsing);
 	token_trim_white(&parsing);
 	token_trim_quotes(&parsing);
+	// token_trim_quotes(&parsing);
+	// token_trim_quotes(&parsing);
 	display_token_list(parsing.token_list); // DEBUG
 	printf("total cmds: %d\n", parsing.num_cmds);
-	delete_list(parsing.pipeline);
-	//delete_token_list(parsing.token_list); // TODO Segfaults
 	syntax_errors(&parsing);
-	// ft_exec_file(&parsing);
-	// if (!parsing.vars->syntax_error)
-	// 	delete_sub_list(parsing.pipeline); // TODO implement
 }

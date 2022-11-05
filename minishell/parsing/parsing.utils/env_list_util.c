@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 21:51:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:15:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ void	delete_list(t_linked_list *list)
 		temp = list->head;
 		while (temp != NULL && temp->next != list->current)
 		{
-			free (temp->data);
+			free(temp->data);
 			temp = temp->next;
 		}
 		if (temp != NULL)
 			temp->next = list->current->next;
+		if (temp)
+			free(temp);
 	}
 	free(list->current);
 	if (list)

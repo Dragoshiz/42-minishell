@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 15:14:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 01:14:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "libft/libft.h"
+
+struct	s_parsing;
 
 typedef struct s_token {
 	char			*data;
@@ -74,8 +76,7 @@ typedef struct s_vars{
 	int				syntax_error;
 	int				exit_status;
 	int				call_minish;
-	t_linked_list	*env_list; // working env list
-}	t_vars;
+	t_linked_list	*env_list;}	t_vars;
 
 //iov stand for Input Output Variables
 typedef struct s_iovars
@@ -160,6 +161,7 @@ int		ft_exec_file(t_parsing *parsing);
 // PARSING
 
 void	parsing(t_vars *vars);
+void	parsing_cleanup(t_parsing *parsing);
 
 // EXPANSION UTILITIES
 
@@ -170,6 +172,7 @@ int		is_variable_char(char c);
 
 // TOKEN UTILITIES
 
+int		remove_quote_pair(char *p, char *str, int m1, int m2);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
 void	add_token(t_parsing *parsing, void *data);

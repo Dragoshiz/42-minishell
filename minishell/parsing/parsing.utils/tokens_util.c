@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 13:27:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 19:50:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	display_token_list(t_token_list *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("token[pipe#%d type:%d]: %s\n", current->pipe_nbr, current->type, current->data); // DEBUG remove $ for production
+		printf("token[pipe#%d type:%d]: $%s$\n", current->pipe_nbr, current->type, current->data); // DEBUG remove $ for production
 		current = current->next;
 	}
 }
@@ -89,11 +89,13 @@ void	delete_token_list(t_token_list *list)
 		temp = list->head;
 		while (temp != NULL && temp->next != list->current)
 		{
-			free (temp->data);
+			free(temp->data);
 			temp = temp->next;
 		}
 		if (temp != NULL)
 			temp->next = list->current->next;
+		if (temp)
+			free(temp);
 	}
 	free(list->current);
 	if (list)
