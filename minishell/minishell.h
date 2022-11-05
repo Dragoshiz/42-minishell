@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 22:16:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 23:07:12 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int		ft_exec_file(t_parsing *parsing);
 
 void	parsing(t_vars *vars, t_parsing *parsing);
 void	parsing_cleanup(t_parsing *parsing);
+void	empty_redirection(t_parsing *parsing);
 
 // EDGE CASES UTILS
 
