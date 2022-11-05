@@ -6,47 +6,47 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:16:46 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/29 17:50:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 16:06:34 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 //closes pipes
-void	ft_close_pipes(t_vars *vars)
-{
-	int	i;
+// void	ft_close_pipes(t_vars *vars)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < vars->num_args -1)
-	{
-		close(vars->pipefds[i][0]);
-		close(vars->pipefds[i][1]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < vars->num_args -1)
+// 	{
+// 		close(vars->pipefds[i][0]);
+// 		close(vars->pipefds[i][1]);
+// 		i++;
+// 	}
+// }
 
 //ft_creates pipes
-void	ft_create_pipes(t_vars *vars)
-{
-	int	i;
+// void	ft_create_pipes(t_vars *vars)
+// {
+// 	int	i;
 
-	i = 0;
-	if (vars->num_args != 0)
-	{
-		vars->pipefds = malloc(sizeof(int *) * vars->num_args - 1);
-		while (i < vars->num_args - 1)
-		{
-			vars->pipefds[i] = malloc(sizeof(int) * 2);
-			if (pipe(vars->pipefds[i]) < 0)
-			{
-				perror("error piping");
-				exit(2);
-			}
-			i++;
-		}
-	}
-}
+// 	i = 0;
+// 	if (vars->num_args != 0)
+// 	{
+// 		vars->pipefds = malloc(sizeof(int *) * vars->num_args - 1);
+// 		while (i < vars->num_args - 1)
+// 		{
+// 			vars->pipefds[i] = malloc(sizeof(int) * 2);
+// 			if (pipe(vars->pipefds[i]) < 0)
+// 			{
+// 				perror("error piping");
+// 				exit(2);
+// 			}
+// 			i++;
+// 		}
+// 	}
+// }
 
 //see  if it is correct
 void	ft_get_cmd(t_vars *vars, char *arg)
@@ -92,14 +92,14 @@ char	*ft_get_filename(char *arg, int i)
 	return (filename);
 }
 
-int	ft_size_rl(char *line, t_iovars *iov)
-{
-	int	i;
+// int	ft_size_rl(char *line, t_iovars *iov)
+// {
+// 	int	i;
 
-	i = 0;
-	while (line[i])
-		i++;
-	if (i < iov->size_delim)
-		return (iov->size_delim);
-	return (i);
-}
+// 	i = 0;
+// 	while (line[i])
+// 		i++;
+// 	if (i < iov->size_delim)
+// 		return (iov->size_delim);
+// 	return (i);
+// }

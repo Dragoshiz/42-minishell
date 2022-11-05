@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 13:43:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 16:39:33 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # include <signal.h>
 # include "libft/libft.h"
 
+struct	s_parsing;
+struct	s_iovars;
+
+int		g_exit;
 typedef struct s_token {
 	char			*data;
 	int				type;
@@ -62,7 +66,6 @@ typedef struct s_vars{
 	char			**args; // array of commands for the executor
 	char			**env_sh;// cpy of env variable on startup
 	char			**cmds;// array of commandse
-	int				**pipefds;// pipe file descriptors
 	char			*line;
 	pid_t			pid;
 	int				num_args;
@@ -70,7 +73,6 @@ typedef struct s_vars{
 	int				hv_infile;
 	int				hv_outfile;
 	int				hv_append;
-	int				hv_heredoc;
 	int				syntax_error;
 	int				exit_status;
 	int				call_minish;
@@ -83,12 +85,15 @@ typedef struct s_iovars
 	char	*cmd;
 	char	*delim;
 	char	*filename;
+	int		**pipefds;// pipe file descriptors
 	int		hrdc_pipe[2];
 	int		size_delim;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
 	int		fdout;
+	int		hv_heredoc;
+	t_vars	*vars;
 }t_iovars;
 
 typedef struct s_parsing {
@@ -114,20 +119,20 @@ void	ft_env(t_vars *vars);
 void	ft_exec_cmd(t_vars *vars, t_iovars *iov);
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds);
 void	ft_get_path(t_vars *vars, char *env[]);
-void	ft_start_exec(t_vars *vars, t_iovars *iov);
+void	ft_start_exec(t_vars *vars, t_iovars *iov, t_parsing *parse);
 void	ft_put_backsl(t_vars *vars);
-void	ft_execution(t_vars *vars, t_iovars *iov);
+void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse);
 // minish_utils.c
 void	ft_free_doublepoint(char **to_free);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_count_args(t_vars *vars);
 void	ft_dup2nclose(int fd, int std);
 // pipes.c
-void	ft_create_pipes(t_vars *vars);
+// void	ft_create_pipes(t_vars *vars);
 void	ft_close_pipes(t_vars *vars);
 char	*ft_get_filename(char *arg, int i);
 void	ft_get_cmd(t_vars *vars, char *arg);
-int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
+// int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
 //searchers.c
 int		ft_find_in(t_vars *vars);
 int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
@@ -135,7 +140,7 @@ void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i);
 //exec_utils.c
 void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
-int		ft_size_rl(char *line, t_iovars *iov);
+int		t_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_errmsg(t_vars *vars, int i);
 //hrdc.c
@@ -147,7 +152,7 @@ void	ft_init_exc(t_iovars *iov);
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
 void	ft_built_env(t_vars *vars);
 void	ft_built_pwd(void);
-void	ft_executable(t_vars *vars, t_iovars *iov);
+void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing);
 
 // other
 int		is_whitespace(char *line);
@@ -159,7 +164,7 @@ int		ft_exec_file(t_parsing *parsing);
 
 // PARSING
 
-void	parsing(t_vars *vars);
+void	parsing(t_parsing *parsing, t_vars *vars);
 
 // EXPANSION UTILITIES
 
@@ -201,4 +206,12 @@ void	initialize_list(t_linked_list *list);
 int		count_linked_list(t_linked_list *list);
 void	delete_list(t_linked_list *list); // TODO also delete sub-list
 
+//NEW EXEC
+void	ft_execv2(t_parsing *parse, t_iovars *iov);
+int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+int		ft_get_hrdoc(t_token *current, t_iovars *iov);
+int		ft_size_rl(char *line, int size_delim);
+char	*ft_custom_strjoin(char *s1, char *s2);
+void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
 #endif

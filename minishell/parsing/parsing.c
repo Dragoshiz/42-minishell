@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 13:41:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/04 19:15:59 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,26 +184,20 @@ static void	debug_print_args(char *args[], int num_args)
 }
 
 // Main function for Parsing & initial checks
-void	parsing(t_vars *vars)
+void	parsing(t_parsing *parsing, t_vars *vars)
 {
-	t_parsing	parsing;
-
-	initialize_parsing(&parsing, vars);
-	initialize_pipeline(&parsing);
-	split_pipeline(&parsing);
-	initialize_token_list(&parsing);
-	split_tokens(&parsing);
-	fill_args(&parsing); // TODO update function to cpy from sublist
-	debug_print_args(parsing.vars->args, parsing.vars->num_args); // DEBUG
-	expand_tokens(&parsing);
-	token_trim_white(&parsing);
-	token_trim_quotes(&parsing);
-	display_token_list(parsing.token_list); // DEBUG
-	printf("total cmds: %d\n", parsing.num_cmds);
-	delete_list(parsing.pipeline);
-	//delete_token_list(parsing.token_list); // TODO Segfaults
-	syntax_errors(&parsing);
-	// ft_exec_file(&parsing);
-	// if (!parsing.vars->syntax_error)
-	// 	delete_sub_list(parsing.pipeline); // TODO implement
+	initialize_parsing(parsing, vars);
+	initialize_pipeline(parsing);
+	split_pipeline(parsing);
+	initialize_token_list(parsing);
+	split_tokens(parsing);
+	fill_args(parsing); // TODO update function to cpy from sublist
+	debug_print_args(parsing->vars->args,parsing->vars->num_args); // DEBUG
+	expand_tokens(parsing);
+	token_trim_white(parsing);
+	token_trim_quotes(parsing);
+	display_token_list(parsing->token_list); // DEBUG
+	printf("total cmds: %d\n",parsing->num_cmds);
+	delete_list(parsing->pipeline);
+	syntax_errors(parsing);
 }

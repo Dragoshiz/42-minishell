@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 12:13:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 16:40:25 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_init_vars(t_vars *vars)
 	vars->num_env_sh = 0;
 	vars->hv_append = 0;
 	vars->hv_outfile = 0;
-	vars->hv_heredoc = 0;
 	vars->hv_infile = 0;
 	vars->syntax_error = 0;
 }
@@ -59,6 +58,7 @@ void	ft_init_vars(t_vars *vars)
 
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 {
+	(void) iov;
 	// if (i == 1)
 	// 	ft_built_cd();
 	if (i == 2)
@@ -69,8 +69,8 @@ void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 	{
 		exit(0);
 	}
-	else if (i == 7)
-		ft_executable(vars, iov);
+	// else if (i == 7)
+	// 	ft_executable(vars, iov);
 }
 
 // TODO checks first argument against list of builtins and returns >0 if true
@@ -78,7 +78,7 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 {
 	int			i;
 	int			len;
-	const char	*builtins[9];
+	const char	*builtins[10];
 
 	builtins[0] = "echo\0";
 	builtins[1] = "cd\0";
@@ -88,7 +88,8 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 	builtins[5] = "env\0";
 	builtins[6] = "exit\0";
 	builtins[7] = "./\0";
-	builtins[8] = NULL;
+	builtins[8] = "$?\0";
+	builtins[9] = NULL;
 	i = 0;
 	len = ft_strlen(vars->args[0]);
 	while (builtins[i])
@@ -119,20 +120,21 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
 	t_iovars	iov;
+	t_parsing	parsing;
 
 	(void)argc;
 	(void)argv;
-	// (void)env;
-	// (void)iov;
+	g_exit = 0;
 	signal(SIGINT, ft_ctrl);
 	signal(SIGQUIT, SIG_IGN);
 	vars.env_sh = NULL;
+	iov.vars = &vars;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
 	// execve("/Users/dimbrea/Documents/hello",NULL,NULL);
 	// perror("");
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
 	ft_init_exc(&iov);
-	ft_execution(&vars, &iov);
+	ft_start_exec(&vars, &iov, &parsing);
 	return (0);
 }
