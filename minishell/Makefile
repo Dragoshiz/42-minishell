@@ -35,6 +35,7 @@ parsing/parsing.utils/line_util.c\
 parsing/parsing.utils/pipeline_util.c\
 parsing/parsing.utils/tokens_util.c\
 parsing/parsing.utils/expansion_util.c\
+parsing/parsing.utils/edge_cases.c\
 parsing/parsing.c\
 builtins/ft_env.c\
 builtins/ft_export.c\

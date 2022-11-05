@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 21:34:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 22:23:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ static void	syntax_errors(t_parsing *parsing)
 		ft_putstr_fd("minish: syntax error near unexpected token '|' \n", 1);
 	if (parsing->vars->syntax_error == 2)
 		ft_putstr_fd("minish: syntax error unclosed quote \n", 1);
+	if (parsing->vars->syntax_error == 3)
+		ft_putstr_fd("minish: syntax error empty cmd \n", 1);
 }
 
 static void	debug_print_args(char *args[], int num_args) // DEBUG print args
@@ -287,5 +289,6 @@ void	parsing(t_vars *vars, t_parsing *parsing)
 	fill_args(parsing); // DEBUG
 	debug_print_args(parsing->vars->args, parsing->vars->num_args); // DEBUG
 	display_token_list(parsing->token_list); // DEBUG
+	edge_cases(parsing);
 	syntax_errors(parsing);
 }
