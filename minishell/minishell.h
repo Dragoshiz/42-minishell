@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 01:14:53 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 21:11:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds);
 void	ft_get_path(t_vars *vars, char *env[]);
 void	ft_start_exec(t_vars *vars, t_iovars *iov);
 void	ft_put_backsl(t_vars *vars);
-void	ft_execution(t_vars *vars, t_iovars *iov);
+void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse);
 // minish_utils.c
 void	ft_free_doublepoint(char **to_free);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
@@ -160,7 +160,7 @@ int		ft_exec_file(t_parsing *parsing);
 
 // PARSING
 
-void	parsing(t_vars *vars);
+void	parsing(t_vars *vars, t_parsing *parsing);
 void	parsing_cleanup(t_parsing *parsing);
 
 // EXPANSION UTILITIES
@@ -172,7 +172,7 @@ int		is_variable_char(char c);
 
 // TOKEN UTILITIES
 
-int		remove_quote_pair(char *p, char *str, int m1, int m2);
+void	remove_quote_pairs(char *p, int *ref, char *str);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
 void	add_token(t_parsing *parsing, void *data);

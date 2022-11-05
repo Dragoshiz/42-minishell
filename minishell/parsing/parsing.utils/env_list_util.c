@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 17:15:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 19:40:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	display_linked_list(t_linked_list *list)
 	current = list->head;
 	while (current != NULL)
 	{
-		printf("%s\n", current->data); // DEBUG remove $ for production
+		ft_putstr_fd(current->data, 1);
+		ft_putchar_fd('\n', 1);
 		current = current->next;
 	}
 }
@@ -85,27 +86,11 @@ void	delete_list(t_linked_list *list)
 {
 	t_node	*temp;
 
-	if (list->current == list->head)
-	{
-		if (list->head->next == NULL)
-			list->head = list->tail = NULL;
-		else
-			list->head = list->head->next;
-	}
-	else
+	while (list->head != NULL)
 	{
 		temp = list->head;
-		while (temp != NULL && temp->next != list->current)
-		{
-			free(temp->data);
-			temp = temp->next;
-		}
-		if (temp != NULL)
-			temp->next = list->current->next;
-		if (temp)
-			free(temp);
+		list->head = list->head->next;
+		free(temp->data);
+		free(temp);
 	}
-	free(list->current);
-	if (list)
-		free(list);
 }

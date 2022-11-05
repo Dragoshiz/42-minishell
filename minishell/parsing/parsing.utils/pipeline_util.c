@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 10:51:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 15:02:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ void	initialize_pipeline(t_parsing *parsing)
 void	fill_args(t_parsing *parsing)
 {
 	int	i;
+	t_node *current;
 
-	parsing->pipeline->current = parsing->pipeline->head;
+	current = parsing->pipeline->head;
 	parsing->vars->num_args = count_linked_list(parsing->pipeline);
 	parsing->vars->args = ft_calloc((parsing->vars->num_args + 1), sizeof(char *));
 	i = 0;
 	while (i < parsing->vars->num_args)
 	{
-		parsing->vars->args[i] = ft_strdup(parsing->pipeline->current->data);
-		if (parsing->pipeline->current->next)
-			parsing->pipeline->current = parsing->pipeline->current->next;
+		parsing->vars->args[i] = ft_strdup(current->data);
+		if (current->next)
+			current = current->next;
 		i++;
 	}
 	parsing->vars->args[i] = NULL;

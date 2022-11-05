@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/04 13:24:06 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/05 21:11:17 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_start_exec(t_vars *vars, t_iovars *iov)
 	ft_exec_cmd(vars, iov);
 }
 
-void	ft_execution(t_vars *vars, t_iovars *iov)
+void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
 	while (1)
 	{
@@ -133,7 +133,7 @@ void	ft_execution(t_vars *vars, t_iovars *iov)
 		{
 			add_history(vars->line);
 			ft_init_vars(vars);
-			parsing(vars);
+			parsing(vars, parse);
 			if (!vars->syntax_error && !check_builtins(vars, iov))
 				ft_start_exec(vars, iov);
 			// delete_list(vars->env_list);

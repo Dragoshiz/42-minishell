@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 19:57:16 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 10:27:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:43:01 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(const char *src)
 	int		len;
 
 	len = ft_strlen(src);
-	p = calloc((len + 1), sizeof(char));
+	p = ft_calloc((len + 1), sizeof(char));
 	if (p == NULL)
 		return (NULL);
 	i = 0;

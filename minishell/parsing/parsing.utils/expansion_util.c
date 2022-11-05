@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:53:08 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 20:10:10 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 16:05:45 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*insert_expanded_string(t_linked_list *env_list, void *data, int index)
 	int		p_len;
 	char	*p;
 	
-
+	current = NULL;
 	i = index + 1; // + 1 to pass $ sign
 	current = env_list->head;
 	str = ft_strdup(data);
