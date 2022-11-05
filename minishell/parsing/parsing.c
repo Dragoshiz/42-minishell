@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 23:08:12 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 23:44:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,9 @@ static void	syntax_errors(t_parsing *parsing)
 	if (parsing->vars->syntax_error == 3)
 		ft_putstr_fd("minish: syntax error empty cmd \n", 1);
 	if (parsing->vars->syntax_error == 4)
-		ft_putstr_fd("minish: syntax error empty heredoc \n", 1);
+		ft_putstr_fd("minish: syntax error empty redirection \n", 1);
+	if (parsing->vars->syntax_error == 5)
+		ft_putstr_fd("minish: syntax error (redirection) \n", 1);
 }
 
 static void	debug_print_args(char *args[], int num_args) // DEBUG print args

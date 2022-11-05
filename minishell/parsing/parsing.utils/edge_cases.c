@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 21:55:04 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 23:23:45 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/05 23:45:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	edge_cases(t_parsing *parsing)
 {
 	last_pipe_empty(parsing);
-	empty_redirection(parsing);
+	syntax_heredoc(parsing);
 }
 
 void	last_pipe_empty(t_parsing *parsing)
@@ -30,7 +30,19 @@ void	last_pipe_empty(t_parsing *parsing)
 	}
 }
 
-void	empty_redirection(t_parsing *parsing) // TODO
+//function that checks for whitespace characters
+static int	is_only_c(char *line, char c)
+{
+	while (*line)
+	{
+		if (*line != c)
+			return (0);
+		line++;
+	}
+	return (1);
+}
+
+void	syntax_heredoc(t_parsing *parsing) // TODO
 {
 	t_token	*current;
 
@@ -44,6 +56,70 @@ void	empty_redirection(t_parsing *parsing) // TODO
 			if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
 				parsing->vars->syntax_error = 4;
 			else if ((ft_strncmp(current->data, "<<", 2) == 0) && (ft_strncmp(current->next->data, "<<", 2) == 0) && current->next->type != 1 && current->type != 1)
+				parsing->vars->syntax_error = 4;
+		}
+		if ((is_only_c(current->data, '<')) && ft_strlen(current->data) > 2 && current->type != 1)
+			parsing->vars->syntax_error = 5;
+		current = current->next;
+	}
+}
+
+void	syntax_redirect_output_append(t_parsing *parsing) // TODO
+{
+	t_token	*current;
+
+	current = parsing->token_list->head;
+	while (current)
+	{
+		if ((ft_strncmp(current->data, ">>", 2) == 0) && current->next == NULL && current->type != 1)
+			parsing->vars->syntax_error = 4;
+		if (current->next != NULL)
+		{
+			if ((ft_strncmp(current->data, ">>", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
+				parsing->vars->syntax_error = 4;
+			else if ((ft_strncmp(current->data, ">>", 2) == 0) && (ft_strncmp(current->next->data, ">>", 2) == 0) && current->next->type != 1 && current->type != 1)
+				parsing->vars->syntax_error = 4;
+		}
+		if ((is_only_c(current->data, '>')) && ft_strlen(current->data) > 2 && current->type != 1)
+			parsing->vars->syntax_error = 5;
+		current = current->next;
+	}
+}
+
+void	syntax_redirect_output_overwrite(t_parsing *parsing) // TODO
+{
+	t_token	*current;
+
+	current = parsing->token_list->head;
+	while (current)
+	{
+		if ((ft_strncmp(current->data, ">", 2) == 0) && current->next == NULL && current->type != 1)
+			parsing->vars->syntax_error = 4;
+		if (current->next != NULL)
+		{
+			if ((ft_strncmp(current->data, ">", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
+				parsing->vars->syntax_error = 4;
+			else if ((ft_strncmp(current->data, ">", 2) == 0) && (ft_strncmp(current->next->data, ">", 2) == 0) && current->next->type != 1 && current->type != 1)
+				parsing->vars->syntax_error = 4;
+		}
+		current = current->next;
+	}
+}
+
+void	syntax_redirect_input(t_parsing *parsing) // TODO
+{
+	t_token	*current;
+
+	current = parsing->token_list->head;
+	while (current)
+	{
+		if ((ft_strncmp(current->data, "<", 2) == 0) && current->next == NULL && current->type != 1)
+			parsing->vars->syntax_error = 4;
+		if (current->next != NULL)
+		{
+			if ((ft_strncmp(current->data, "<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
+				parsing->vars->syntax_error = 4;
+			else if ((ft_strncmp(current->data, "<", 2) == 0) && (ft_strncmp(current->next->data, "<", 2) == 0) && current->next->type != 1 && current->type != 1)
 				parsing->vars->syntax_error = 4;
 		}
 		current = current->next;
