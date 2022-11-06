@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/06 17:43:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:32:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	expand_tokens(t_parsing *parsing) // TODO not working
 			{
 				check = 0;
 				check_expansion_quotes(&quote, &status, current->data[i]);
-				if (status == 0 && current->data[i] == DOLLAR && is_variable_start_char(current->data[i + 1]))
+				if (status == 0 && current->data[i] == DOLLAR && is_variable_char(current->data[i + 1]))
 				{
 					p = insert_expanded_string(parsing->vars->env_list, current->data, i);
 					free (current->data);

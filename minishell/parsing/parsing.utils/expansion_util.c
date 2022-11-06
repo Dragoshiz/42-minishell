@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:53:08 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/06 18:12:46 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:35:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,23 @@ char	*insert_expanded_string(t_linked_list *env_list, void *data, int index)
 	var_name_len = 0;
 	var_value_len = 0;
 	var_value = NULL;
-	while (str[i]) // get variable name length and set null character 
+	if (ft_isdigit(str[index + 1]))
 	{
-		if (!is_variable_char(str[i]))
-		{
-			str[i] = '\0';
-			break;
-		}
-		var_name_len++;
-		i++;
+		str[index + 2] = '\0';
+		var_name_len = 1;
+		i = 1;
 	}
+	else
+		while (str[i]) // get variable name length and set null character 
+		{
+			if (!is_variable_char(str[i]))
+			{
+				str[i] = '\0';
+				break;
+			}
+			var_name_len++;
+			i++;
+		}
 	var_name = ft_strdup(&str[index + 1]);
 	free (str);
 	while (current)
@@ -126,4 +133,3 @@ int	is_redirection_char(char c)
 		return (0);
 	return (1);
 }
-
