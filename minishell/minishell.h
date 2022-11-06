@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 23:41:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:13:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	last_pipe_empty(t_parsing *parsing);
 void	syntax_redirect_output_append(t_parsing *parsing);
 void	syntax_redirect_output_overwrite(t_parsing *parsing);
 void	syntax_redirect_input(t_parsing *parsing);
+int		is_redirection_char(char c);
 
 // EXPANSION UTILITIES
 
@@ -178,6 +179,7 @@ char	*insert_expanded_string(t_linked_list *env_list, void *data, int i);
 void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_tokens(t_parsing *parsing);
 int		is_variable_char(char c);
+int		is_variable_start_char(char c);
 
 // TOKEN UTILITIES
 

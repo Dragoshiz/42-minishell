@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 23:44:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:43:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	expand_tokens(t_parsing *parsing) // TODO not working
 			{
 				check = 0;
 				check_expansion_quotes(&quote, &status, current->data[i]);
-				if (status == 0 && current->data[i] == DOLLAR && is_variable_char(current->data[i + 1]))
+				if (status == 0 && current->data[i] == DOLLAR && is_variable_start_char(current->data[i + 1]))
 				{
 					p = insert_expanded_string(parsing->vars->env_list, current->data, i);
 					free (current->data);
@@ -142,9 +142,11 @@ void	expand_tokens(t_parsing *parsing) // TODO not working
 				}
 				i++;
 			}
-			if (i == len && check == 0)
+			if ((i == len && check == 0) || len == 0)
 				break;
 			i = 0;
+			status = 0;
+			quote = '\0';
 		}
 		current = current->next;
 	}
@@ -232,18 +234,20 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 }
 
 // displays error message. 1:near unexpected token 2:unclosed quote
-static void	syntax_errors(t_parsing *parsing)
+static void	syntax_errors(t_parsing *parsing) // DEBUG
 {
 	if (parsing->vars->syntax_error == 1)
 		ft_putstr_fd("minish: syntax error near unexpected token '|' \n", 1);
 	if (parsing->vars->syntax_error == 2)
 		ft_putstr_fd("minish: syntax error unclosed quote \n", 1);
 	if (parsing->vars->syntax_error == 3)
-		ft_putstr_fd("minish: syntax error empty cmd \n", 1);
+		ft_putstr_fd("minish: syntax error near unexpected token `<<' \n", 1);
 	if (parsing->vars->syntax_error == 4)
-		ft_putstr_fd("minish: syntax error empty redirection \n", 1);
+		ft_putstr_fd("minish: syntax error near unexpected token `>>' \n", 1);
 	if (parsing->vars->syntax_error == 5)
-		ft_putstr_fd("minish: syntax error (redirection) \n", 1);
+		ft_putstr_fd("minish: syntax error near unexpected token `>' \n", 1);
+	if (parsing->vars->syntax_error == 6)
+		ft_putstr_fd("minish: syntax error near unexpected token `<' \n", 1);
 }
 
 static void	debug_print_args(char *args[], int num_args) // DEBUG print args

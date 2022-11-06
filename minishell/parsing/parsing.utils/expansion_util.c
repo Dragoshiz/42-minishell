@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:53:08 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 16:05:45 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:12:46 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,28 @@ void	check_expansion_quotes(char *quote, int *status, char c)
 		*status = 0;
 }
 
-//function that checks for whitespace characters
-int	is_variable_char(char c)
+//function that checks if char is a valid first variable name character
+int	is_variable_start_char(char c)
 {
 	if (c != 95 && !(c >= 65 \
 	&& c <= 90) && !(c >= 97 && c <= 122))
 		return (0);
 	return (1);
 }
+
+//function that checks if char is a valid variable name character
+int	is_variable_char(char c)
+{
+	if (c != 95 && !(c >= 65 \
+	&& c <= 90) && !(c >= 97 && c <= 122) && !(c >= 48 && c <= 57))
+		return (0);
+	return (1);
+}
+
+int	is_redirection_char(char c)
+{
+	if (c != 60 && c != 62)
+		return (0);
+	return (1);
+}
+
