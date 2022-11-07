@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:46:53 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 20:10:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 23:18:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_update_exp(t_linked_list *exp_lst, char *data)
 	curr = exp_lst->head;
 	while (curr != NULL)
 	{
-		while (*(char*)curr->next->data[len2++] != '=' && curr->next->data[len2])//from here have to find solution to have both the same lenght till = sign
+		// while (*(char*)curr->next->data[len2++] != '=' && curr->next->data[len2])//from here have to find solution to have both the same lenght till = sign
 		if (ft_strncmp(curr->data, data, len) == 0)
 		{
 			if (len >= len2)

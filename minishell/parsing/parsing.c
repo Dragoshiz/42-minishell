@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 23:11:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:27:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 }
 
 // Main function for Parsing & initial checks
-void	parsing(t_vars *vars, t_parsing *parsing)
+void	parsing(t_parsing *parsing, t_vars *vars)
 {
 	initialize_parsing(parsing, vars);
 	initialize_pipeline(parsing);
@@ -79,8 +79,4 @@ void	parsing_cleanup(t_parsing *parsing)
 	free(parsing->pipeline);
 	delete_token_list(parsing->token_list);
 	free(parsing->token_list);
-	ft_free_doublepoint(parsing->vars->args);
-	delete_list(parsing->vars->env_list);
-	free(parsing->vars->env_list);
-	ft_free_doublepoint(parsing->vars->env_sh);
 }

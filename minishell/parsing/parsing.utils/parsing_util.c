@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:56:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 17:58:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:20:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	display_token_list(t_token_list *list)
 		temp = ft_itoa(current->type);
 		ft_putstr_fd(temp, 1);
 		free(temp);
-		ft_putstr_fd("]:\t\t$", 1);
+		ft_putstr_fd("]:\t$", 1);
 		ft_putstr_fd(current->data, 1);
 		ft_putstr_fd("$\n", 1);
 		current = current->next;

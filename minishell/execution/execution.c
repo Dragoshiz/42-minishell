@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 23:09:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:28:55 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,13 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 			parsing(parse, vars);
 			if (!vars->syntax_error && !check_builtins(vars, iov))
 				ft_execv2(parse, iov);
-			// delete_list(vars->env_list);
+			parsing_cleanup(parse);
+			ft_free_doublepoint(vars->args);
 		}
 		if (vars->line)
 			free(vars->line);
 	}
+	delete_list(vars->env_list);
+	free(vars->env_list);
+	ft_free_doublepoint(vars->env_sh);
 }
