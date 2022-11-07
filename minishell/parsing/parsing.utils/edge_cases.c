@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 21:55:04 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/06 18:33:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:38:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	last_pipe_empty(t_parsing *parsing)
 	current = parsing->pipeline->tail;
 	if (current->data)
 	{
-		if(is_whitespace(current->data))
+		if (is_whitespace(current->data))
 			parsing->vars->syntax_error = 3;
 	}
 }
@@ -45,7 +45,7 @@ static int	is_only_c(char *line, char c)
 	return (1);
 }
 
-void	syntax_heredoc(t_parsing *parsing) // TODO
+void	syntax_heredoc(t_parsing *parsing)
 {
 	t_token	*current;
 
@@ -59,7 +59,7 @@ void	syntax_heredoc(t_parsing *parsing) // TODO
 		}
 		if (ft_strlen(current->data) < 3 || (is_only_c(current->data, '<')))
 		{
-			if ((ft_strncmp(current->data, "<<", 2) == 0) && current->next == NULL && current->type != 1)
+			if ((ft_strncmp(current->data, "<<", 2) == 0) && current->next == NULL && current->type != 2)
 				parsing->vars->syntax_error = 3;
 		}
 		if (current->next != NULL && ((ft_strlen(current->data) < 3) || (is_only_c(current->data, '<'))))
@@ -69,7 +69,7 @@ void	syntax_heredoc(t_parsing *parsing) // TODO
 				if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_redirection_char(current->next->data[0])) && current->type != 1 && current->next->type != 1)
 						parsing->vars->syntax_error = 3;
 			}
-			if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
+			if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 2)
 				parsing->vars->syntax_error = 3;
 			else if ((ft_strncmp(current->data, "<<", 2) == 0) && (ft_strncmp(current->next->data, "<<", 2) == 0) && current->next->type != 1 && current->type != 1)
 				parsing->vars->syntax_error = 3;
@@ -80,7 +80,7 @@ void	syntax_heredoc(t_parsing *parsing) // TODO
 	}
 }
 
-void	syntax_redirect_output_append(t_parsing *parsing) // TODO
+void	syntax_redirect_output_append(t_parsing *parsing)
 {
 	t_token	*current;
 
@@ -112,7 +112,7 @@ void	syntax_redirect_output_append(t_parsing *parsing) // TODO
 	}
 }
 
-void	syntax_redirect_output_overwrite(t_parsing *parsing) // TODO
+void	syntax_redirect_output_overwrite(t_parsing *parsing)
 {
 	t_token	*current;
 
@@ -142,7 +142,7 @@ void	syntax_redirect_output_overwrite(t_parsing *parsing) // TODO
 	}
 }
 
-void	syntax_redirect_input(t_parsing *parsing) // TODO
+void	syntax_redirect_input(t_parsing *parsing)
 {
 	t_token	*current;
 

@@ -30,11 +30,17 @@ execution/execution.utils/exit.c\
 execution/execution.utils/exec_file.c\
 execution/execution.c\
 execution/new_exec.c\
+parsing/parsing.utils/parsing_util.c\
 parsing/parsing.utils/env_list_util.c\
+parsing/parsing.utils/env_list_util2.c\
 parsing/parsing.utils/line_util.c\
 parsing/parsing.utils/pipeline_util.c\
 parsing/parsing.utils/tokens_util.c\
+parsing/parsing.utils/tokens_util2.c\
+parsing/parsing.utils/tokens_util3.c\
 parsing/parsing.utils/expansion_util.c\
+parsing/parsing.utils/expansion_util2.c\
+parsing/parsing.utils/expansion_util3.c\
 parsing/parsing.utils/edge_cases.c\
 parsing/parsing.c\
 builtins/ft_env.c\

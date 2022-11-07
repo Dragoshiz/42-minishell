@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/05 19:40:39 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:53:33 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,6 @@ int	count_linked_list(t_linked_list *list)
 		current = current->next;
 	}
 	return (i);
-}
-
-// DEBUG prints the list
-void	display_linked_list(t_linked_list *list)
-{
-	t_node	*current;
-
-	current = list->head;
-	while (current != NULL)
-	{
-		ft_putstr_fd(current->data, 1);
-		ft_putchar_fd('\n', 1);
-		current = current->next;
-	}
 }
 
 void	delete_list(t_linked_list *list)

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/06 18:13:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 22:30:02 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1\
+/include/readline/readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1\
+/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include "libft/libft.h"
@@ -60,11 +62,11 @@ typedef struct s_linked_list {
 }	t_linked_list;
 
 typedef struct s_vars{
-	char			**paths; // ENV list
-	char			**args; // array of commands for the executor
-	char			**env_sh;// cpy of env variable on startup
-	char			**cmds;// array of commandse
-	int				**pipefds;// pipe file descriptors
+	char			**paths;
+	char			**args;
+	char			**env_sh;
+	char			**cmds;
+	int				**pipefds;
 	char			*line;
 	pid_t			pid;
 	int				num_args;
@@ -76,7 +78,8 @@ typedef struct s_vars{
 	int				syntax_error;
 	int				exit_status;
 	int				call_minish;
-	t_linked_list	*env_list;}	t_vars;
+	t_linked_list	*env_list;
+}	t_vars;
 
 //iov stand for Input Output Variables
 typedef struct s_iovars
@@ -103,7 +106,20 @@ typedef struct s_parsing {
 	char			*q_open;
 	char			quote;
 	int				num_cmds;
-}	t_parsing;
+	int				len;
+	int				status;
+	int				check;
+	int				var_name_len;
+	int				var_value_len;
+	char			*var_name;
+	char			*var_value;
+	int				p_len;
+	int				index;
+	int				m1;
+	int				m2;
+	char			d_quote;
+	char			s_quote;
+}t_parsing;
 
 // BUILTINS
 void	env_list_create(t_vars *vars);
@@ -162,12 +178,17 @@ int		ft_exec_file(t_parsing *parsing);
 
 void	parsing(t_vars *vars, t_parsing *parsing);
 void	parsing_cleanup(t_parsing *parsing);
-void	syntax_heredoc(t_parsing *parsing);
+
+// PARSING DEBUG
+
+void	debug_print_args(char *args[], int num_args);
+void	display_token_list(t_token_list *list);
 
 // EDGE CASES UTILS
 
 void	edge_cases(t_parsing *parsing);
 void	last_pipe_empty(t_parsing *parsing);
+void	syntax_heredoc(t_parsing *parsing);
 void	syntax_redirect_output_append(t_parsing *parsing);
 void	syntax_redirect_output_overwrite(t_parsing *parsing);
 void	syntax_redirect_input(t_parsing *parsing);
@@ -175,7 +196,7 @@ int		is_redirection_char(char c);
 
 // EXPANSION UTILITIES
 
-char	*insert_expanded_string(t_linked_list *env_list, void *data, int i);
+char	*insert_expanded_string(t_parsing *parsing, void *data);
 void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_tokens(t_parsing *parsing);
 int		is_variable_char(char c);
@@ -186,16 +207,16 @@ int		is_variable_start_char(char c);
 void	remove_quote_pairs(char *p, int *ref, char *str);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
-void	add_token(t_parsing *parsing, void *data);
+void	add_token(t_parsing *parsing, void *data, int type);
 int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
-void	display_token_list(t_token_list *list); // DEBUG
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
 
 // PIPELINE UTILITIES
 
+void	split_pipeline(t_parsing *parsing);
 void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
@@ -213,6 +234,6 @@ void	add_tail(t_linked_list *list, void *data);
 void	display_linked_list(t_linked_list *list);
 void	initialize_list(t_linked_list *list);
 int		count_linked_list(t_linked_list *list);
-void	delete_list(t_linked_list *list); // TODO also delete sub-list
+void	delete_list(t_linked_list *list);
 
 #endif
