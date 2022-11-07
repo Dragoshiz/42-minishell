@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 16:39:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 11:25:12 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@
 # include <signal.h>
 # include "libft/libft.h"
 
-struct	s_parsing;
-struct	s_iovars;
+typedef struct s_parsing	t_parsing;
+typedef struct s_iovars		t_iovars;
+typedef struct s_vars		t_vars;
 
 int		g_exit;
+
 typedef struct s_token {
 	char			*data;
 	int				type;
@@ -77,6 +79,8 @@ typedef struct s_vars{
 	int				exit_status;
 	int				call_minish;
 	t_linked_list	*env_list; // working env list
+	t_linked_list	*exp_lst;
+	t_parsing		*parse;
 }	t_vars;
 
 //iov stand for Input Output Variables
@@ -214,4 +218,8 @@ int		ft_get_hrdoc(t_token *current, t_iovars *iov);
 int		ft_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
+//ft_export.c
+void	ft_export(t_vars *vars);
+void	ft_printnsortexp(t_linked_list *exp_lst);
+void	ft_get_export(t_vars *vars);
 #endif

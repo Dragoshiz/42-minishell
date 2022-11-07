@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:47:09 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/02 12:04:45 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 12:33:13 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_built_env(t_vars *vars)
 {
-	int	i;
+	t_node	*env;
 
-	i = 0;
-	while (vars->env_sh[i])
+	env = vars->env_list->head;
+	while (env != NULL)
 	{
-		printf("%s\n", vars->env_sh[i]);
-		i++;
+		printf("%s\n", env->data);
+		env = env->next;
 	}
 }
 

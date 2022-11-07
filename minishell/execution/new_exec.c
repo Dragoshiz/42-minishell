@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 17:03:16 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 10:47:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*ft_custom_strjoin(char *s1, char *s2)
 		j++;
 	}
 	p[i] = '\0';
-	if (*s1)
-		free(s1);
+	if (*s2)
+		free(s2);
 	return (p);
 }
 
@@ -190,8 +190,6 @@ int	ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 	return (fdin);
 }
 
-
-
 int	ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 {
 	const char	*meta[3];
@@ -279,29 +277,33 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	return (NULL);
 }
 
-void	ft_get_cmd(t_parsing *parse, t_iovars *iov)
-{
-	t_token	*current;
+// void	ft_get_cmd(t_parsing *parse, t_iovars *iov)
+// {
+// 	t_token	*current;
+// 	t_token	*start;
+// 	int		i;
 
-	current = parse->token_list->head;
-	while (current->next != NULL)
-	{
-		if(current->data[0] != )
-	}
-}
+// 	current = parse->token_list->head
+// 	i = 0;
+// 	while (current != NULL)
+// 	{
+// 		if (current->data[0] != '<' && current->data[0] != '>')
+			
+// 	}
+// }
 
-void	ft_forknexec(t_parsing *parse, t_iovars *iov)
-{
-	int	pid;
+// void	ft_forknexec(t_parsing *parse, t_iovars *iov)
+// {
+// 	int	pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		if (iov->hv_heredoc)
-			close(iov->hrdc_pipe[0]);
-		if(execve(,))
-	}
-}
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (iov->hv_heredoc)
+// 			close(iov->hrdc_pipe[0]);
+// 		if(execve(,))
+// 	}
+// }
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
 {
 	t_token	*current;

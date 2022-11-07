@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:16:46 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 16:06:34 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/06 16:39:34 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,27 @@
 // 	}
 // }
 
-//see  if it is correct
-void	ft_get_cmd(t_vars *vars, char *arg)
-{
-	int		i;
-	int		j;
-	char	*tempcmd;
+// //see  if it is correct
+// void	ft_get_cmd(t_vars *vars, char *arg)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*tempcmd;
 
-	i = 0;
-	while (arg[i] && arg[i] != '<' && arg[i] != '>' && arg[i] != '$')
-		i++;
-	tempcmd = malloc(sizeof(char) * (i + 1));
-	j = 0;
-	while (j < i)
-	{
-		tempcmd[j] = arg[j];
-		j++;
-	}
-	tempcmd[j] = '\0';
-	vars->cmds = ft_split(tempcmd, ' ');
-	free(tempcmd);
-}
+// 	i = 0;
+// 	while (arg[i] && arg[i] != '<' && arg[i] != '>' && arg[i] != '$')
+// 		i++;
+// 	tempcmd = malloc(sizeof(char) * (i + 1));
+// 	j = 0;
+// 	while (j < i)
+// 	{
+// 		tempcmd[j] = arg[j];
+// 		j++;
+// 	}
+// 	tempcmd[j] = '\0';
+// 	vars->cmds = ft_split(tempcmd, ' ');
+// 	free(tempcmd);
+// }
 
 //returns filename NEED TO FREE FILENAME
 char	*ft_get_filename(char *arg, int i)
