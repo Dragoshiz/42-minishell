@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:46:53 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 18:21:52 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 20:10:07 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,7 @@ void	ft_get_export(t_vars *vars)
 	}
 }
 
-int	ft_update_data(t_linked_list *env_list, char	*data)
-{
-	t_node	*curr;
-	int		len;
-
-	len = 0;
-	while (data[len] != '=')
-		len++;
-	curr = env_list->head;
-	while (curr != NULL)
-	{
-		if (ft_strncmp(curr->data, data, len) == 0)
-		{
-			free(curr->data);
-			curr->data = ft_strdup(data);
-			return (1);
-		}
-		curr = curr->next;
-	}
-	return (0);
-}
-
-void	ft_update_exp(t_linked_list *exp_lst, char *data)
+int	ft_update_data(t_vars *vars, char	*data)
 {
 	t_node	*curr;
 	int		len;
@@ -73,16 +51,47 @@ void	ft_update_exp(t_linked_list *exp_lst, char *data)
 	len = 0;
 	while (data[len] != '=' && data[len])
 		len++;
-	curr = exp_lst->head;
+	curr = vars->env_list->head;
 	while (curr != NULL)
 	{
 		if (ft_strncmp(curr->data, data, len) == 0)
 		{
 			free(curr->data);
 			curr->data = ft_strdup(data);
+			ft_update_data(vars, data);
+			return (1);
 		}
 		curr = curr->next;
 	}
+	return (0);
+}
+
+int	ft_update_exp(t_linked_list *exp_lst, char *data)
+{
+	t_node	*curr;
+	int		len;
+	int		len2;
+
+	len = 0;
+	len2 = 0;
+	while (data[len] != '=' && data[len])
+		len++;
+	curr = exp_lst->head;
+	while (curr != NULL)
+	{
+		while (*(char*)curr->next->data[len2++] != '=' && curr->next->data[len2])//from here have to find solution to have both the same lenght till = sign
+		if (ft_strncmp(curr->data, data, len) == 0)
+		{
+			if (len >= len2)
+			{
+				free(curr->data);
+				curr->data = ft_strdup(data);
+				return (1);
+			}
+		}
+		curr = curr->next;
+	}
+	return (0);
 }
 
 void	ft_printnsortexp(t_linked_list *exp_lst)
@@ -118,7 +127,7 @@ void	ft_add2env(t_vars *vars, char *data)
 	i = ft_strchr(data, '=');
 	if (i && *i == '=' && i-- != NULL)
 	{
-		if (ft_update_data(vars->env_list, data) == 1)
+		if (ft_update_data(vars, data) == 1)
 		{
 			ft_update_exp(vars->exp_lst, data);
 			return ;
@@ -130,6 +139,7 @@ void	ft_add2env(t_vars *vars, char *data)
 void	ft_get_var(t_vars *vars)
 {
 	t_token	*curr;
+	t_token	*previous;
 	int		pipe_nr;
 
 	curr = vars->parse->token_list->head;
@@ -140,9 +150,13 @@ void	ft_get_var(t_vars *vars)
 			pipe_nr = curr->pipe_nbr;
 			while (pipe_nr == curr->pipe_nbr && curr->next != NULL)
 			{
+				previous = curr;
 				curr = curr->next;
-				add_tail(vars->exp_lst, curr->data);
-				ft_add2env(vars, curr->data);
+				if (ft_update_exp(vars->exp_lst, curr->data) != 1)
+				{
+					ft_add2env(vars, curr->data);
+					add_tail(vars->exp_lst, curr->data);
+				}
 			}
 			curr = curr->next;
 		}
