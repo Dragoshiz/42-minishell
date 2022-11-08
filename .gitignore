@@ -1,3 +1,5 @@
 .DS_Store
-*.vscode
-minishell.dSYM
+.vscode/
+debug_parsing/
+debug_parsing2/
+minishell.dSYM/
