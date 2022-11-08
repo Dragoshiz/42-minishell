@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 11:16:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:04:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 void	parsing(t_parsing *parsing, t_vars *vars)
 {
 	initialize_parsing(parsing, vars);
-	initialize_pipeline(parsing);
+	initialize_pipeline(parsing);//free elsewhere
 	split_pipeline(parsing);
-	initialize_token_list(parsing);
+	initialize_token_list(parsing);//free elsewhere
 	split_tokens(parsing);
 	expand_tokens(parsing);
 	token_trim_white(parsing);
@@ -78,5 +78,5 @@ void	parsing_cleanup(t_parsing *parsing)
 	delete_list(parsing->pipeline);
 	free(parsing->pipeline);
 	delete_token_list(parsing->token_list);
-	free(parsing->token_list);
+	// free(parsing->token_list);
 }

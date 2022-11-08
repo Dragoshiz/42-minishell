@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:46:53 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 12:32:18 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:15:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,13 +174,15 @@ int	ft_chk_cur_env(t_linked_list *exp_lst, char *data)
 	return (0);
 }
 
-void	ft_is_valid(t_token *curr, char *curr_data)
+int	ft_is_valid(t_token *curr, char *curr_data)
 {
 	if (ft_isalpha(curr_data[0]) == 0)
 	{
 		printf("minishell: export: '%s': not a valid identifier\n", curr_data);
 		curr = curr->next;
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_get_var(t_vars *vars)
@@ -197,13 +199,15 @@ void	ft_get_var(t_vars *vars)
 			while (pipe_nr == curr->pipe_nbr && curr->next != NULL)
 			{
 				curr = curr->next;
-				ft_is_valid(curr, curr->data);
-				if (ft_update_exp(vars->exp_lst, curr->data) != 1)
+				if (ft_is_valid(curr, curr->data) == 0)
 				{
-					if (ft_chk_cur_env(vars->exp_lst, curr->data) == 0)
-						add_tail(vars->exp_lst, curr->data);
+					if (ft_update_exp(vars->exp_lst, curr->data) != 1)
+					{
+						if (ft_chk_cur_env(vars->exp_lst, curr->data) == 0)
+							add_tail(vars->exp_lst, curr->data);
+					}
+					ft_add2env(vars, curr->data);
 				}
-				ft_add2env(vars, curr->data);
 			}
 			curr = curr->next;
 		}
