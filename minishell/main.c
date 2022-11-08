@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/07 23:05:52 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:24:40 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 	if (i == 2)
 		ft_built_pwd();
 	if (i == 3)
-	{
 		ft_export(vars);
-	}
+	if (i == 4)
+		ft_unset(vars);
 	if (i == 5)
 		ft_built_env(vars);
 	else if (i == 6)

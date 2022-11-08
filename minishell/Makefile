@@ -43,8 +43,11 @@ parsing/parsing.utils/expansion_util2.c\
 parsing/parsing.utils/expansion_util3.c\
 parsing/parsing.utils/edge_cases.c\
 parsing/parsing.c\
+builtins/export/ft_export.c\
+builtins/export/ft_export1.c\
+builtins/export/ft_export2.c\
+builtins/ft_unset.c\
 builtins/ft_env.c\
-builtins/ft_export.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)

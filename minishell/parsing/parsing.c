@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 13:04:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:08:00 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ void	parsing_cleanup(t_parsing *parsing)
 	delete_list(parsing->pipeline);
 	free(parsing->pipeline);
 	delete_token_list(parsing->token_list);
-	// free(parsing->token_list);
+	free(parsing->token_list);
 }
