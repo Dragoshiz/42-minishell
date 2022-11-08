@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 21:51:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:38:03 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env_list_create(t_vars *vars) // TODO free env_sh linkedList
 	i = 0;
 	while (i < vars->num_env_sh)
 	{
-		add_tail(vars->env_list, vars->env_sh[i]);
+		add_tail(vars->env_list, ft_strdup(vars->env_sh[i]));
 		i++;
 	}
 	vars->num_env_sh = i;

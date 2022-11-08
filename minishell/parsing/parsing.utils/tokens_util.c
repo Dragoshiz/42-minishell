@@ -6,96 +6,63 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 21:35:42 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:11:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_token_quotes(t_parsing *parsing, char *str, int i)
+static void	init_split_tokens(t_parsing *parsing, char *str)
 {
-	if ((str[i] == SQUOTE || \
-	str[i] == DQUOTE) && (parsing->q_open == NULL))
-	{
-		parsing->q_open = &str[i];
-		parsing->quote = str[i];
-	}
-	else if (parsing->quote == str[i])
-		parsing->q_open = NULL;
-}
+	int		len;
 
-//function that checks for whitespace characters
-int	is_whitespace_char(char c)
-{
-	if (c != 32 && !(c >= 9 && c <= 13))
-		return (0);
-	return (1);
-}
-
-void	initialize_token_list(t_parsing *parsing)
-{
-	parsing->token_list = NULL;
+	len = ft_strlen(str);
+	parsing->p_start = str;
+	parsing->p_end = &str[len];
+	parsing->line_end = &str[len];
 	parsing->q_open = NULL;
 	parsing->quote = '\0';
-	parsing->token_list = ft_calloc(1, sizeof(t_token_list));
-	parsing->token_list->head = NULL;
-	parsing->token_list->tail = NULL;
-	parsing->token_list->current = NULL;
 }
 
-// adds a node at the tail
-void	add_token(t_parsing *parsing, void *data)
+static void	check_string(t_parsing *parsing, char *str)
 {
-	t_token	*node;
+	int		i;
 
-	node = ft_calloc(1, sizeof(t_token));
-	node->data = data;
-	node->pipe_nbr = parsing->num_pipes;
-	node->type = 0;
-	node->next = NULL;
-	if (parsing->token_list->head == NULL)
-		parsing->token_list->head = node;
-	else
-		parsing->token_list->tail->next = node;
-	parsing->token_list->tail = node;
-}
-
-// DEBUG prints the list
-void	display_token_list(t_token_list *list)
-{
-	t_token	*current;
-
-	current = list->head;
-	while (current != NULL)
+	i = 0;
+	while (str[i])
 	{
-		printf("token[pipe#%d type:%d]: $%s$\n", current->pipe_nbr,current->type, current->data); // DEBUG remove $ for production
-		current = current->next;
-	}
-}
-
-void	delete_token_list(t_token_list *list)
-{
-	t_token	*temp;
-
-	if (list->current == list->head)
-	{
-		if (list->head->next == NULL)
-			list->head = list->tail = NULL;
-		else
-			list->head = list->head->next;
-	}
-	else
-	{
-		temp = list->head;
-		while (temp != NULL && temp->next != list->current)
+		check_token_quotes(parsing, str, i);
+		if (parsing->q_open == NULL && !is_whitespace_char(str[i]) && \
+		is_whitespace_char(str[i + 1]))
 		{
-			free (temp->data);
-			temp = temp->next;
+			parsing->p_end = &str[i + 1];
+			add_token(parsing, dup_range(parsing->p_start, parsing->p_end), 0);
+			parsing->p_start = &parsing->p_end[1];
 		}
-		if (temp != NULL)
-			temp->next = list->current->next;
+		if (str[i + 1] == '\0' && !is_whitespace_char(str[i]))
+			add_token(parsing, dup_range(parsing->p_start, parsing->line_end), \
+			0);
+		i++;
 	}
-	free(list->current);
-	if (list)
-		free(list);
+}
+
+void	split_tokens(t_parsing *parsing)
+{
+	int		j;
+	char	*str;
+	t_node	*current;
+
+	current = parsing->pipeline->head;
+	j = 0;
+	while (current)
+	{
+		str = current->data;
+		init_split_tokens(parsing, str);
+		check_string(parsing, str);
+		if (parsing->q_open != NULL)
+			parsing->vars->syntax_error = 2;
+		current = current->next;
+		j++;
+		parsing->num_cmds = j;
+	}
 }

@@ -3,15 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/03 10:51:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/08 11:46:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// splits line into pipes -> linked list (pipeline)
+void	split_pipeline(t_parsing *parsing)
+{
+	int	i;
+
+	i = 0;
+	if (*parsing->vars->line == PIPE)
+		parsing->vars->syntax_error = 1;
+	while (i < parsing->line_len)
+	{
+		check_quotes(parsing, i);
+		if (parsing->q_open == NULL && parsing->vars->line[i] == PIPE)
+		{
+			if (parsing->vars->line[i + 1] == PIPE)
+				parsing->vars->syntax_error = 1;
+			parsing->p_end = &parsing->vars->line[i];
+			add_tail(parsing->pipeline, dup_range(parsing->p_start, \
+			parsing->p_end));
+			parsing->p_start = &parsing->p_end[1];
+		}
+		if (i + 1 == parsing->line_len)
+			add_tail(parsing->pipeline, dup_range(parsing->p_start, \
+			parsing->line_end));
+		i++;
+	}
+	if (parsing->q_open != NULL)
+		parsing->vars->syntax_error = 2;
+}
+
+// allocates for linked list pipeline
 void	initialize_pipeline(t_parsing *parsing)
 {
 	parsing->pipeline = NULL;
@@ -19,25 +49,29 @@ void	initialize_pipeline(t_parsing *parsing)
 	initialize_list(parsing->pipeline);
 }
 
-// transfers strings from linked list to arg array
+// transfers strings from linked list (pipeline) to arg array
 void	fill_args(t_parsing *parsing)
 {
-	int	i;
+	int		i;
+	t_node	*current;
 
-	parsing->pipeline->current = parsing->pipeline->head;
+	current = parsing->pipeline->head;
 	parsing->vars->num_args = count_linked_list(parsing->pipeline);
-	parsing->vars->args = ft_calloc((parsing->vars->num_args + 1), sizeof(char *));
+	parsing->vars->args = ft_calloc((parsing->vars->num_args + 1), \
+	sizeof(char *));
 	i = 0;
 	while (i < parsing->vars->num_args)
 	{
-		parsing->vars->args[i] = ft_strdup(parsing->pipeline->current->data);
-		if (parsing->pipeline->current->next)
-			parsing->pipeline->current = parsing->pipeline->current->next;
+		parsing->vars->args[i] = ft_strdup(current->data);
+		if (current->next)
+			current = current->next;
 		i++;
 	}
 	parsing->vars->args[i] = NULL;
 }
 
+// if i is in quoted area, quote will store which quote is
+// active and q_open will not be NULL
 void	check_quotes(t_parsing *parsing, int i)
 {
 	if ((parsing->vars->line[i] == SQUOTE || \

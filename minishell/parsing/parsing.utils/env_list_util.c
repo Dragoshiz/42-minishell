@@ -6,13 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/02 21:51:55 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:48:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// initializes the list
+// sets nodes from linked-list to NULL
 void	initialize_list(t_linked_list *list)
 {
 	list->head = NULL;
@@ -68,42 +68,16 @@ int	count_linked_list(t_linked_list *list)
 	return (i);
 }
 
-// DEBUG prints the list
-void	display_linked_list(t_linked_list *list)
-{
-	t_node	*current;
-
-	current = list->head;
-	while (current != NULL)
-	{
-		printf("%s\n", current->data); // DEBUG remove $ for production
-		current = current->next;
-	}
-}
-
+// deletes and frees nodes from linked-list 
 void	delete_list(t_linked_list *list)
 {
 	t_node	*temp;
 
-	if (list->current == list->head)
-	{
-		if (list->head->next == NULL)
-			list->head = list->tail = NULL;
-		else
-			list->head = list->head->next;
-	}
-	else
+	while (list->head != NULL)
 	{
 		temp = list->head;
-		while (temp != NULL && temp->next != list->current)
-		{
-			free (temp->data);
-			temp = temp->next;
-		}
-		if (temp != NULL)
-			temp->next = list->current->next;
+		list->head = list->head->next;
+		free(temp->data);
+		free(temp);
 	}
-	free(list->current);
-	if (list)
-		free(list);
 }

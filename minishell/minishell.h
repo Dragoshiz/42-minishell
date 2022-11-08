@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/04 11:54:13 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/08 12:09:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,19 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1\
+/include/readline/readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1\
+/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include "libft/libft.h"
+
+typedef struct s_parsing	t_parsing;
+typedef struct s_iovars		t_iovars;
+typedef struct s_vars		t_vars;
+
+int		g_exit;
 
 typedef struct s_token {
 	char			*data;
@@ -62,7 +70,6 @@ typedef struct s_vars{
 	char			**args; // array of commands for the executor
 	char			**env_sh;// cpy of env variable on startup
 	char			**cmds;// array of commandse
-	int				**pipefds;// pipe file descriptors
 	char			*line;
 	pid_t			pid;
 	int				num_args;
@@ -70,11 +77,12 @@ typedef struct s_vars{
 	int				hv_infile;
 	int				hv_outfile;
 	int				hv_append;
-	int				hv_heredoc;
 	int				syntax_error;
 	int				exit_status;
 	int				call_minish;
 	t_linked_list	*env_list; // working env list
+	t_linked_list	*exp_lst;
+	t_parsing		*parse;
 }	t_vars;
 
 //iov stand for Input Output Variables
@@ -83,12 +91,15 @@ typedef struct s_iovars
 	char	*cmd;
 	char	*delim;
 	char	*filename;
+	int		**pipefds;// pipe file descriptors
 	int		hrdc_pipe[2];
 	int		size_delim;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
 	int		fdout;
+	int		hv_heredoc;
+	t_vars	*vars;
 }t_iovars;
 
 typedef struct s_parsing {
@@ -101,8 +112,21 @@ typedef struct s_parsing {
 	char			*line_end;
 	char			*q_open;
 	char			quote;
-	int				num_pipes;
-}	t_parsing;
+	int				num_cmds;
+	int				len;
+	int				status;
+	int				check;
+	int				var_name_len;
+	int				var_value_len;
+	char			*var_name;
+	char			*var_value;
+	int				p_len;
+	int				index;
+	int				m1;
+	int				m2;
+	char			d_quote;
+	char			s_quote;
+}t_parsing;
 
 // BUILTINS
 void	env_list_create(t_vars *vars);
@@ -114,20 +138,20 @@ void	ft_env(t_vars *vars);
 void	ft_exec_cmd(t_vars *vars, t_iovars *iov);
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds);
 void	ft_get_path(t_vars *vars, char *env[]);
-void	ft_start_exec(t_vars *vars, t_iovars *iov);
+void	ft_start_exec(t_vars *vars, t_iovars *iov, t_parsing *parse);
 void	ft_put_backsl(t_vars *vars);
-void	ft_execution(t_vars *vars, t_iovars *iov);
+void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse);
 // minish_utils.c
 void	ft_free_doublepoint(char **to_free);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_count_args(t_vars *vars);
 void	ft_dup2nclose(int fd, int std);
 // pipes.c
-void	ft_create_pipes(t_vars *vars);
+// void	ft_create_pipes(t_vars *vars);
 void	ft_close_pipes(t_vars *vars);
 char	*ft_get_filename(char *arg, int i);
 void	ft_get_cmd(t_vars *vars, char *arg);
-int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
+// int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
 //searchers.c
 int		ft_find_in(t_vars *vars);
 int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
@@ -135,7 +159,7 @@ void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i);
 //exec_utils.c
 void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
-int		ft_size_rl(char *line, t_iovars *iov);
+int		t_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_errmsg(t_vars *vars, int i);
 //hrdc.c
@@ -147,7 +171,7 @@ void	ft_init_exc(t_iovars *iov);
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
 void	ft_built_env(t_vars *vars);
 void	ft_built_pwd(void);
-void	ft_executable(t_vars *vars, t_iovars *iov);
+void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing);
 
 // other
 int		is_whitespace(char *line);
@@ -159,29 +183,48 @@ int		ft_exec_file(t_parsing *parsing);
 
 // PARSING
 
-void	parsing(t_vars *vars);
+void	parsing(t_parsing *parsing, t_vars *vars);
+void	parsing_cleanup(t_parsing *parsing);
+
+// PARSING DEBUG
+
+void	debug_print_args(char *args[], int num_args);
+void	display_token_list(t_token_list *list);
+
+// EDGE CASES UTILS
+
+void	edge_cases(t_parsing *parsing);
+void	last_pipe_empty(t_parsing *parsing);
+void	syntax_heredoc(t_parsing *parsing);
+void	syntax_redirect_output_append(t_parsing *parsing);
+void	syntax_redirect_output_overwrite(t_parsing *parsing);
+void	syntax_redirect_input(t_parsing *parsing);
+int		is_redirection_char(char c);
 
 // EXPANSION UTILITIES
 
-char	*insert_expanded_string(t_linked_list *env_list, void *data, int i);
+char	*insert_expanded_string(t_parsing *parsing, void *data);
 void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_tokens(t_parsing *parsing);
 int		is_variable_char(char c);
+int		is_variable_start_char(char c);
+int		is_quote_char(char c);
 
 // TOKEN UTILITIES
 
+void	remove_quote_pairs(char *p, int *ref, char *str);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
-void	add_token(t_parsing *parsing, void *data);
+void	add_token(t_parsing *parsing, void *data, int type);
 int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
-void	display_token_list(t_token_list *list); // DEBUG
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
 
 // PIPELINE UTILITIES
 
+void	split_pipeline(t_parsing *parsing);
 void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
@@ -190,7 +233,6 @@ void	check_quotes(t_parsing *parsing, int i);
 
 void	initialize_line(t_parsing *parsing);
 char	*dup_range(char *p_start, char *p_end);
-void	check_quotes(t_parsing *parsing, int i);
 
 // LIST UTIL
 
@@ -199,6 +241,18 @@ void	add_tail(t_linked_list *list, void *data);
 void	display_linked_list(t_linked_list *list);
 void	initialize_list(t_linked_list *list);
 int		count_linked_list(t_linked_list *list);
-void	delete_list(t_linked_list *list); // TODO also delete sub-list
+void	delete_list(t_linked_list *list);
 
+//NEW EXEC
+void	ft_execv2(t_parsing *parse, t_iovars *iov);
+int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+int		ft_get_hrdoc(t_token *current, t_iovars *iov);
+int		ft_size_rl(char *line, int size_delim);
+char	*ft_custom_strjoin(char *s1, char *s2);
+void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
+//ft_export.c
+void	ft_export(t_vars *vars);
+void	ft_printnsortexp(t_linked_list *exp_lst);
+void	ft_get_export(t_vars *vars);
 #endif

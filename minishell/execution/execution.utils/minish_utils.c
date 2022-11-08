@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/03 16:20:11 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/07 23:10:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,8 @@ void	ft_cleanup(t_vars *vars)
 	ft_free_doublepoint(vars->cmds);
 }
 
-//trying out should be implemented in ft_is_a_cmd()
-char	*ft_find_arg_path(t_vars *vars, char *arg)
-{
-	int		i;
-	char	*cmd_path;
 
-	i = 0;
-	cmd_path = NULL;
-	while (vars->paths[i])
-	{
-		if (access(arg, F_OK) == 0)
-			return (arg);
-		cmd_path = ft_strjoin(vars->paths[i], arg);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
-		i++;
-	}
-	return (NULL);
-}
+
 
 //counts number of arguments aka simple commands
 void	ft_count_args(t_vars *vars)
@@ -71,8 +53,7 @@ void	ft_dup2nclose(int fd, int std)
 	// close(std);
 }
 
-void	ft_executable(t_vars *vars, t_iovars *iov)
+void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing)
 {
-	vars->call_minish += 1;
-	ft_execution(vars, iov);
+	ft_execution(vars, iov, parsing);
 }
