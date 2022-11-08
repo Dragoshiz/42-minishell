@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/07 23:15:02 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:09:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_tokens(t_parsing *parsing);
 int		is_variable_char(char c);
 int		is_variable_start_char(char c);
+int		is_quote_char(char c);
 
 // TOKEN UTILITIES
 
@@ -232,7 +233,6 @@ void	check_quotes(t_parsing *parsing, int i);
 
 void	initialize_line(t_parsing *parsing);
 char	*dup_range(char *p_start, char *p_end);
-void	check_quotes(t_parsing *parsing, int i);
 
 // LIST UTIL
 

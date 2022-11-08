@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 20:27:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:46:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// splits line into pipes -> linked list (pipeline)
 void	split_pipeline(t_parsing *parsing)
 {
 	int	i;
@@ -40,6 +41,7 @@ void	split_pipeline(t_parsing *parsing)
 		parsing->vars->syntax_error = 2;
 }
 
+// allocates for linked list pipeline
 void	initialize_pipeline(t_parsing *parsing)
 {
 	parsing->pipeline = NULL;
@@ -47,7 +49,7 @@ void	initialize_pipeline(t_parsing *parsing)
 	initialize_list(parsing->pipeline);
 }
 
-// transfers strings from linked list to arg array
+// transfers strings from linked list (pipeline) to arg array
 void	fill_args(t_parsing *parsing)
 {
 	int		i;
@@ -68,6 +70,8 @@ void	fill_args(t_parsing *parsing)
 	parsing->vars->args[i] = NULL;
 }
 
+// if i is in quoted area, quote will store which quote is
+// active and q_open will not be NULL
 void	check_quotes(t_parsing *parsing, int i)
 {
 	if ((parsing->vars->line[i] == SQUOTE || \

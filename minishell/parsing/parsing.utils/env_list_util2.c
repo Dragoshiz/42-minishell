@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:55:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 17:55:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:47:31 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// displays nodes from linked_list
 void	display_linked_list(t_linked_list *list)
 {
 	t_node	*current;

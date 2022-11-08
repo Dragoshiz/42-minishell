@@ -6,13 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 17:53:33 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:48:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// initializes the list
+// sets nodes from linked-list to NULL
 void	initialize_list(t_linked_list *list)
 {
 	list->head = NULL;
@@ -68,6 +68,7 @@ int	count_linked_list(t_linked_list *list)
 	return (i);
 }
 
+// deletes and frees nodes from linked-list 
 void	delete_list(t_linked_list *list)
 {
 	t_node	*temp;

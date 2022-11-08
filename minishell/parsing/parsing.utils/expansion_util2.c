@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 20:22:59 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:13:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	get_var_name_len(t_parsing *parsing, void *data, int index, int i)
 	char	*str;
 
 	str = ft_strdup(data);
-	if (ft_isdigit(str[index + 1]))
+	if (ft_isdigit(str[index + 1]) || is_quote_char(str[index + 1]))
 	{
 		str[index + 2] = '\0';
 		parsing->var_name_len = 1;
