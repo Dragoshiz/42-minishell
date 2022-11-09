@@ -43,6 +43,7 @@ parsing/parsing.utils/tokens_util4.c\
 parsing/parsing.utils/expansion_util.c\
 parsing/parsing.utils/expansion_util2.c\
 parsing/parsing.utils/expansion_util3.c\
+parsing/parsing.utils/expansion_util4.c\
 parsing/parsing.utils/edge_cases.c\
 parsing/parsing.c\
 builtins/export/ft_export.c\

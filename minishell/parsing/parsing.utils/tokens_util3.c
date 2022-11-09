@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:28:20 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 22:29:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:00:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	analyse_quotes(t_parsing *parsing, t_token *current, int *ref)
 			parsing->m2 = i;
 			ref[parsing->m1] = 1;
 			ref[parsing->m2] = 1;
-			current->type = -1;
+			current->type = 0;
 			init_analyse_quotes(parsing);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 20:03:41 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 21:06:33 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # define WHITESPACE " \t\r\n\v"
+# define HEREDOC "<<"
 # define NUMPIPES 50
 # define MAX_PATH_LEN 256
 # define PIPE '|'
@@ -106,6 +107,7 @@ typedef struct s_parsing {
 	t_vars			*vars;
 	t_linked_list	*pipeline;
 	t_token_list	*token_list;
+	int				token_nbr;
 	int				line_len;
 	char			*p_start;
 	char			*p_end;
@@ -224,18 +226,15 @@ int		is_word_c(char c);
 
 // EDGE CASES UTILS
 
-void	edge_cases(t_parsing *parsing);
-void	last_pipe_empty(t_parsing *parsing);
-void	syntax_heredoc(t_parsing *parsing);
-void	syntax_redirect_output_append(t_parsing *parsing);
-void	syntax_redirect_output_overwrite(t_parsing *parsing);
-void	syntax_redirect_input(t_parsing *parsing);
+void	s_err_pipe(t_parsing *p);
+void	add_syntax_error(t_parsing *p, char *c, int i);
 
 // EXPANSION UTILITIES
 
+char	*insert_exit_status(t_parsing *parsing, void *data);
 char	*insert_expanded_string(t_parsing *parsing, void *data);
 void	check_expansion_quotes(char *quote, int *status, char c);
-void	expand_tokens(t_parsing *parsing);
+void	expand_variables(t_parsing *parsing);
 
 // TOKEN UTILITIES
 
@@ -249,6 +248,7 @@ void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
+int		count_token_list(t_token_list *list);
 
 // PIPELINE UTILITIES
 
@@ -256,6 +256,7 @@ void	split_pipeline(t_parsing *parsing);
 void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
+void	pipe_trim_white(t_parsing *parsing);
 
 // LINE UTIL
 
