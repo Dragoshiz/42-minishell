@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 10:37:22 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 11:02:59 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	ft_search_env_lst(t_token *next, t_vars *vars)
 					(env->next->data, token->data) == 1)
 			{
 				tmp = env->next;
-				env->next = env->next->next;
+				if (env->next->next != NULL)
+				{
+					env->next = env->next->next;
+					printf("%s\n", env->next->data);
+				}
 				free(tmp->data);
 				free(tmp);
 				break ;
