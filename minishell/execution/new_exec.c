@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 08:46:17 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 21:02:22 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,46 +52,46 @@ int	ft_size_rl(char *line, int size_delim)
 	return (i);
 }
 
-int	ft_get_hrdoc(t_token *current, t_iovars *iov)
+void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 {
 	char		*line;
 	char		*delim;
-	int			size_delim;
-	t_token		*nxt;
+	size_t		size_delim;
+	t_token		*curr;
 
-	nxt = current;
-	if (ft_strlen(current->data) < 3)
-		nxt = current->next;
-	delim = ft_strtrim(nxt->data, "<<");
+	curr = current->next;
+	delim = curr->data;
+	curr->type = 8;
 	size_delim = ft_strlen(delim);
 	pipe(iov->hrdc_pipe);
 	while (1)
 	{
 		line = readline("> ");
-		size_delim = ft_size_rl(nxt->data, size_delim);
-		if (ft_strncmp(line, delim, size_delim) == 0)
+		if ((ft_strncmp(line, delim, size_delim) == 0)
+			&& (ft_strlen(line) == size_delim))
 			break ;
 		line = ft_custom_strjoin(line, "\n");
-		write(iov->hrdc_pipe[1], line, ft_size_rl(line, size_delim));
+		write(iov->hrdc_pipe[1], line, ft_strlen(line));
 		free(line);
 	}
 	free(line);
-	free(delim);
+	iov->hv_heredoc = 1;
 	close(iov->hrdc_pipe[1]);
-	return (iov->hrdc_pipe[0]);
 }
 
-int	ft_get_fin(t_token *current)//it steps here when HEREDOC
+int	ft_get_fin(t_token *current)
 {
 	int		fdin;
 	char	*filename;
-	t_token	*nxt;
+	t_token	*curr;
 
-	nxt = current;
-	if (ft_strlen(nxt->data) < 2)
-		nxt = current->next;
-	filename = ft_strtrim(nxt->data, "<");
+	curr = current->next;
+	fdin = 0;
+	if (curr->data == NULL)
+		return (fdin);
+	filename = ft_strdup(curr->data);
 	fdin = open(filename, O_RDONLY);
+	curr->type = 8;
 	if (fdin < 0)
 	{
 		g_exit = 1;
@@ -105,12 +105,14 @@ int	ft_appnd(t_token *current)
 {
 	int		fdout;
 	char	*filename;
-	t_token	*nxt;
+	t_token	*curr;
 
-	nxt = current;
-	if (ft_strlen(nxt->data) < 3)
-		nxt = current->next;
-	filename = ft_strtrim(nxt->data, ">>");
+	curr = current->next;
+	fdout = 1;
+	if (curr->data == NULL)
+		return (fdout);
+	filename = ft_strdup(curr->data);
+	curr->type = 8;
 	fdout = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 	if (fdout < 0)
 	{
@@ -125,12 +127,14 @@ int	ft_overwrite(t_token *current)
 {
 	int		fdout;
 	char	*filename;
-	t_token	*nxt;
+	t_token	*curr;
 
-	nxt = current;
-	if (ft_strlen(nxt->data) < 2)
-		nxt = current->next;
-	filename = ft_strtrim(nxt->data, ">");
+	curr = current->next;
+	fdout = 1;
+	if (curr->data == NULL)
+		return (fdout);
+	filename = ft_strdup(curr->data);
+	curr->type = 8;
 	fdout = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fdout < 0)
 	{
@@ -141,102 +145,65 @@ int	ft_overwrite(t_token *current)
 	return (fdout);
 }
 
-int	ft_get_meta(t_token *current, int i, t_iovars *iov)
+int	ft_get_meta(t_token *current, int type, t_iovars *iov)
 {
-	int	fdin;
+	int	fd;
 
-	fdin = 0;
-	if (i == 0)
-	{
-		fdin = ft_get_hrdoc(current, iov);
-		iov->hv_heredoc = 1;
-	}
-	if (i == 1)
-		fdin = ft_get_fin(current);
-	if (i == 2)
-		fdin = ft_appnd(current);
-	if (i == 3)
-		fdin = ft_overwrite(current);
-	return (fdin);
+	fd = 0;
+	if (type == 1)
+		fd = ft_get_fin(current);
+	if (type == 2)
+		fd = ft_appnd(current);
+	if (type == 3)
+		ft_get_hrdoc(current, iov);
+	if (type == 4)
+		fd = ft_overwrite(current);
+	return (fd);
 }
 
 int	ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 {
-	char	*meta[3];
-	int		i;
-	int		fdin;
-	t_token	*current;
+	int			fdin;
+	t_token		*curr;
 
-	meta[0] = "<<\0";//pipe n change read from pipe.->0
-	meta[1] = "<\0";//redirect input->0
-	meta[2] = NULL;
-	current = parse->token_list->head;
-	while (current->pipe_nbr != pipe_nbr)
-		current = current->next;
-	while (current->pipe_nbr < parse->num_cmds && current->pipe_nbr == pipe_nbr)
+	curr = parse->token_list->head;
+	while (curr->pipe_nbr != pipe_nbr)
+		curr = curr->next;
+	fdin = 0;
+	while (curr->pipe_nbr == pipe_nbr)
 	{
-		i = 0;
-		fdin = 0;
-		while (meta[i])
-		{
-			if (ft_strncmp(current->data, meta[i], ft_strlen(meta[i])) == 0)
-				fdin = ft_get_meta(current, i, iov);
-			i++;
-		}
-		if (!current->next)
+		if (curr->type == 1 && curr->next && curr->next->pipe_nbr == pipe_nbr)
+			fdin = ft_get_meta(curr, 1, iov);
+		if (curr->type == 3 && curr->next && curr->next->pipe_nbr == pipe_nbr)
+			fdin = ft_get_meta(curr, 3, iov);
+		if (curr->next == NULL)
 			break ;
-		current = current->next;
+		curr = curr->next;
 	}
 	return (fdin);
 }
 
 int	ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 {
-	const char	*meta[3];
-	int			i;
 	int			fdout;
-	t_token		*current;
+	t_token		*curr;
 
-	meta[0] = ">>\0";//append output->1
-	meta[1] = ">\0";//->1
-	meta[2] = NULL;
-	current = parse->token_list->head;
-	while (current->pipe_nbr != pipe_nbr)
-		current = current->next;
-	i = 0;
+	curr = parse->token_list->head;
+	while (curr->pipe_nbr != pipe_nbr)
+		curr = curr->next;
 	fdout = 1;
-	while (current->pipe_nbr == pipe_nbr && current->pipe_nbr == pipe_nbr)
+	while (curr->pipe_nbr == pipe_nbr)
 	{
-		while (meta[i])
-		{
-			if (ft_strncmp(current->data, meta[i], ft_strlen(meta[i])) == 0)
-				fdout = ft_get_meta(current, i + 2, iov);
-			i++;
-		}
-		if (!current->next)
+		if (curr->type == 2 && curr->next && curr->next->pipe_nbr == pipe_nbr)
+			ft_get_meta(curr, 2, iov);
+		if (curr->type == 4 && curr->next && curr->next->pipe_nbr == pipe_nbr)
+			ft_get_meta(curr, 4, iov);
+		if (curr->next == NULL)
 			break ;
-		current = current->next;
+		curr = curr->next;
 	}
 	return (fdout);
 }
-
-// void	ft_forknexec(t_parsing *parse, t_iovars *iov)
-// {
-// 	t_token	*current;
-// 	int		pid;
-
-// 	current = parse->token_list->head;
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (iov->hv_heredoc)
-// 			close(iov->hrdc_pipe[0]);
-// 		close()
-// 		if (execve(iov->cmd, vars->cmds, vars->env_sh) < 0)
-// 			ft_errmsg(vars, 1);
-// 	}
-// 	waitpid(vars->pid, NULL, 0);
-// }
 
 //ft_creates pipes
 void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
@@ -277,54 +244,101 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	return (NULL);
 }
 
-// void	ft_get_cmd(t_parsing *parse, t_iovars *iov)
-// {
-// 	t_token	*current;
-// 	t_token	*start;
-// 	int		i;
+void	ft_get_cmd(t_parsing *parse, t_iovars *iov, int pipe)
+{
+	t_token	*curr;
+	int		i;
 
-// 	current = parse->token_list->head
-// 	i = 0;
-// 	while (current != NULL)
-// 	{
-// 		if (current->data[0] != '<' && current->data[0] != '>')
-			
-// 	}
-// }
+	i = 0;
+	curr = parse->token_list->head;
+	while (curr != NULL && curr->type != 0)
+		curr = curr->next;
+	iov->vars->cmds = ft_calloc(count_token_list
+			(parse->token_list) + 1, sizeof(char *));
+	while (i < count_token_list(parse->token_list) && curr->pipe_nbr == pipe && curr->type == 0)
+	{
+		iov->vars->cmds[i] = ft_strdup(curr->data);
+		curr = curr->next;
+		if (curr == NULL)
+			break ;
+		i++;
+	}
+}
 
-// void	ft_forknexec(t_parsing *parse, t_iovars *iov)
-// {
-// 	int	pid;
+void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
+{
+	int	i;
 
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (iov->hv_heredoc)
-// 			close(iov->hrdc_pipe[0]);
-// 		if(execve(,))
-// 	}
-// }
+	i = 0;
+	if (parse->num_cmds != 1)
+	{
+		while (i < parse->num_cmds)
+		{
+			close(iov->pipefds[i][0]);
+			close(iov->pipefds[i][1]);
+			i++;
+		}
+	}
+}
+
+void	ft_forknexec(t_parsing *parse, t_iovars *iov)
+{
+	int	pid;
+	int	status;
+
+	(void)parse;
+	ft_close_pipes(parse, iov);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (iov->hv_heredoc)
+			close(iov->hrdc_pipe[0]);
+		if (execve(ft_find_arg_path(iov->vars, iov->vars->cmds[0]), iov->vars->cmds, iov->vars->env_sh) < 0)
+			perror("");
+	}
+	waitpid(pid, &status, 0);
+	g_exit = WEXITSTATUS(status);
+	if (iov->hv_heredoc)
+			close(iov->hrdc_pipe[0]);
+	close(iov->fdout);
+	dup2(STDIN_FILENO, iov->fdin);
+	dup2(STDOUT_FILENO, iov->fdout);
+}
+
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
 {
 	t_token	*current;
 	int		i;
 
 	i = 0;
+	iov->hv_heredoc = 0;
 	current = parse->token_list->head;
 	ft_create_pipes(parse, iov);
 	while (i < parse->num_cmds)
 	{
 		iov->fdin = ft_get_inp(iov, parse, i);
 		iov->fdout = ft_get_out(iov, parse, i);
+		ft_get_cmd(parse, iov, i);
 		if (i != 0)
 		{
 			close(iov->pipefds[i - 1][1]);
 			iov->fdin = iov->pipefds[i - 1][0];
 		}
-		dup2(STDIN_FILENO, iov->fdin);
+		if (iov->hv_heredoc)
+		{
+			dup2(iov->hrdc_pipe[0], STDIN_FILENO);
+			close(iov->hrdc_pipe[0]);
+		}
+		else
+		{
+			dup2(iov->fdin, STDIN_FILENO);
+			close(iov->fdin);
+		}
 		if (i != parse->num_cmds - 1)
 			iov->fdout = iov->pipefds[i][1];
-		dup2(STDOUT_FILENO, iov->fdout);
+		dup2(iov->fdout, STDOUT_FILENO);
+		ft_forknexec(parse, iov);
+		iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}
 }

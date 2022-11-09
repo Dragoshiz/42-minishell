@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 08:41:03 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 20:03:41 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
+# include <errno.h>
 # include "libft/libft.h"
 
 typedef struct s_parsing	t_parsing;
@@ -146,11 +147,9 @@ char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_count_args(t_vars *vars);
 void	ft_dup2nclose(int fd, int std);
 // pipes.c
-// void	ft_create_pipes(t_vars *vars);
-void	ft_close_pipes(t_vars *vars);
 char	*ft_get_filename(char *arg, int i);
-void	ft_get_cmd(t_vars *vars, char *arg);
-// int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
+// void	ft_get_cmd(t_vars *vars, char *arg);
+int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
 //searchers.c
 int		ft_find_in(t_vars *vars);
 int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
@@ -177,6 +176,7 @@ void	ft_get_export(t_vars *vars);
 void	ft_export(t_vars *vars);
 
 //export1.c
+int		ft_chk_chars(char *data);
 int		ft_hv_equal(char *curr_data);
 int		is_ordered(t_linked_list *exp_lst);
 int		ft_update_data(t_vars *vars, char	*data);
@@ -269,13 +269,14 @@ void	add_tail(t_linked_list *list, void *data);
 void	display_linked_list(t_linked_list *list);
 void	initialize_list(t_linked_list *list);
 int		count_linked_list(t_linked_list *list);
+int		count_token_list(t_token_list *list);
 void	delete_list(t_linked_list *list);
 
 //NEW EXEC
 void	ft_execv2(t_parsing *parse, t_iovars *iov);
 int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
 int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
-int		ft_get_hrdoc(t_token *current, t_iovars *iov);
+void	ft_get_hrdoc(t_token *current, t_iovars *iov);
 int		ft_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_create_pipes(t_parsing *parse, t_iovars *iov);

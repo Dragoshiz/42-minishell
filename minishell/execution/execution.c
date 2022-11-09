@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 15:16:28 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 19:58:55 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_init_exc(t_iovars *iov)
 	iov->tmpin = 0;
 	iov->tmpout = 0;
 	iov->fdin = 0;
-	iov->fdout = 0;
+	iov->fdout = 1;
 }
 
 void	ft_start_exec(t_vars *vars, t_iovars *iov, t_parsing *parse)

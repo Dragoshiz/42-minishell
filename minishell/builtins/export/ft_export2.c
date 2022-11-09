@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 10:38:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 16:59:05 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,25 @@ int	ft_chk_cur_env(t_linked_list *exp_lst, char *data)
 //checks if variable is a valid identifier
 int	ft_is_valid(t_token *curr, char *curr_data)
 {
-	if (ft_isalpha(curr_data[0]) == 0)
+	int	valid;
+	int	i;
+
+	i = 0;
+	valid = 0;
+	while (curr_data[i] && curr_data[i] != '=')
+	{
+		if (is_variable_char(curr_data[i]) == 0)
+			valid = 1;
+		i++;
+	}
+	if (valid == 1)
 	{
 		printf("minishell: export: '%s': not a valid identifier\n", curr_data);
 		curr = curr->next;
 		g_exit = 1;
-		return (1);
+		return (valid);
 	}
-	return (0);
+	return (valid);
 }
 
 //puts variables used after export in exp_lst and
