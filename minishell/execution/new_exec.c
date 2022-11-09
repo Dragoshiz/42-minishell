@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/07 23:10:38 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 08:46:17 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*ft_custom_strjoin(char *s1, char *s2)
 		j++;
 	}
 	p[i] = '\0';
-	if (*s2)
-		free(s2);
+	if (*s1)
+		free(s1);
 	return (p);
 }
 
@@ -81,7 +81,7 @@ int	ft_get_hrdoc(t_token *current, t_iovars *iov)
 	return (iov->hrdc_pipe[0]);
 }
 
-int	ft_get_fin(t_token *current)
+int	ft_get_fin(t_token *current)//it steps here when HEREDOC
 {
 	int		fdin;
 	char	*filename;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 04:12:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 10:46:48 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	fill_args(parsing);
 	debug_print_args(parsing->vars->args, parsing->vars->num_args);
 	display_token_list(parsing->token_list);
-	edge_cases(parsing);
+	// edge_cases(parsing);
 	syntax_errors(parsing);
 }
 

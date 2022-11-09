@@ -3,32 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/08 16:45:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 10:37:22 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_search_env_lst(t_token *curr, t_vars *vars)
+int	ft_is_equal(char *env_data, char *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (env_data[i] != '=' && env_data[i])
+		i++;
+	if (ft_strlen(data) == i)
+		return (1);
+	return (0);
+}
+
+int	ft_chk_equal(char *data)
+{
+	while (*data)
+	{
+		if (*data == '=')
+			return (1);
+		data++;
+	}
+	return (0);
+}
+
+void	ft_search_env_lst(t_token *next, t_vars *vars)
 {
 	t_node	*env;
 	t_node	*tmp;
 	t_token	*token;
 
-	token = curr;
+	token = next;
 	while (token != NULL)
 	{
 		env = vars->env_list->head;
 		while (env->next != NULL)
 		{
-			if (ft_strncmp(env->next->data, token->data, ft_strlen(token->data)) == 0)
+			if (ft_chk_equal(token->data) == 1)
 			{
-				printf("%s\n", env->data);
+				printf("minishell: unset: `%s': not a valid identifier\n", token->data);
+				if (token->next != NULL)
+					token = token->next;
+				else
+					return ;
+			}
+			if (ft_strncmp(env->next->data, token->data,
+					ft_strlen(token->data)) == 0 && ft_is_equal \
+					(env->next->data, token->data) == 1)
+			{
 				tmp = env->next;
 				env->next = env->next->next;
+				free(tmp->data);
 				free(tmp);
 				break ;
 			}
@@ -37,6 +70,7 @@ void	ft_search_env_lst(t_token *curr, t_vars *vars)
 		token = token->next;
 	}
 }
+
 
 void	ft_unset(t_vars *vars)
 {
@@ -50,12 +84,12 @@ void	ft_unset(t_vars *vars)
 		if (curr->next == NULL)
 		{
 			printf("unset: not enough arguments\n");
-			g_exit = 1;
+			g_exit = 0;
 			return ;
 		}
 		if (curr->next != NULL && curr->next->pipe_nbr == pipe_nr)
 		{
-			ft_search_env_lst(curr, vars);
+			ft_search_env_lst(curr->next, vars);
 		}
 	}
 }
