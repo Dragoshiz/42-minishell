@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 11:46:06 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:31:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,19 @@ void	check_quotes(t_parsing *parsing, int i)
 	}
 	else if (parsing->quote == parsing->vars->line[i])
 		parsing->q_open = NULL;
+}
+
+void	pipe_trim_white(t_parsing *parsing)
+{
+	t_node		*current;
+	char		*p;
+
+	current = parsing->pipeline->head;
+	while (current)
+	{
+		p = ft_strtrim(current->data, " ");
+		free (current->data);
+		current->data = p;
+		current = current->next;
+	}
 }

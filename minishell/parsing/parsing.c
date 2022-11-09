@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 10:46:48 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 20:27:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static void	syntax_errors(t_parsing *parsing)
 	}
 	else if (parsing->vars->syntax_error == 2)
 		ft_putstr_fd("minish: syntax error unclosed quote \n", 1);
+}
+
+static void	edge_cases(t_parsing *parsing)
+{
+	s_err_pipe(parsing);
 }
 
 // Initialize parsing struct
@@ -49,6 +54,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->m2 = -1;
 	parsing->d_quote = DQUOTE;
 	parsing->s_quote = SQUOTE;
+	parsing->token_nbr = 0;
 }
 
 // Main function for Parsing & initial checks
@@ -57,15 +63,16 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	initialize_parsing(parsing, vars);
 	initialize_pipeline(parsing);
 	split_pipeline(parsing);
-	initialize_token_list(parsing);
-	expand_tokens(parsing);
-	split_tokens(parsing);
-	// token_trim_white(parsing);
-	// token_trim_quotes(parsing);
+	expand_variables(parsing);
+	pipe_trim_white(parsing);
 	fill_args(parsing);
+	initialize_token_list(parsing);
+	split_tokens(parsing);
+	token_trim_white(parsing);
+	token_trim_quotes(parsing);
 	debug_print_args(parsing->vars->args, parsing->vars->num_args);
 	display_token_list(parsing->token_list);
-	// edge_cases(parsing);
+	edge_cases(parsing);
 	syntax_errors(parsing);
 }
 
