@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:56:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 23:20:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/09 04:12:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ void	debug_print_args(char *args[], int num_args)
 		ft_putstr_fd("$\n", 1);
 		i++;
 	}
+}
+
+int	is_word_c(char c)
+{
+	if (is_whs_c(c) || is_quote_char(c) || is_redc(c))
+		return (0);
+	return (1);
 }

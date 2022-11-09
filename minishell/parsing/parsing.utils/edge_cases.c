@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 21:55:04 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 20:38:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:19:32 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	syntax_heredoc(t_parsing *parsing)
 		{
 			if (ft_strlen(current->data) == 2)
 			{
-				if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_redirection_char(current->next->data[0])) && current->type != 1 && current->next->type != 1)
+				if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_redc(current->next->data[0])) && current->type != 1 && current->next->type != 1)
 						parsing->vars->syntax_error = 3;
 			}
 			if ((ft_strncmp(current->data, "<<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 2)
@@ -98,7 +98,7 @@ void	syntax_redirect_output_append(t_parsing *parsing)
 		{
 			if (ft_strlen(current->data) == 2)
 			{
-				if ((ft_strncmp(current->data, ">>", 2) == 0) && (is_redirection_char(current->next->data[0])) && current->type != 1 && current->next->type != 1)
+				if ((ft_strncmp(current->data, ">>", 2) == 0) && (is_redc(current->next->data[0])) && current->type != 1 && current->next->type != 1)
 						parsing->vars->syntax_error = 4;
 			}
 			if ((ft_strncmp(current->data, ">>", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
@@ -130,7 +130,7 @@ void	syntax_redirect_output_overwrite(t_parsing *parsing)
 		{
 			if (ft_strlen(current->data) == 1)
 			{
-				if ((ft_strncmp(current->data, ">", 1) == 0) && (is_redirection_char(current->next->data[0])) && current->type != 1 && current->next->type != 1)
+				if ((ft_strncmp(current->data, ">", 1) == 0) && (is_redc(current->next->data[0])) && current->type != 1 && current->next->type != 1)
 						parsing->vars->syntax_error = 5;
 			}
 			if ((ft_strncmp(current->data, ">", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)
@@ -160,7 +160,7 @@ void	syntax_redirect_input(t_parsing *parsing)
 		{
 			if (ft_strlen(current->data) == 1)
 			{
-				if ((ft_strncmp(current->data, "<", 1) == 0) && (is_redirection_char(current->next->data[0])) && current->type != 1 && current->next->type != 1)
+				if ((ft_strncmp(current->data, "<", 1) == 0) && (is_redc(current->next->data[0])) && current->type != 1 && current->next->type != 1)
 						parsing->vars->syntax_error = 6;
 			}
 			if ((ft_strncmp(current->data, "<", 2) == 0) && (is_whitespace(current->next->data)) && current->type != 1)

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 12:09:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:19:30 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ int	is_variable_start_char(char c)
 //(digit, underscore, lower-case letter, upper-case letter)
 int	is_variable_char(char c)
 {
-	if (c != 95 && !(c >= 65 \
-	&& c <= 90) && !(c >= 97 && c <= 122) && !(c >= 48 && c <= 57))
-		return (0);
-	return (1);
+	if (c == 95 || (c >= 65 \
+	&& c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57))
+		return (1);
+	return (0);
 }
 
-int	is_redirection_char(char c)
+int	is_redc(char c)
 {
-	if (c != 60 && c != 62)
-		return (0);
-	return (1);
+	if (c == 60 || c == 62)
+		return (1);
+	return (0);
 }
 
 int	is_quote_char(char c)
 {
-	if (c != 36 && c != 39)
-		return (0);
-	return (1);
+	if (c == 36 || c == 39)
+		return (1);
+	return (0);
 }

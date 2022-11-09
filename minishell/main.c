@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/08 15:24:40 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 03:30:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_init_vars(t_vars *vars)
 	vars->hv_outfile = 0;
 	vars->hv_infile = 0;
 	vars->syntax_error = 0;
+	vars->s_err_c = '\0';
 }
 
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i)

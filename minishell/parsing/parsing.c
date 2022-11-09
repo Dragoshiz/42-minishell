@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 15:08:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 04:12:13 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@
 static void	syntax_errors(t_parsing *parsing)
 {
 	if (parsing->vars->syntax_error == 1)
-		ft_putstr_fd("minish: syntax error near unexpected token '|' \n", 1);
-	if (parsing->vars->syntax_error == 2)
+	{
+		ft_putstr_fd("minish: syntax error near unexpected token '", 1);
+		ft_putstr_fd(&parsing->vars->s_err_c, 1);
+		ft_putstr_fd("' \n", 1);
+	}
+	else if (parsing->vars->syntax_error == 2)
 		ft_putstr_fd("minish: syntax error unclosed quote \n", 1);
-	if (parsing->vars->syntax_error == 3)
-		ft_putstr_fd("minish: syntax error near unexpected token `<<' \n", 1);
-	if (parsing->vars->syntax_error == 4)
-		ft_putstr_fd("minish: syntax error near unexpected token `>>' \n", 1);
-	if (parsing->vars->syntax_error == 5)
-		ft_putstr_fd("minish: syntax error near unexpected token `>' \n", 1);
-	if (parsing->vars->syntax_error == 6)
-		ft_putstr_fd("minish: syntax error near unexpected token `<' \n", 1);
 }
 
 // Initialize parsing struct
@@ -48,7 +44,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->var_name = NULL;
 	parsing->var_value = NULL;
 	parsing->p_len = 0;
-	parsing->index = 0;
+	parsing->ix = 0;
 	parsing->m1 = -1;
 	parsing->m2 = -1;
 	parsing->d_quote = DQUOTE;
@@ -59,13 +55,13 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 void	parsing(t_parsing *parsing, t_vars *vars)
 {
 	initialize_parsing(parsing, vars);
-	initialize_pipeline(parsing);//free elsewhere
+	initialize_pipeline(parsing);
 	split_pipeline(parsing);
-	initialize_token_list(parsing);//free elsewhere
-	split_tokens(parsing);
+	initialize_token_list(parsing);
 	expand_tokens(parsing);
-	token_trim_white(parsing);
-	token_trim_quotes(parsing);
+	split_tokens(parsing);
+	// token_trim_white(parsing);
+	// token_trim_quotes(parsing);
 	fill_args(parsing);
 	debug_print_args(parsing->vars->args, parsing->vars->num_args);
 	display_token_list(parsing->token_list);

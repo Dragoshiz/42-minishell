@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:21:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 17:24:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:18:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	check_token_quotes(t_parsing *parsing, char *str, int i)
 }
 
 //function that checks for whitespace characters
-int	is_whitespace_char(char c)
+int	is_whs_c(char c)
 {
-	if (c != 32 && !(c >= 9 && c <= 13))
-		return (0);
-	return (1);
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }
 
 void	initialize_token_list(t_parsing *parsing)
@@ -62,7 +62,7 @@ void	add_token(t_parsing *parsing, void *data, int type)
 
 void	delete_token_list(t_token_list *list)
 {
-	t_token			*temp;
+	t_token	*temp;
 
 	while (list->head != NULL)
 	{

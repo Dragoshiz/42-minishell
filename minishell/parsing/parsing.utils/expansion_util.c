@@ -6,56 +6,56 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:53:08 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/07 20:13:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:47:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int	expand_var(t_parsing *parsing, t_token *current)
+static int	expand_var(t_parsing *parsing, t_node *current)
 {
 	char	*p;
 
 	parsing->len = ft_strlen(current->data);
-	while (current->data[parsing->index])
+	while (current->data[parsing->ix])
 	{
 		parsing->check = 0;
 		check_expansion_quotes(&parsing->quote, \
-		&parsing->status, current->data[parsing->index]);
-		if (parsing->status == 0 && current->data[parsing->index] == DOLLAR \
-		&& is_variable_char(current->data[parsing->index + 1]))
+		&parsing->status, current->data[parsing->ix]);
+		if (parsing->status == 0 && current->data[parsing->ix] == DOLLAR \
+		&& is_variable_char(current->data[parsing->ix + 1]))
 		{
 			p = insert_expanded_string(parsing, \
 			current->data);
 			free (current->data);
 			current->data = p;
 			parsing->check = 1;
-			return (parsing->index);
+			return (parsing->ix);
 		}
-		parsing->index++;
+		parsing->ix++;
 	}
-	return (parsing->index);
+	return (parsing->ix);
 }
 
 // expands variables in tokens
 void	expand_tokens(t_parsing *parsing)
 {
-	t_token	*current;
+	t_node	*current;
 
-	current = parsing->token_list->head;
+	current = parsing->pipeline->head;
 	while (current != NULL)
 	{
 		parsing->check = 0;
-		parsing->index = 0;
+		parsing->ix = 0;
 		parsing->status = 0;
 		parsing->quote = '\0';
 		while (1)
 		{
-			parsing->index = expand_var(parsing, current);
-			if ((parsing->index == parsing->len && parsing->check == 0) \
+			parsing->ix = expand_var(parsing, current);
+			if ((parsing->ix == parsing->len && parsing->check == 0) \
 			|| parsing->len == 0)
 				break ;
-			parsing->index = 0;
+			parsing->ix = 0;
 			parsing->status = 0;
 			parsing->quote = '\0';
 		}

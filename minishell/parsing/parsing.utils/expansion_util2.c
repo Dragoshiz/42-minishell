@@ -6,24 +6,24 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 12:13:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:49:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int	get_var_name_len(t_parsing *parsing, void *data, int index, int i)
+static int	get_var_name_len(t_parsing *parsing, void *data, int ix, int i)
 {
 	char	*str;
 
 	str = ft_strdup(data);
-	if (ft_isdigit(str[index + 1]) || is_quote_char(str[index + 1]))
+	if (ft_isdigit(str[ix + 1]) || is_quote_char(str[ix + 1]))
 	{
-		str[index + 2] = '\0';
+		str[ix + 2] = '\0';
 		parsing->var_name_len = 1;
 		i = 1;
 	}
-	else if (!ft_isdigit(str[index + 1]))
+	else if (!ft_isdigit(str[ix + 1]))
 	{
 		while (str[i])
 		{
@@ -36,7 +36,7 @@ static int	get_var_name_len(t_parsing *parsing, void *data, int index, int i)
 			i++;
 		}
 	}
-	parsing->var_name = ft_strdup(&str[index + 1]);
+	parsing->var_name = ft_strdup(&str[ix + 1]);
 	free (str);
 	return (i);
 }
@@ -84,7 +84,7 @@ char *p)
 	}
 	while (i < parsing->p_len)
 	{
-		p[i] = str[j + parsing->index + parsing->var_name_len + 1];
+		p[i] = str[j + parsing->ix + parsing->var_name_len + 1];
 		i++;
 		j++;
 	}
@@ -99,13 +99,13 @@ char	*insert_expanded_string(t_parsing *parsing, void *data)
 	char	*p;
 	char	*str;
 
-	i = parsing->index + 1;
-	i = get_var_name_len(parsing, data, parsing->index, i);
+	i = parsing->ix + 1;
+	i = get_var_name_len(parsing, data, parsing->ix, i);
 	str = get_var_value(parsing, data);
 	i = 0;
 	p = ft_calloc((parsing->p_len + 1), sizeof(char));
 	j = 0;
-	while (i < parsing->index)
+	while (i < parsing->ix)
 	{
 		p[i] = str[j];
 		i++;

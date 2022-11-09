@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/08 15:24:03 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/09 03:42:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include "libft/libft.h"
@@ -37,7 +37,7 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_iovars		t_iovars;
 typedef struct s_vars		t_vars;
 
-int		g_exit;
+int			g_exit;
 
 typedef struct s_token {
 	char			*data;
@@ -53,7 +53,7 @@ typedef struct s_token_list {
 }	t_token_list;
 
 typedef struct s_node {
-	void				*data;
+	char				*data;
 	struct s_node		*next;
 }	t_node;
 
@@ -76,6 +76,7 @@ typedef struct s_vars{
 	int				hv_outfile;
 	int				hv_append;
 	int				syntax_error;
+	char			s_err_c;
 	int				exit_status;
 	int				call_minish;
 	t_linked_list	*env_list; // working env list
@@ -119,7 +120,7 @@ typedef struct s_parsing {
 	char			*var_name;
 	char			*var_value;
 	int				p_len;
-	int				index;
+	int				ix;
 	int				m1;
 	int				m2;
 	char			d_quote;
@@ -208,6 +209,19 @@ void	parsing_cleanup(t_parsing *parsing);
 void	debug_print_args(char *args[], int num_args);
 void	display_token_list(t_token_list *list);
 
+// PARSING UTILS
+
+void	seek_word_r(t_parsing *parsing, char *str);
+void	seek_red_r(t_parsing *parsing, char *str);
+void	seek_whs_r(t_parsing *parsing, char *str);
+int		peek_dollar_quote(t_parsing *p, char *str);
+int		is_redc(char c);
+int		is_variable_char(char c);
+int		is_variable_start_char(char c);
+int		is_quote_char(char c);
+int		is_whs_c(char c);
+int		is_word_c(char c);
+
 // EDGE CASES UTILS
 
 void	edge_cases(t_parsing *parsing);
@@ -216,24 +230,21 @@ void	syntax_heredoc(t_parsing *parsing);
 void	syntax_redirect_output_append(t_parsing *parsing);
 void	syntax_redirect_output_overwrite(t_parsing *parsing);
 void	syntax_redirect_input(t_parsing *parsing);
-int		is_redirection_char(char c);
 
 // EXPANSION UTILITIES
 
 char	*insert_expanded_string(t_parsing *parsing, void *data);
 void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_tokens(t_parsing *parsing);
-int		is_variable_char(char c);
-int		is_variable_start_char(char c);
-int		is_quote_char(char c);
 
 // TOKEN UTILITIES
 
 void	remove_quote_pairs(char *p, int *ref, char *str);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
+int		token_value_red(t_parsing *parsing, char *str, int i);
+void	redir_error_check(t_parsing *p, char *str, int i);
 void	add_token(t_parsing *parsing, void *data, int type);
-int		is_whitespace_char(char c);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
