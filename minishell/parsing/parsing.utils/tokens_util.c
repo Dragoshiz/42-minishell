@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/10 15:02:18 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:47:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void	split_tokens(t_parsing *parsing)
 		if (parsing->q_open != NULL)
 			parsing->vars->syntax_error = 2;
 		current = current->next;
-		j++;
+		if (current)
+			j++;
 		parsing->num_cmds = j;
 	}
 	parsing->token_nbr = count_token_list(parsing->token_list);
