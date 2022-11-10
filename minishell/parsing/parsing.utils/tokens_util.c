@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 20:21:35 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:02:18 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	add_redir_token(t_parsing *p, char *str)
 	p->p_start = &str[p->ix];
 	if (!is_redc(str[p->ix + 1]))
 	{
-		p->p_end = &str[p->ix];
+		p->p_end = &str[p->ix + 1];
 		add_token(p, dup_range(p->p_start, p->p_end), \
 		token_value_red(p, str, i));
 		p->p_start = p->p_end;

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 03:05:01 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 20:20:12 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:01:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,4 @@ int	token_value_red(t_parsing *p, char *str, int i)
 	else if (str[i] == '>' && str[i + 1] == '<')
 		return (2);
 	return (0);
-}
-
-// counts tokens
-int	count_token_list(t_token_list *list)
-{
-	int		i;
-	t_token	*current;
-
-	current = list->head;
-	i = 0;
-	while (current != NULL)
-	{
-		i++;
-		current = current->next;
-	}
-	return (i);
 }
