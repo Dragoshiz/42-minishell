@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_util2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 11:39:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:47:43 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_tail_pipe(t_parsing *parsing, void *data)
 	node->pipe_nbr = 0;
 	if (!is_whitespace(data))
 		parsing->num_cmds++;
-	node->pipe_nbr = parsing->num_cmds;
+	node->pipe_nbr = parsing->num_cmds - 1;
 	if (parsing->pipeline->head == NULL)
 		parsing->pipeline->head = node;
 	else

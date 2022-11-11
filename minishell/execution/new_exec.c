@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 12:26:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:00:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int	ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 	curr = parse->token_list->head;
 	while (curr->pipe_nbr != pipe_nbr)
 		curr = curr->next;
-	fdin = dup(STDIN_FILENO);
+	iov->tmpin = dup(STDIN_FILENO);
 	while (curr->pipe_nbr == pipe_nbr && curr != NULL)
 	{
 		if (curr->type == 1 && curr->next && curr->next->pipe_nbr == pipe_nbr)
@@ -191,7 +191,7 @@ int	ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 	curr = parse->token_list->head;
 	while (curr->pipe_nbr != pipe_nbr)
 		curr = curr->next;
-	fdout = dup(STDOUT_FILENO);
+	iov->tmpout = dup(STDOUT_FILENO);
 	while (curr->pipe_nbr == pipe_nbr && curr != NULL)
 	{
 		if (curr->type == 2 && curr->next && curr->next->pipe_nbr == pipe_nbr)
@@ -237,7 +237,7 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	{
 		if (access(arg, F_OK) == 0)
 			return (arg);
-		cmd_path = ft_custom_strjoin(vars->paths[i], arg);
+		cmd_path = ft_strjoin(vars->paths[i], arg);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
@@ -319,6 +319,7 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, int num_cmd)
 	{
 		if (iov->hv_heredoc)
 			close(iov->hrdc_pipe[0]);
+		close(iov->fdin);
 		close(iov->fdout);
 		if (execve(ft_find_arg_path(iov->vars, iov->vars->cmds[0]), iov->vars->cmds, iov->vars->env_sh) < 0)
 		{
@@ -330,13 +331,10 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, int num_cmd)
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
+	dup2(iov->tmpin, STDIN_FILENO);
+	dup2(iov->tmpout, STDOUT_FILENO);
 	if (iov->hv_heredoc)
 		close(iov->hrdc_pipe[0]);
-	// dup2(iov->fdout, STDOUT_FILENO);
-	// dup2(iov->fdin, STDIN_FILENO);
-	// close(iov->fdin);
-	// if (num_cmd < 2)
-		// close(iov->pipefds[num_cmd - 1][1]);
 }
 
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
@@ -355,13 +353,13 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 		ft_get_cmd(parse, iov, i);
 		if (i != 0)
 		{
-			close(iov->fdout);
+			close(iov->pipefds[i - 1][1]);
 			iov->fdin = iov->pipefds[i - 1][0];
 		}
 		if (iov->hv_heredoc)
 		{
 			iov->fdin = iov->hrdc_pipe[0];
-			dup2(iov->fdin, STDIN_FILENO);
+			// dup2(iov->fdin, STDIN_FILENO);
 		}
 		else
 		{
