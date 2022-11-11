@@ -36,6 +36,7 @@ parsing/parsing.utils/env_list_util.c\
 parsing/parsing.utils/env_list_util2.c\
 parsing/parsing.utils/line_util.c\
 parsing/parsing.utils/pipeline_util.c\
+parsing/parsing.utils/pipeline_util2.c\
 parsing/parsing.utils/tokens_util.c\
 parsing/parsing.utils/tokens_util2.c\
 parsing/parsing.utils/tokens_util3.c\

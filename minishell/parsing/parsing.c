@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/10 22:52:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:40:16 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->p_start = vars->line;
 	parsing->p_end = parsing->line_end;
 	parsing->q_open = NULL;
-	parsing->num_cmds = 1;
+	parsing->num_cmds = 0;
 	parsing->quote = '\0';
 	parsing->len = 0;
 	parsing->status = 0;

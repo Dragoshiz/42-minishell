@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/10 23:04:37 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:48:45 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,18 @@ static void	init_split_tokens(t_parsing *p, char *str)
 
 void	split_tokens(t_parsing *parsing)
 {
-	int		j;
 	char	*str;
 	t_node	*current;
 
 	current = parsing->pipeline->head;
-	j = 0;
 	while (current)
 	{
-		parsing->num_cmds = j;
 		str = current->data;
 		init_split_tokens(parsing, str);
 		check_string(parsing, str);
 		if (parsing->q_open != NULL)
 			parsing->vars->syntax_error = 2;
 		current = current->next;
-		if (current)
-			j++;
 	}
 	parsing->token_nbr = count_token_list(parsing->token_list);
 }
