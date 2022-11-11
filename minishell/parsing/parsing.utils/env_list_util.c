@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 15:40:27 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/10 10:32:15 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	count_token_list(t_token_list *list)
 		i++;
 		current = current->next;
 	}
+	printf("%d", i);
 	return (i);
 }
 

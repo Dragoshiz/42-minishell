@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 20:48:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:09:53 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	ft_init_vars(t_vars *vars)
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 {
 	(void) iov;
-	// if (i == 1)
-	// 	ft_built_cd();
+	if (i == 1)
+		// ft_built_cd();
 	if (i == 2)
 		ft_built_pwd();
 	if (i == 3)
@@ -137,8 +137,6 @@ int	main(int argc, char *argv[], char *env[])
 	iov.vars = &vars;
 	vars.parse = &parsing;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
-	// execve("/Users/dimbrea/Documents/hello",NULL,NULL);
-	// perror("");
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
 	ft_get_export(&vars);
