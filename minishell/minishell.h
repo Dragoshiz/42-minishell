@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 11:48:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:50:17 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_parsing {
 // BUILTINS
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
+void	ft_echo(t_vars *vars);
 
 // EXECUTION
 

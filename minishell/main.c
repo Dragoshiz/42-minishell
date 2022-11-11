@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 20:48:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:50:43 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_init_vars(t_vars *vars)
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 {
 	(void) iov;
+	if (i == 0)
+		ft_echo(vars);
 	// if (i == 1)
 	// 	ft_built_cd();
 	if (i == 2)
