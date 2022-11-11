@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 11:46:06 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:42:11 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	split_pipeline(t_parsing *parsing)
 			if (parsing->vars->line[i + 1] == PIPE)
 				parsing->vars->syntax_error = 1;
 			parsing->p_end = &parsing->vars->line[i];
-			add_tail(parsing->pipeline, dup_range(parsing->p_start, \
+			add_tail_pipe(parsing, dup_range(parsing->p_start, \
 			parsing->p_end));
 			parsing->p_start = &parsing->p_end[1];
 		}
 		if (i + 1 == parsing->line_len)
-			add_tail(parsing->pipeline, dup_range(parsing->p_start, \
+			add_tail_pipe(parsing, dup_range(parsing->p_start, \
 			parsing->line_end));
 		i++;
 	}
@@ -82,4 +82,19 @@ void	check_quotes(t_parsing *parsing, int i)
 	}
 	else if (parsing->quote == parsing->vars->line[i])
 		parsing->q_open = NULL;
+}
+
+void	pipe_trim_white(t_parsing *parsing)
+{
+	t_node		*current;
+	char		*p;
+
+	current = parsing->pipeline->head;
+	while (current)
+	{
+		p = ft_strtrim(current->data, " ");
+		free (current->data);
+		current->data = p;
+		current = current->next;
+	}
 }

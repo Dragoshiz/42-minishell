@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 11:15:39 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:38:56 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,4 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	delete_list(vars->env_list);
 	free(vars->env_list);
 	ft_free_doublepoint(vars->env_sh);
-	ft_free_doublepoint(vars->paths);
 }

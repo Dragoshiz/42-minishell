@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_util4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 03:05:01 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 10:47:02 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/10 15:01:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,9 @@ int	token_value_red(t_parsing *p, char *str, int i)
 		return (3);
 	else if (str[i] == '>' && str[i + 1] == '>')
 		return (4);
+	else if (str[i] == '<' && str[i + 1] == '>')
+		return (1);
+	else if (str[i] == '>' && str[i + 1] == '<')
+		return (2);
 	return (0);
 }

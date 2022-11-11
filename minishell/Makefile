@@ -36,6 +36,7 @@ parsing/parsing.utils/env_list_util.c\
 parsing/parsing.utils/env_list_util2.c\
 parsing/parsing.utils/line_util.c\
 parsing/parsing.utils/pipeline_util.c\
+parsing/parsing.utils/pipeline_util2.c\
 parsing/parsing.utils/tokens_util.c\
 parsing/parsing.utils/tokens_util2.c\
 parsing/parsing.utils/tokens_util3.c\
@@ -43,6 +44,7 @@ parsing/parsing.utils/tokens_util4.c\
 parsing/parsing.utils/expansion_util.c\
 parsing/parsing.utils/expansion_util2.c\
 parsing/parsing.utils/expansion_util3.c\
+parsing/parsing.utils/expansion_util4.c\
 parsing/parsing.utils/edge_cases.c\
 parsing/parsing.c\
 builtins/export/ft_export.c\
