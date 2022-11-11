@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 19:58:55 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 14:53:52 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	{
 		vars->line = readline("minish >");
 		if (!vars->line)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		if (*vars->line && !is_whitespace(vars->line))
 		{
 			add_history(vars->line);

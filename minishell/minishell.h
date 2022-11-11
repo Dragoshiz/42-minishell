@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 21:06:33 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:09:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+// readline.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+// history.h"
 # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
 # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
@@ -56,6 +60,7 @@ typedef struct s_token_list {
 
 typedef struct s_node {
 	char				*data;
+	int					pipe_nbr;
 	struct s_node		*next;
 }	t_node;
 
@@ -193,6 +198,10 @@ void	ft_get_var(t_vars *vars);
 //unset.c
 void	ft_unset(t_vars *vars);
 
+//ft_cd.c
+void	ft_cd(t_vars *vars);
+
+
 // other
 int		is_whitespace(char *line);
 void	ft_cpy_env(t_vars *vars, char **env);
@@ -227,6 +236,7 @@ int		is_word_c(char c);
 // EDGE CASES UTILS
 
 void	s_err_pipe(t_parsing *p);
+void	s_err_redir(t_parsing *p);
 void	add_syntax_error(t_parsing *p, char *c, int i);
 
 // EXPANSION UTILITIES
@@ -243,12 +253,11 @@ void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
 int		token_value_red(t_parsing *parsing, char *str, int i);
 void	redir_error_check(t_parsing *p, char *str, int i);
-void	add_token(t_parsing *parsing, void *data, int type);
+void	add_token(t_parsing *parsing, void *data, int type, t_node *current);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
-int		count_token_list(t_token_list *list);
 
 // PIPELINE UTILITIES
 
@@ -257,6 +266,7 @@ void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
 void	pipe_trim_white(t_parsing *parsing);
+void	add_tail_pipe(t_parsing *parsing, void *data);
 
 // LINE UTIL
 

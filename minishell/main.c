@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 20:48:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:19:09 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	ft_init_vars(t_vars *vars)
 void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 {
 	(void) iov;
-	// if (i == 1)
-	// 	ft_built_cd();
+	if (i == 1)
+		ft_cd(vars);
 	if (i == 2)
 		ft_built_pwd();
 	if (i == 3)
@@ -81,7 +81,7 @@ void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 int	check_builtins(t_vars *vars, t_iovars *iov)
 {
 	int				i;
-	int				len;
+	size_t			len;
 	t_token			*curr;
 	const char		*builtins[10];
 
@@ -96,14 +96,17 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 	builtins[8] = "$?\0";
 	builtins[9] = NULL;
 	i = 0;
-	len = ft_strlen(vars->args[0]);
 	curr = vars->parse->token_list->head;
+	len = ft_strlen(curr->data);
 	while (builtins[i])
 	{
 		if (ft_strncmp(curr->data, builtins[i], len) == 0)
 		{
-			ft_builtins(vars, iov, i);
-			return (1);
+			if (len == ft_strlen(builtins[i]))
+			{
+				ft_builtins(vars, iov, i);
+				return (1);
+			}
 		}
 		i++;
 	}
@@ -118,7 +121,7 @@ void	ft_ctrl(int sig)
 		rl_on_new_line();
 		printf("\n");
 		rl_redisplay();
-		// signal(SIGINT, SIG_K);
+		g_exit = 130;
 	}
 }
 
@@ -137,8 +140,6 @@ int	main(int argc, char *argv[], char *env[])
 	iov.vars = &vars;
 	vars.parse = &parsing;
 	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
-	// execve("/Users/dimbrea/Documents/hello",NULL,NULL);
-	// perror("");
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
 	ft_get_export(&vars);

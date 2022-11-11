@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 17:36:51 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 16:32:49 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 11:19:35 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_put_backsl(t_vars *vars)
 	i = 0;
 	while (vars->paths[i])
 	{
-		vars->paths[i] = ft_strjoin(vars->paths[i], "/");
+		vars->paths[i] = ft_custom_strjoin(vars->paths[i], "/");
 		i++;
 	}
 }

@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 10:41:25 by vfuhlenb         ###   ########.fr       */
+/*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
+/*   Updated: 2022/11/11 16:18:54 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-1. if type zero and not the first token -> print
-2. if second token is "-n" then print without newlines
-
-print all folling arguments with type 0 in current pipe
-*/
-
-static void	echo_print(t_vars *vars)
-{
-
-}
-
-void	ft_echo(t_vars *vars)
+void	ft_cd(t_vars *vars)
 {
 	t_token	*curr;
 	int		pipe_nr;
+	char	*home;
 
 	curr = vars->parse->token_list->head;
 	pipe_nr = curr->pipe_nbr;
-	if (ft_strncmp(curr->data, "echo", 4) == 0)
+	home = getenv("HOME");
+	if (strncmp(curr->data, "cd", 2) == 0)
 	{
 		if ((curr->next != NULL && curr->next->pipe_nbr != pipe_nr)
 			|| curr->next == NULL)
+			chdir(home);
+		else if (curr->next->pipe_nbr == pipe_nr && curr->next)
 		{
-			echo_print(vars);
-			g_exit = 0;
-			return ;
+			if (chdir(curr->next->data) != 0)
+			{
+				printf("minishell: cd: %s: No such file or directory\n"\
+					, curr->next->data);
+				g_exit = 1;
+			}
 		}
+		g_exit = 0;
 	}
 }
