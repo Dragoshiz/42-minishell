@@ -53,6 +53,7 @@ builtins/export/ft_export2.c\
 builtins/ft_unset.c\
 builtins/ft_env.c\
 builtins/ft_echo.c\
+builtins/ft_cd.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)

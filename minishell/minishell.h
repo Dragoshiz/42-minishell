@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 16:50:17 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 23:47:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-readline.h"
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-history.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+// readline.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+// history.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -198,6 +198,10 @@ int		ft_is_valid(t_token *curr, char *curr_data);
 void	ft_get_var(t_vars *vars);
 //unset.c
 void	ft_unset(t_vars *vars);
+
+//ft_cd.c
+void	ft_cd(t_vars *vars);
+
 
 // other
 int		is_whitespace(char *line);

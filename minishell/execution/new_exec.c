@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 21:02:22 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:00:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,11 @@ int	ft_get_meta(t_token *current, int type, t_iovars *iov)
 	if (type == 1)
 		fd = ft_get_fin(current);
 	if (type == 2)
-		fd = ft_appnd(current);
+		fd = ft_overwrite(current);
 	if (type == 3)
 		ft_get_hrdoc(current, iov);
 	if (type == 4)
-		fd = ft_overwrite(current);
+		fd = ft_appnd(current);
 	return (fd);
 }
 
@@ -169,8 +169,8 @@ int	ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 	curr = parse->token_list->head;
 	while (curr->pipe_nbr != pipe_nbr)
 		curr = curr->next;
-	fdin = 0;
-	while (curr->pipe_nbr == pipe_nbr)
+	iov->tmpin = dup(STDIN_FILENO);
+	while (curr->pipe_nbr == pipe_nbr && curr != NULL)
 	{
 		if (curr->type == 1 && curr->next && curr->next->pipe_nbr == pipe_nbr)
 			fdin = ft_get_meta(curr, 1, iov);
@@ -191,13 +191,13 @@ int	ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 	curr = parse->token_list->head;
 	while (curr->pipe_nbr != pipe_nbr)
 		curr = curr->next;
-	fdout = 1;
-	while (curr->pipe_nbr == pipe_nbr)
+	iov->tmpout = dup(STDOUT_FILENO);
+	while (curr->pipe_nbr == pipe_nbr && curr != NULL)
 	{
 		if (curr->type == 2 && curr->next && curr->next->pipe_nbr == pipe_nbr)
-			ft_get_meta(curr, 2, iov);
+			fdout = ft_get_meta(curr, 2, iov);
 		if (curr->type == 4 && curr->next && curr->next->pipe_nbr == pipe_nbr)
-			ft_get_meta(curr, 4, iov);
+			fdout = ft_get_meta(curr, 4, iov);
 		if (curr->next == NULL)
 			break ;
 		curr = curr->next;
@@ -211,6 +211,8 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 	int	i;
 
 	i = 0;
+	if (parse->num_cmds == 1)
+		return ;
 	iov->pipefds = malloc(sizeof(int *) * (parse->num_cmds - 1));
 	while (i < parse->num_cmds - 1)
 	{
@@ -218,7 +220,7 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 		if (pipe(iov->pipefds[i]) < 0)
 		{
 			perror("");
-			exit(1);
+			g_exit = 1;
 		}
 		i++;
 	}
@@ -244,6 +246,28 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	return (NULL);
 }
 
+int		ft_tokens_inpipe(t_parsing *parse, int pipe)
+{
+	t_token	*curr;
+	int		i;
+
+	curr = parse->token_list->head;
+	while (curr->pipe_nbr != pipe)
+		curr = curr->next;
+	while (curr != NULL && curr->pipe_nbr == pipe && curr->type != 0)
+	{
+		curr = curr->next;
+		if (curr == NULL)
+			break ;
+	}
+	i = 0;
+	while (curr != NULL && curr->type == 0 && curr->pipe_nbr == pipe)
+	{
+		i++;
+		curr = curr->next;
+	}
+	return (i);
+}
 void	ft_get_cmd(t_parsing *parse, t_iovars *iov, int pipe)
 {
 	t_token	*curr;
@@ -251,13 +275,15 @@ void	ft_get_cmd(t_parsing *parse, t_iovars *iov, int pipe)
 
 	i = 0;
 	curr = parse->token_list->head;
-	while (curr != NULL && curr->type != 0)
+	while (curr != NULL && curr->type != 0 && curr->pipe_nbr != pipe)
 		curr = curr->next;
-	iov->vars->cmds = ft_calloc(count_token_list
-			(parse->token_list) + 1, sizeof(char *));
-	while (i < count_token_list(parse->token_list) && curr->pipe_nbr == pipe && curr->type == 0)
+	if (curr == NULL)
+		return ;
+	iov->vars->cmds = ft_calloc(ft_tokens_inpipe(parse, pipe) + 1, sizeof(char *));
+	while (curr->pipe_nbr == pipe && curr->type == 0)
 	{
 		iov->vars->cmds[i] = ft_strdup(curr->data);
+		curr->type = 8;
 		curr = curr->next;
 		if (curr == NULL)
 			break ;
@@ -272,37 +298,43 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	i = 0;
 	if (parse->num_cmds != 1)
 	{
-		while (i < parse->num_cmds)
+		while (i < parse->num_cmds - 1)
 		{
-			close(iov->pipefds[i][0]);
 			close(iov->pipefds[i][1]);
+			close(iov->pipefds[i][0]);
 			i++;
 		}
 	}
 }
 
-void	ft_forknexec(t_parsing *parse, t_iovars *iov)
+void	ft_forknexec(t_parsing *parse, t_iovars *iov, int num_cmd)
 {
 	int	pid;
 	int	status;
 
 	(void)parse;
-	ft_close_pipes(parse, iov);
+	(void)num_cmd;
 	pid = fork();
 	if (pid == 0)
 	{
 		if (iov->hv_heredoc)
 			close(iov->hrdc_pipe[0]);
+		close(iov->fdin);
+		close(iov->fdout);
 		if (execve(ft_find_arg_path(iov->vars, iov->vars->cmds[0]), iov->vars->cmds, iov->vars->env_sh) < 0)
+		{
 			perror("");
+			close(iov->fdout);
+			close(iov->fdin);
+			ft_close_pipes(parse, iov);
+		}
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
+	dup2(iov->tmpin, STDIN_FILENO);
+	dup2(iov->tmpout, STDOUT_FILENO);
 	if (iov->hv_heredoc)
-			close(iov->hrdc_pipe[0]);
-	close(iov->fdout);
-	dup2(STDIN_FILENO, iov->fdin);
-	dup2(STDOUT_FILENO, iov->fdout);
+		close(iov->hrdc_pipe[0]);
 }
 
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
@@ -326,18 +358,19 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 		}
 		if (iov->hv_heredoc)
 		{
-			dup2(iov->hrdc_pipe[0], STDIN_FILENO);
-			close(iov->hrdc_pipe[0]);
+			iov->fdin = iov->hrdc_pipe[0];
+			// dup2(iov->fdin, STDIN_FILENO);
 		}
 		else
 		{
 			dup2(iov->fdin, STDIN_FILENO);
-			close(iov->fdin);
+			// close(iov->fdin);
 		}
-		if (i != parse->num_cmds - 1)
+		if (i != parse->num_cmds - 1 )
 			iov->fdout = iov->pipefds[i][1];
 		dup2(iov->fdout, STDOUT_FILENO);
-		ft_forknexec(parse, iov);
+		// close(iov->fdout);
+		ft_forknexec(parse, iov, i);
 		iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}
