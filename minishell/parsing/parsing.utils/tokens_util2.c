@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:21:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 22:18:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:47:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	initialize_token_list(t_parsing *parsing)
 }
 
 // adds a node at the tail
-void	add_token(t_parsing *parsing, void *data, int type)
+void	add_token(t_parsing *parsing, void *data, int type, t_node *current)
 {
 	t_token	*node;
 
 	node = ft_calloc(1, sizeof(t_token));
 	node->data = data;
-	node->pipe_nbr = parsing->num_cmds;
+	node->pipe_nbr = current->pipe_nbr;
 	node->type = type;
 	node->next = NULL;
 	if (parsing->token_list->head == NULL)

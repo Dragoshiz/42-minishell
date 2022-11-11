@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 09:49:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:48:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-// readline.h"
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-// history.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+history.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -60,6 +60,7 @@ typedef struct s_token_list {
 
 typedef struct s_node {
 	char				*data;
+	int					pipe_nbr;
 	struct s_node		*next;
 }	t_node;
 
@@ -231,6 +232,7 @@ int		is_word_c(char c);
 // EDGE CASES UTILS
 
 void	s_err_pipe(t_parsing *p);
+void	s_err_redir(t_parsing *p);
 void	add_syntax_error(t_parsing *p, char *c, int i);
 
 // EXPANSION UTILITIES
@@ -247,7 +249,7 @@ void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
 int		token_value_red(t_parsing *parsing, char *str, int i);
 void	redir_error_check(t_parsing *p, char *str, int i);
-void	add_token(t_parsing *parsing, void *data, int type);
+void	add_token(t_parsing *parsing, void *data, int type, t_node *current);
 void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);

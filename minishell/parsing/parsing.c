@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 09:40:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:52:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	syntax_errors(t_parsing *parsing)
 static void	edge_cases(t_parsing *parsing)
 {
 	s_err_pipe(parsing);
+	s_err_redir(parsing);
+
 }
 
 // Initialize parsing struct
