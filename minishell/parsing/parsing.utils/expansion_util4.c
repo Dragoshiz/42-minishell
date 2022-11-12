@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 21:18:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/12 21:29:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*insert_exit_status(t_parsing *parsing, void *data)
 	char	*p;
 	char	*str;
 
-	g_exit = 0;
 	parsing->var_value = ft_itoa(g_exit);
 	parsing->var_value_len = ft_strlen(parsing->var_value);
 	parsing->var_name_len = 1;
