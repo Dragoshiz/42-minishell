@@ -27,7 +27,6 @@ execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
 execution/execution.utils/searchers.c\
 execution/execution.utils/exit.c\
-execution/execution.utils/exec_file.c\
 execution/execution.c\
 execution/new_exec.c\
 parsing/parsing.utils/parsing_util.c\

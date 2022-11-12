@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 18:48:50 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/12 18:24:35 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,23 +309,22 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-void	ft_forknexec(t_parsing *parse, t_iovars *iov, int num_cmd)
+void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 {
-	int	pid;
-	int	status;
+	pid_t	pid;
+	int		status;
+	char	*cmd_path;
 
-	(void)parse;
-	(void)num_cmd;
+	cmd_path = ft_exe(parse, iov);
 	pid = fork();
 	if (pid == 0)
 	{
 		if (iov->hv_heredoc)
 			close(iov->hrdc_pipe[0]);
-		// close(iov->fdin);
-		// close(iov->fdout);
-		if (execve(ft_find_arg_path(iov->vars, iov->vars->cmds[0]), iov->vars->cmds, iov->vars->env_sh) < 0)
+		if (execve(cmd_path, iov->vars->cmds, iov->vars->env_sh) < 0)
 		{
-			perror("");
+			g_exit = 127;
+			printf("minishell: %s: command not found\n", iov->vars->cmds[0]);
 			close(iov->fdout);
 			close(iov->fdin);
 			ft_close_pipes(parse, iov);
@@ -333,10 +332,30 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, int num_cmd)
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
+	close(iov->fdin);
 	dup2(iov->tmpin, STDIN_FILENO);
+	close(iov->tmpin);
 	dup2(iov->tmpout, STDOUT_FILENO);
+	close(iov->tmpout);
 	if (iov->hv_heredoc)
 		close(iov->hrdc_pipe[0]);
+	// free(cmd_path);
+}
+
+char	*ft_exe(t_parsing *parse, t_iovars *iov)
+{
+	t_token	*curr;
+	char	*cmd_path;
+
+	curr = parse->token_list->head;
+	if ((curr->data[0] == '.' || curr->data[0] == '/')
+		&& access(curr->data, X_OK) == 0)
+	{
+		cmd_path = curr->data;
+	}	
+	else
+		cmd_path = ft_find_arg_path(iov->vars, iov->vars->cmds[0]);
+	return (cmd_path);
 }
 
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
@@ -354,22 +373,23 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 		iov->fdout = ft_get_out(iov, parse, i);
 		ft_get_cmd(parse, iov, i);
 		if (iov->hv_heredoc)
-		{
 			iov->fdin = iov->hrdc_pipe[0];
-		}
 		else if (i != 0)
 		{
 			close(iov->pipefds[i - 1][1]);
 			iov->fdin = iov->pipefds[i - 1][0];
 		}
-		dup2(iov->fdin, STDIN_FILENO);
-		if (i != parse->num_cmds - 1 )
+		if (iov->fdin == 0)
+			dup2(iov->tmpin, STDOUT_FILENO);
+		else
+			dup2(iov->fdin, STDIN_FILENO);
+		if (i != parse->num_cmds - 1)
 			iov->fdout = iov->pipefds[i][1];
 		if (iov->fdout == 0)
 			dup2(iov->tmpout, STDOUT_FILENO);
 		else
 			dup2(iov->fdout, STDOUT_FILENO);
-		ft_forknexec(parse, iov, i);
+		ft_forknexec(parse, iov);
 		iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}

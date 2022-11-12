@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 11:52:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:01:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	edge_cases(t_parsing *parsing)
 {
 	s_err_pipe(parsing);
 	s_err_redir(parsing);
-
 }
 
 // Initialize parsing struct
