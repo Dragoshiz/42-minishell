@@ -6,26 +6,25 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 16:58:01 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:38:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-1. if type zero and not the first token -> print
-2. if second token is "-n" then print without newlines
-
-print all folling arguments with type 0 in current pipe
-*/
-
-static void	echo_print(t_vars *vars, int opt)
+static void	echo_print(t_token *curr, int pipe_nr, int opt) // TODO only print until the next pipe
 {
-	(void)vars;
-	if (opt == 2)
-		printf("ECHO\n"); // DEBUG
-	else if (opt == 1)
-		printf("ECHO -n\n"); // DEBUG
+	while (curr && curr->pipe_nbr == pipe_nr)
+	{
+		if (curr->type == 0)
+			printf("%s", curr->data);
+		if (curr->next && curr->next->pipe_nbr == pipe_nr)
+			printf(" ");
+		curr = curr->next;
+	}
+	if (opt == 0)
+		printf("\n");
+	g_exit = 0;
 }
 
 void	ft_echo(t_vars *vars)
@@ -35,12 +34,14 @@ void	ft_echo(t_vars *vars)
 
 	curr = vars->parse->token_list->head;
 	pipe_nr = curr->pipe_nbr;
-	if (ft_strncmp(curr->data, "echo", 4) == 0)
+	if (curr->next && ft_strncmp(curr->next->data, "-n", 2) == 0)
 	{
-		if ((curr->next != NULL && curr->next->data[0] == '-'))
-			echo_print(vars, 1);
-		else if (curr->next != NULL)
-			echo_print(vars, 2);
-		g_exit = 0;
+		curr = curr->next->next;
+		echo_print(curr, pipe_nr, 1);
+	}
+	else
+	{
+		curr = curr->next;
+		echo_print(curr, pipe_nr, 0);
 	}
 }
