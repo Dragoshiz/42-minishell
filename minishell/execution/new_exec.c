@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/12 18:24:35 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/12 19:01:37 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,15 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 	char	*cmd_path;
 
 	cmd_path = ft_exe(parse, iov);
+	if (!cmd_path)
+	{
+		close(iov->fdin);
+		dup2(iov->tmpin, STDIN_FILENO);
+		close(iov->tmpin);
+		dup2(iov->tmpout, STDOUT_FILENO);
+		close(iov->tmpout);
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -353,8 +362,9 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 	{
 		cmd_path = curr->data;
 	}	
-	else
-		cmd_path = ft_find_arg_path(iov->vars, iov->vars->cmds[0]);
+	else if (!iov->vars->cmds[0])
+		return (NULL);
+	cmd_path = ft_find_arg_path(iov->vars, iov->vars->cmds[0]);
 	return (cmd_path);
 }
 
