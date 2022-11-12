@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 11:49:28 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:26:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	init_split_tokens(t_parsing *p, char *str)
 	p->quote = '\0';
 }
 
+// splits into tokens. 0 if cmd or word, 1 >, 2 <, 3 >>, 4 <<
 void	split_tokens(t_parsing *parsing)
 {
 	char	*str;
