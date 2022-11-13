@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 18:33:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/13 15:12:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_ctrl(int sig)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		rl_redisplay();
 		g_exit = 130;
 	}
