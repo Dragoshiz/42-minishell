@@ -6,24 +6,24 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 22:38:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/13 11:05:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	echo_print(t_token *curr, int pipe_nr, int opt) // TODO only print until the next pipe
+static void	echo_print(t_token *curr, int pipe_nr, int opt)
 {
 	while (curr && curr->pipe_nbr == pipe_nr)
 	{
 		if (curr->type == 0)
-			printf("%s", curr->data);
+			ft_putstr_fd(curr->data, 1);
 		if (curr->next && curr->next->pipe_nbr == pipe_nr)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		curr = curr->next;
 	}
 	if (opt == 0)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	g_exit = 0;
 }
 
