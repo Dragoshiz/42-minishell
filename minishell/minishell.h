@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 23:50:30 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/13 15:17:07 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_iovars		t_iovars;
 typedef struct s_vars		t_vars;
 
-int			g_exit;
+int	g_exit;
 
 typedef struct s_token {
 	char			*data;
@@ -97,7 +97,7 @@ typedef struct s_iovars
 	char	*cmd;
 	char	*delim;
 	char	*filename;
-	int		**pipefds;// pipe file descriptors
+	int		**pipefds;
 	int		hrdc_pipe[2];
 	int		size_delim;
 	int		tmpin;
@@ -202,7 +202,6 @@ void	ft_unset(t_vars *vars);
 //ft_cd.c
 void	ft_cd(t_vars *vars);
 
-
 // other
 int		is_whitespace(char *line);
 void	ft_cpy_env(t_vars *vars, char **env);
@@ -285,6 +284,7 @@ int		count_token_list(t_token_list *list);
 void	delete_list(t_linked_list *list);
 
 //NEW EXEC
+char	*ft_exe(t_parsing *parse, t_iovars *iov);
 void	ft_execv2(t_parsing *parse, t_iovars *iov);
 int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
 int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);

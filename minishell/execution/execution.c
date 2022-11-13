@@ -6,104 +6,11 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 14:53:52 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/12 18:14:07 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//sets stdin and stdout
-// void	ft_set_stdin(t_iovars *iov)
-// {
-// 	iov->tmpin = dup(STDIN_FILENO);
-// 	iov->tmpout = dup(STDOUT_FILENO);
-// 	if (iov->tmpin < 0 || iov->tmpout < 0)
-// 	{
-// 		perror("");
-// 		exit(2);
-// 	}
-// }
-
-// //uses the fork function and executes
-// void	ft_forknexec(t_vars *vars, t_iovars *iov)
-// {
-// 	iov->cmd = ft_find_arg_path(vars, vars->cmds[0]);
-// 	if (!iov->cmd)
-// 	{
-// 		ft_errmsg(vars, 0);
-// 		return ;
-// 	}
-// 	vars->pid = fork();
-// 	if (vars->pid == 0)
-// 	{
-// 		close(iov->fdin);
-// 		close(iov->fdout);
-// 		if (vars->hv_heredoc)
-// 			close(iov->hrdc_pipe[0]);
-// 		if (execve(iov->cmd, vars->cmds, vars->env_sh) < 0)
-// 			ft_errmsg(vars, 1);
-// 	}
-// 	waitpid(vars->pid, NULL, 0);
-// }
-
-// //part2 of exec function
-// void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds)
-// {
-// 	ft_find_io(vars, iov, vars->args[numcmds]);
-// 	ft_get_cmd(vars, vars->args[numcmds]);
-// 	if (numcmds != 0)
-// 	{
-// 		close(vars->pipefds[numcmds - 1][1]);
-// 		iov->fdin = vars->pipefds[numcmds - 1][0];
-// 	}
-// 	ft_dup2nclose(iov->fdin, STDIN_FILENO);
-// 	if (vars->hv_outfile || vars->hv_append)
-// 		iov->fdout = ft_find_out(vars, iov, vars->args[numcmds]);
-// 	else
-// 	{
-// 		iov->fdout = dup(iov->tmpout);
-// 		close(iov->tmpout);
-// 	}
-// 	close(iov->fdout);
-// 	if (numcmds != vars->num_args - 1)
-// 		if (!vars->hv_outfile && !vars->hv_append)
-// 			iov->fdout = vars->pipefds[numcmds][1];
-// 	ft_dup2nclose(iov->fdout, STDOUT_FILENO);
-// 	ft_forknexec(vars, iov);
-// 	close(iov->tmpout);
-// 	ft_free_doublepoint(vars->cmds);
-// 	ft_set_redir(vars);
-// }
-
-// // //part1 of exec function
-// void	ft_exec_cmd(t_vars *vars, t_iovars *iov)
-// {
-// 	int	numcmds;
-
-// 	ft_set_stdin(iov);
-// 	ft_find_hrdc(vars, iov);
-// 	ft_find_in(vars);
-// 	if (vars->hv_heredoc)
-// 		iov->fdin = iov->hrdc_pipe[0];
-// 	else if (vars->hv_infile)
-// 			iov->fdin = ft_find_in(vars);
-// 	else
-// 	{
-// 		iov->fdin = dup(iov->tmpin);
-// 		close(iov->tmpin);
-// 	}
-// 	close(iov->fdin);
-// 	ft_create_pipes(vars);
-// 	numcmds = 0;
-// 	while (numcmds < vars->num_args)
-// 	{
-// 		ft_exec_utils(vars, iov, numcmds);
-// 		numcmds++;
-// 	}
-// 	ft_dup2nclose(iov->tmpin, STDIN_FILENO);
-// 	ft_dup2nclose(iov->tmpout, STDOUT_FILENO);
-// 	ft_close_pipes(vars);
-// }
 
 void	ft_init_exc(t_iovars *iov)
 {
@@ -129,6 +36,8 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 		if (!vars->line)
 		{
 			write(1, "exit\n", 5);
+			//we have to free everything also here, so we have to make a function to free everything
+			//each time while runs and also if exits.
 			break ;
 		}
 		if (*vars->line && !is_whitespace(vars->line))
