@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 11:43:01 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 13:09:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,13 +274,11 @@ int		ft_tokens_inpipe(t_parsing *parse, int pipe)
 	}
 	return (i);
 }
-void	ft_get_cmd(t_parsing *parse, t_iovars *iov, int pipe)
+static void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe)
 {
-	t_token	*curr;
 	int		i;
 
 	i = 0;
-	curr = parse->token_list->head;
 	while (curr != NULL && curr->type != 0 && curr->pipe_nbr != pipe)
 		curr = curr->next;
 	if (curr == NULL)
@@ -386,9 +384,12 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 	ft_create_pipes(parse, iov);
 	while (i < parse->num_cmds)
 	{
+		while (current->pipe_nbr != i)
+			current = current->next;
 		iov->fdin = ft_get_inp(iov, parse, i);
 		iov->fdout = ft_get_out(iov, parse, i);
-		ft_get_cmd(parse, iov, i);
+		if (!check_builtins(current, iov, i))
+			ft_get_cmd(parse, iov, current, i);
 		if (iov->hv_heredoc)
 			iov->fdin = iov->hrdc_pipe[0];
 		else if (i != 0)
@@ -400,13 +401,16 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 			dup2(iov->tmpin, STDOUT_FILENO);
 		else
 			dup2(iov->fdin, STDIN_FILENO);
-		if (i != parse->num_cmds - 1)
-			iov->fdout = iov->pipefds[i][1];
-		if (iov->fdout == 0)
-			dup2(iov->tmpout, STDOUT_FILENO);
-		else
-			dup2(iov->fdout, STDOUT_FILENO);
-		ft_forknexec(parse, iov);
+		if (iov->hv_builtin == 0)
+		{
+			if (i != parse->num_cmds - 1)
+				iov->fdout = iov->pipefds[i][1];
+			if (iov->fdout == 0)
+				dup2(iov->tmpout, STDOUT_FILENO);
+			else
+				dup2(iov->fdout, STDOUT_FILENO);
+			ft_forknexec(parse, iov);
+		}
 		iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}

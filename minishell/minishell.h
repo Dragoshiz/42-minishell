@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 11:51:31 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:51:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_iovars
 	int		fdin;
 	int		fdout;
 	int		hv_heredoc;
+	int		hv_builtin;
 	t_vars	*vars;
 }t_iovars;
 
@@ -138,7 +139,7 @@ typedef struct s_parsing {
 // BUILTINS
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
-void	ft_echo(t_vars *vars);
+void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 
 // EXECUTION
 
@@ -175,7 +176,7 @@ void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 
 void	ft_init_exc(t_iovars *iov);
-void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
+void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num);
 void	ft_built_env(t_vars *vars);
 void	ft_built_pwd(void);
 void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing);
@@ -207,8 +208,7 @@ void	ft_cd(t_vars *vars);
 int		is_whitespace(char *line);
 void	ft_cpy_env(t_vars *vars, char **env);
 void	ft_init_vars(t_vars *vars);
-int		check_builtins(t_vars *vars, t_iovars *iov);
-void	ft_builtins(t_vars *vars, t_iovars *iov, int i);
+int		check_builtins(t_token *current, t_iovars *iov, int pipe_num);
 int		ft_exec_file(t_parsing *parsing);
 
 // PARSING

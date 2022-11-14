@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 11:51:17 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:50:34 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ void	ft_init_vars(t_vars *vars)
 	vars->s_err_c = '\0';
 }
 
-void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
+void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 {
 	(void) iov;
 	if (i == 0)
-		ft_echo(vars);
+		ft_echo(current, iov, pipe_num);
 	if (i == 1)
-		ft_cd(vars);
+		ft_cd(iov->vars);
 	if (i == 2)
 		ft_built_pwd();
 	if (i == 3)
-		ft_export(vars);
+		ft_export(iov->vars);
 	if (i == 4)
-		ft_unset(vars);
+		ft_unset(iov->vars);
 	if (i == 5)
-		ft_built_env(vars);
+		ft_built_env(iov->vars);
 	else if (i == 6)
 	{
 		exit(0);
@@ -80,11 +80,10 @@ void	ft_builtins(t_vars *vars, t_iovars *iov, int i)
 }
 
 // TODO checks first argument against list of builtins and returns >0 if true
-int	check_builtins(t_vars *vars, t_iovars *iov)
+int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 {
 	int				i;
 	size_t			len;
-	t_token			*curr;
 	const char		*builtins[10];
 
 	builtins[0] = "echo\0";
@@ -96,15 +95,16 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 	builtins[6] = "exit\0";
 	builtins[7] = NULL;
 	i = 0;
-	curr = vars->parse->token_list->head;
-	len = ft_strlen(curr->data);
+	iov->hv_builtin = 0;
+	len = ft_strlen(current->data);
 	while (builtins[i])
 	{
-		if (ft_strncmp(curr->data, builtins[i], len) == 0)
+		if (ft_strncmp(current->data, builtins[i], len) == 0)
 		{
 			if (len == ft_strlen(builtins[i]))
 			{
-				ft_builtins(vars, iov, i);
+				iov->hv_builtin = 1;
+				ft_builtins(current, iov, i, pipe_num);
 				return (1);
 			}
 		}
@@ -127,7 +127,7 @@ int	main(int argc, char *argv[], char *env[])
 	vars.env_sh = NULL;
 	iov.vars = &vars;
 	vars.parse = &parsing;
-	ft_init_vars(&vars); // TODO needs to be reinitialized after each cycle
+	ft_init_vars(&vars);
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
 	ft_get_export(&vars);
