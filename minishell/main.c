@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 12:50:34 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:40:23 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 	if (i == 3)
 		ft_export(iov->vars);
 	if (i == 4)
-		ft_unset(iov->vars);
+		ft_unset(current, iov, pipe_num);
 	if (i == 5)
 		ft_built_env(iov->vars);
 	else if (i == 6)

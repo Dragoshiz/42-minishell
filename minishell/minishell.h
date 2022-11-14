@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 15:13:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:37:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-// readline.h"
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
 history.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -140,6 +140,7 @@ typedef struct s_parsing {
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
+void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
 
 // EXECUTION
 
@@ -198,8 +199,6 @@ void	ft_add2env(t_vars *vars, char *data);
 int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
 int		ft_is_valid(t_token *curr, char *curr_data);
 void	ft_get_var(t_vars *vars);
-//unset.c
-void	ft_unset(t_vars *vars);
 
 //ft_cd.c
 void	ft_cd(t_vars *vars);
