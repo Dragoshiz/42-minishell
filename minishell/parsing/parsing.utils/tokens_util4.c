@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 03:05:01 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/14 10:06:18 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 10:14:15 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	token_value_red(t_parsing *p, char *str, int i)
 
 void	add_echo_values(t_parsing *p)
 {
+	(void)p;
 	// t_token	*curr;
 	// int		pipe_nr;
 

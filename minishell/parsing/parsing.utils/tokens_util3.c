@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:28:20 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 20:55:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 10:18:00 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static void	init_analyse_quotes(t_parsing *parsing)
 static void	analyse_quotes(t_parsing *parsing, t_token *current, int *ref)
 {
 	int	i;
+	int x;
 
 	i = 0;
+	x = 1;
 	while (current->data[i])
 	{
 		if ((current->data[i] == parsing->d_quote || current->data[i] == \
@@ -43,7 +45,13 @@ static void	analyse_quotes(t_parsing *parsing, t_token *current, int *ref)
 			ref[parsing->m1] = 1;
 			ref[parsing->m2] = 1;
 			if (i > 0 && current->data[parsing->m1 - 1] == '$')
-				ref[parsing->m1 - 1] = 1;
+			{
+				while (current->data[parsing->m1 - x] == '$')
+				{
+					ref[parsing->m1 - x] = 1;
+					x++;
+				}
+			}
 			current->type = 0;
 			init_analyse_quotes(parsing);
 		}
