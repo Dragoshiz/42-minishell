@@ -6,13 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 11:37:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:46:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_is_equal(char *env_data, char *data)
+static int	ft_is_equal(char *env_data, char *data)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ int	ft_is_equal(char *env_data, char *data)
 	return (0);
 }
 
-int	ft_chk_equal(char *data)
+static int	ft_chk_equal(char *data)
 {
 	while (*data)
 	{
@@ -35,7 +35,7 @@ int	ft_chk_equal(char *data)
 	return (0);
 }
 
-void	ft_search_env_lst(t_token *next, t_vars *vars)
+static void	ft_search_env_lst(t_token *next, t_vars *vars)
 {
 	t_node	*env;
 	t_node	*tmp;
