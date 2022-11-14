@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 16:59:05 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/13 15:52:59 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_chk_cur_env(t_linked_list *exp_lst, char *data)
 	curr = exp_lst->head;
 	while (curr != NULL)
 	{
-		if (strncmp(curr->data, data, len) == 0)
+		if (ft_strncmp(curr->data, data, len) == 0)
 		{
 			if (data[len] != '=')
 				return (1);

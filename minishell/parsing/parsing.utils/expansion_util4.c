@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_util4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 14:20:23 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 10:02:57 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*insert_exit_status(t_parsing *parsing, void *data)
 	char	*p;
 	char	*str;
 
-	g_exit = 12;
+	// g_exit = 12;
 	parsing->var_value = ft_itoa(g_exit);
 	parsing->var_value_len = ft_strlen(parsing->var_value);
 	str = ft_strdup(data);

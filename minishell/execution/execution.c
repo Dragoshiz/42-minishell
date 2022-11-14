@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 18:14:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 11:42:57 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,27 @@ void	ft_start_exec(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	ft_execution(vars, iov, parse);
 }
 
+void	ft_ctrl(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		write(1, "\n", 1);
+		rl_redisplay();
+		g_exit = 1;
+	}
+}
+
 void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
+	g_exit = 0;
 	while (1)
 	{
 		vars->line = readline("minish >");
 		if (!vars->line)
 		{
 			write(1, "exit\n", 5);
-			//we have to free everything also here, so we have to make a function to free everything
-			//each time while runs and also if exits.
 			break ;
 		}
 		if (*vars->line && !is_whitespace(vars->line))
@@ -58,4 +69,7 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	delete_list(vars->env_list);
 	free(vars->env_list);
 	ft_free_doublepoint(vars->env_sh);
+	ft_close_pipes(parse, iov);
+	// ft_free_doublepointi(iov->pipefds);
+	ft_free_doublepoint(vars->paths);
 }

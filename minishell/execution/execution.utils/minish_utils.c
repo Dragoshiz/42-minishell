@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 12:26:13 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/13 18:04:58 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,20 @@ void	ft_free_doublepoint(char **to_free)
 		free(to_free[i]);
 		i++;
 	}
-free(to_free);
+	free(to_free);
+}
+
+void	ft_free_doublepointi(int **to_free)
+{
+	int	i;
+
+	i = 0;
+	while (to_free[i])
+	{
+		free(to_free[i]);
+		i++;
+	}
+	free(to_free);
 }
 
 void	ft_cleanup(t_vars *vars)
@@ -30,9 +43,6 @@ void	ft_cleanup(t_vars *vars)
 	ft_free_doublepoint(vars->env_sh);
 	ft_free_doublepoint(vars->cmds);
 }
-
-
-
 
 //counts number of arguments aka simple commands
 void	ft_count_args(t_vars *vars)
@@ -47,10 +57,8 @@ void	ft_count_args(t_vars *vars)
 
 void	ft_dup2nclose(int fd, int std)
 {
-	// (void)std;
 	dup2(fd, std);
 	close(fd);
-	// close(std);
 }
 
 void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing)

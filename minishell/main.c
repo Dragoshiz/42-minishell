@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 16:19:09 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 11:44:07 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 	builtins[4] = "unset\0";
 	builtins[5] = "env\0";
 	builtins[6] = "exit\0";
-	builtins[7] = "./\0";
-	builtins[8] = "$?\0";
-	builtins[9] = NULL;
+	builtins[7] = NULL;
 	i = 0;
 	curr = vars->parse->token_list->head;
 	len = ft_strlen(curr->data);
@@ -111,18 +109,6 @@ int	check_builtins(t_vars *vars, t_iovars *iov)
 		i++;
 	}
 	return (0);
-}
-
-void	ft_ctrl(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		printf("\n");
-		rl_redisplay();
-		g_exit = 130;
-	}
 }
 
 int	main(int argc, char *argv[], char *env[])
