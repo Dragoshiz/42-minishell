@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/13 15:17:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:21:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	split_tokens(parsing);
 	token_trim_white(parsing);
 	token_trim_quotes(parsing);
+	add_echo_values(parsing);
 	debug_print_args(parsing->vars->args, parsing->vars->num_args);
 	display_token_list(parsing->token_list);
 	edge_cases(parsing);

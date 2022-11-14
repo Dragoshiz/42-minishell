@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/13 14:13:03 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:37:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 static void	echo_print(t_token *curr, int pipe_nr, int opt)
 {
-	while (curr && curr->pipe_nbr == pipe_nr)
+	while (curr && curr->type == 0 && curr->pipe_nbr == pipe_nr)
 	{
-		if (curr->type == 0)
-			ft_putstr_fd(curr->data, 1);
+		ft_putstr_fd(curr->data, 1);
 		if (curr->next && curr->next->pipe_nbr == pipe_nr)
 			ft_putstr_fd(" ", 1);
 		curr = curr->next;
