@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 13:09:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:50:50 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int	ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr)
 		curr = curr->next;
 	fdin = 0;
 	iov->tmpin = dup(STDIN_FILENO);
+	iov->hv_out = 1;
 	while (curr->pipe_nbr == pipe_nbr && curr != NULL)
 	{
 		if (curr->type == 1 && curr->next && curr->next->pipe_nbr == pipe_nbr)
@@ -398,10 +399,10 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 			iov->fdin = iov->pipefds[i - 1][0];
 		}
 		if (iov->fdin == 0)
-			dup2(iov->tmpin, STDOUT_FILENO);
+			dup2(iov->tmpin, STDIN_FILENO);
 		else
 			dup2(iov->fdin, STDIN_FILENO);
-		if (iov->hv_builtin == 0)
+		if (!iov->hv_builtin) // if not builtin
 		{
 			if (i != parse->num_cmds - 1)
 				iov->fdout = iov->pipefds[i][1];
