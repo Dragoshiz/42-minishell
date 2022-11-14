@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/13 16:22:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:51:31 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	ft_put_backsl(t_vars *vars);
 void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse);
 // minish_utils.c
 void	ft_free_doublepoint(char **to_free);
+void	ft_free_doublepointi(int **to_free);
 char	*ft_find_arg_path(t_vars *vars, char *arg);
 void	ft_count_args(t_vars *vars);
 void	ft_dup2nclose(int fd, int std);
@@ -293,5 +294,8 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov);
 int		ft_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
+void	ft_close_pipes(t_parsing *parse, t_iovars *iov);
+void	ft_ctrl(int sig);
+void	ft_ctrl_hrdc(int sig);
 
 #endif

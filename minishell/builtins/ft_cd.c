@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/11 16:18:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/13 15:53:29 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_cd(t_vars *vars)
 	curr = vars->parse->token_list->head;
 	pipe_nr = curr->pipe_nbr;
 	home = getenv("HOME");
-	if (strncmp(curr->data, "cd", 2) == 0)
+	if (ft_strncmp(curr->data, "cd", 2) == 0)
 	{
 		if ((curr->next != NULL && curr->next->pipe_nbr != pipe_nr)
 			|| curr->next == NULL)

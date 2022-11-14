@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/12 19:01:37 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 11:43:01 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			return ;
 		if ((ft_strncmp(line, delim, size_delim) == 0)
 			&& (ft_strlen(line) == size_delim))
 			break ;
@@ -76,6 +78,7 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 	}
 	free(line);
 	iov->hv_heredoc = 1;
+	g_exit = 0;
 	close(iov->hrdc_pipe[1]);
 }
 
@@ -215,7 +218,7 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 	i = 0;
 	if (parse->num_cmds == 1)
 		return ;
-	iov->pipefds = malloc(sizeof(int *) * (parse->num_cmds - 1));
+	iov->pipefds = malloc(sizeof(int *) * (parse->num_cmds));
 	while (i < parse->num_cmds - 1)
 	{
 		iov->pipefds[i] = malloc(sizeof(int) * 2);
@@ -226,6 +229,7 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 		}
 		i++;
 	}
+	iov->pipefds[i] = NULL;
 }
 
 char	*ft_find_arg_path(t_vars *vars, char *arg)
@@ -245,7 +249,7 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 		free(cmd_path);
 		i++;
 	}
-	return (NULL);
+	return (arg);
 }
 
 int		ft_tokens_inpipe(t_parsing *parse, int pipe)
@@ -300,7 +304,7 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	i = 0;
 	if (parse->num_cmds != 1)
 	{
-		while (i < parse->num_cmds - 1)
+		while (iov->pipefds[i])
 		{
 			close(iov->pipefds[i][1]);
 			close(iov->pipefds[i][0]);
@@ -337,18 +341,21 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 			close(iov->fdout);
 			close(iov->fdin);
 			ft_close_pipes(parse, iov);
+			exit(g_exit);
 		}
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
-	close(iov->fdin);
+	if (iov->vars->cmds[0])
+		ft_free_doublepoint(iov->vars->cmds);
 	dup2(iov->tmpin, STDIN_FILENO);
 	close(iov->tmpin);
 	dup2(iov->tmpout, STDOUT_FILENO);
 	close(iov->tmpout);
 	if (iov->hv_heredoc)
 		close(iov->hrdc_pipe[0]);
-	// free(cmd_path);
+	if (cmd_path[0])
+		free(cmd_path);
 }
 
 char	*ft_exe(t_parsing *parse, t_iovars *iov)
