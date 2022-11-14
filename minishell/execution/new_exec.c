@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 15:50:50 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 18:36:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-void	ft_forknexec(t_parsing *parse, t_iovars *iov)
+void	ft_forknexec(t_parsing *parse, t_iovars *iov, int i)
 {
 	pid_t	pid;
 	int		status;
@@ -339,12 +339,16 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 			printf("minishell: %s: command not found\n", iov->vars->cmds[0]);
 			close(iov->fdout);
 			close(iov->fdin);
+			close(iov->tmpin);
+			close(iov->tmpout);
 			ft_close_pipes(parse, iov);
 			exit(g_exit);
 		}
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
+	if (parse->num_cmds > 1)
+		close(iov->pipefds[i - 1][0]);
 	if (iov->vars->cmds[0])
 		ft_free_doublepoint(iov->vars->cmds);
 	dup2(iov->tmpin, STDIN_FILENO);
@@ -399,9 +403,13 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 			iov->fdin = iov->pipefds[i - 1][0];
 		}
 		if (iov->fdin == 0)
+		{
 			dup2(iov->tmpin, STDIN_FILENO);
+		}
 		else
+		{
 			dup2(iov->fdin, STDIN_FILENO);
+		}
 		if (!iov->hv_builtin) // if not builtin
 		{
 			if (i != parse->num_cmds - 1)
@@ -410,7 +418,7 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 				dup2(iov->tmpout, STDOUT_FILENO);
 			else
 				dup2(iov->fdout, STDOUT_FILENO);
-			ft_forknexec(parse, iov);
+			ft_forknexec(parse, iov, i);
 		}
 		iov->hv_heredoc = 0; //see where to put this
 		i++;
