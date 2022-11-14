@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:46:53 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 14:59:58 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 20:49:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,39 @@
 
 //remember to FREE EXP_LST
 //copies env_lst to export list
-void	ft_get_export(t_vars *vars)
+void	ft_get_export(t_iovars *iov)
 {
 	t_node			*current;
 
-	current = vars->env_list->head;
-	vars->exp_lst = ft_calloc(1, sizeof(t_linked_list));
-	initialize_list(vars->exp_lst);
+	(void)iov;
+	current = iov->vars->env_list->head;
+	iov->vars->exp_lst = ft_calloc(1, sizeof(t_linked_list));
+	initialize_list(iov->vars->exp_lst);
 	while (current != NULL)
 	{
-		add_tail(vars->exp_lst, ft_strdup(current->data));
+		add_tail(iov->vars->exp_lst, ft_strdup(current->data));
 		current = current->next;
 	}
 }
 
 //check if export is the single command if not goes to ft_getvar
-void	ft_export(t_vars *vars)
+void	ft_export(t_iovars *iov, int num_pipe)
 {
 	t_token	*curr;
 	int		pipe_nr;
 
-	curr = vars->parse->token_list->head;
+	curr = iov->vars->parse->token_list->head;
 	pipe_nr = curr->pipe_nbr;
 	if (ft_strncmp(curr->data, "export", 6) == 0)
 	{
 		if ((curr->next != NULL && curr->next->pipe_nbr != pipe_nr)
 			|| curr->next == NULL)
 		{
-			ft_printnsortexp(vars->exp_lst);
+			ft_printnsortexp(iov, iov->vars->exp_lst, num_pipe);
 			g_exit = 0;
 			return ;
 		}
 	}
-	ft_get_var(vars);
+	ft_get_var(iov->vars);
 	g_exit = 0;
 }

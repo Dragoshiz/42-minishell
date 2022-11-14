@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 17:01:25 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 21:54:41 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 	if (i == 1)
 		ft_cd(iov->vars);
 	if (i == 2)
-		ft_built_pwd();
+		ft_built_pwd(iov, pipe_num);
 	if (i == 3)
-		ft_export(iov->vars);
+		ft_export(iov, pipe_num);
 	if (i == 4)
 		ft_unset(current, iov, pipe_num);
 	if (i == 5)
-		ft_built_env(iov->vars);
+		ft_built_env(iov, pipe_num);
 	else if (i == 6)
 	{
 		exit(0);
@@ -130,7 +130,7 @@ int	main(int argc, char *argv[], char *env[])
 	ft_init_vars(&vars);
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
-	ft_get_export(&vars);
+	ft_get_export(&iov);
 	ft_init_exc(&iov);
 	ft_start_exec(&vars, &iov, &parsing);
 	return (0);

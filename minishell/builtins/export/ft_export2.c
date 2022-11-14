@@ -6,14 +6,36 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/13 15:52:59 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/14 20:50:11 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+void	ft_print_exp(t_iovars *iov, t_node *curr, int i)
+{
+	if (iov->vars->parse->num_cmds > 1)
+	{
+		write(iov->pipefds[i][1], "declare -x ", 11);
+		write(iov->pipefds[i][1], curr->data, ft_strlen(curr->data));
+		write(iov->pipefds[i][1], "\n", 1);
+	}
+	else if (iov->hv_out)
+	{
+		write(iov->fdout, "declare -x ", 11);
+		write(iov->fdout, curr->data, ft_strlen(curr->data));
+		write(iov->fdout, "\n", 1);
+	}
+	else
+	{
+		write(STDOUT_FILENO, "declare -x ", 11);
+		write(STDOUT_FILENO, curr->data, ft_strlen(curr->data));
+		write(STDOUT_FILENO, "\n", 1);
+	}
+}
+
 //sorts and prints export
-void	ft_printnsortexp(t_linked_list *exp_lst)
+void	ft_printnsortexp(t_iovars *iov, t_linked_list *exp_lst, int i)
 {
 	t_node	*current;
 	char	*tmp;
@@ -34,7 +56,7 @@ void	ft_printnsortexp(t_linked_list *exp_lst)
 	current = exp_lst->head;
 	while (current != NULL)
 	{
-		printf("declare -x %s\n", current->data);
+		ft_print_exp(iov, current, i);
 		current = current->next;
 	}
 }

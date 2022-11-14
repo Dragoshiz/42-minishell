@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 17:03:33 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 21:55:20 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,13 @@ void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 
 void	ft_init_exc(t_iovars *iov);
 void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num);
-void	ft_built_env(t_vars *vars);
-void	ft_built_pwd(void);
+void	ft_built_env(t_iovars *iov, int pipe_num);
+void	ft_built_pwd(t_iovars *iov, int pipe_num);
 void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing);
 
 //export.c
-void	ft_get_export(t_vars *vars);
-void	ft_export(t_vars *vars);
+void	ft_get_export(t_iovars *iov);
+void	ft_export(t_iovars *iov, int num_pipe);
 
 //export1.c
 int		ft_chk_chars(char *data);
@@ -195,7 +195,7 @@ int		ft_update_data(t_vars *vars, char	*data);
 int		ft_update_exp(t_linked_list *exp_lst, char *data);
 
 //export2.c
-void	ft_printnsortexp(t_linked_list *exp_lst);
+void	ft_printnsortexp(t_iovars *iov, t_linked_list *exp_lst, int num_pipe);
 void	ft_add2env(t_vars *vars, char *data);
 int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
 int		ft_is_valid(t_token *curr, char *curr_data);
