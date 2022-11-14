@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/13 10:34:48 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:37:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_search_env_lst(t_token *next, t_vars *vars)
 				else
 					return ;
 			}
-			if (ft_strncmp(env->next->data, token->data, // TODO also re-assign tail
+			if (ft_strncmp(env->next->data, token->data,
 					ft_strlen(token->data)) == 0 && ft_is_equal \
 					(env->next->data, token->data) == 1)
 			{
@@ -87,7 +87,7 @@ void	ft_unset(t_vars *vars)
 	{
 		if (curr->next == NULL)
 		{
-			printf("unset: not enough arguments\n");
+			ft_putstr_fd("unset: not enough arguments\n", 1);
 			g_exit = 0;
 			return ;
 		}
