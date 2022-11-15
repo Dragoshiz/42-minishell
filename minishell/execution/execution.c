@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 11:02:36 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:00:20 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_ctrl(int sig)
 
 void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
-	g_exit = 0;
 	while (1)
 	{
 		vars->line = readline("minish >");
@@ -71,6 +70,5 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	free(vars->env_list);
 	ft_free_doublepoint(vars->env_sh);
 	ft_close_pipes(parse, iov);
-	// ft_free_doublepointi(iov->pipefds);
 	ft_free_doublepoint(vars->paths);
 }
