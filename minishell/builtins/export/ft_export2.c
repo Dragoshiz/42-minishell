@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 13:00:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:30:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int	ft_is_valid(t_token *curr, char *curr_data)
 	valid = 0;
 	while (curr_data[i] && curr_data[i] != '=')
 	{
-		if (is_variable_char(curr_data[i]) == 0)
+		if (is_variable_char(curr_data[i]) == 0 || \
+		is_variable_start_char(curr_data[0]) == 0)
 			valid = 1;
 		i++;
 	}
