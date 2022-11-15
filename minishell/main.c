@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 20:47:46 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:37:46 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,23 @@ void	ft_init_vars(t_vars *vars)
 	vars->s_err_c = '\0';
 }
 
+void	ft_exit(t_token *current, t_iovars *iov)
+{
+	// maybe no need for lng lng int
+	long long int	digit;
+
+	if (current->next)
+	{
+		digit = ft_atoi(current->next->data);
+		g_exit = digit % 256;
+	}
+	close(iov->tmpin);
+	close(iov->tmpout);
+	exit(g_exit);
+}
+
 void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 {
-	(void) iov;
 	if (i == 0)
 		ft_echo(current, iov, pipe_num);
 	if (i == 1)
@@ -72,11 +86,7 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 	if (i == 5)
 		ft_built_env(iov, pipe_num);
 	else if (i == 6)
-	{
-		exit(0);
-	}
-	// else if (i == 7)
-	// 	ft_executable(vars, iov);
+		ft_exit(current, iov);
 }
 
 // TODO checks first argument against list of builtins and returns >0 if true
@@ -99,14 +109,12 @@ int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 	len = ft_strlen(current->data);
 	while (builtins[i])
 	{
-		if (ft_strncmp(current->data, builtins[i], len) == 0)
+		if (ft_strncmp(current->data, builtins[i], len) == 0
+			&& len == ft_strlen(builtins[i]))
 		{
-			if (len == ft_strlen(builtins[i]))
-			{
-				iov->hv_builtin = 1;
-				ft_builtins(current, iov, i, pipe_num);
-				return (1);
-			}
+			iov->hv_builtin = 1;
+			ft_builtins(current, iov, i, pipe_num);
+			return (1);
 		}
 		i++;
 	}
@@ -132,6 +140,10 @@ int	main(int argc, char *argv[], char *env[])
 	env_list_create(&vars);
 	ft_get_export(&iov);
 	ft_init_exc(&iov);
+	iov.tmpin = dup(STDIN_FILENO);
+	iov.tmpout = dup(STDOUT_FILENO);
 	ft_start_exec(&vars, &iov, &parsing);
+	close(iov.tmpin);
+	close(iov.tmpout);
 	return (0);
 }

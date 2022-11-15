@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 16:38:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:16:15 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,6 @@ int	ft_update_data(t_vars *vars, char	*data)
 	}
 	return (0);
 }
-
-// int	ft_chk_chars(char *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (data[i])
-// 	{
-// 		if (ft_isalpha(data[i]) != 0 || data[i] == '_')
-// 			i++;
-// 		else
-// 			return (1);
-// 	}
-// 	return (0);
-// }
 
 //updates the export lst
 int	ft_update_exp(t_linked_list *exp_lst, char *data)

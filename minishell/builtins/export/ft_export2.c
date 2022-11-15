@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 20:50:11 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:15:31 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ft_add2env(t_vars *vars, char *data)
 	i = ft_strchr(data, '=');
 	if (i && *i == '=' && i-- != NULL)
 	{
-		printf("%c", *i);
 		if (ft_update_data(vars, data) == 1)
 		{
 			ft_update_exp(vars->exp_lst, data);
