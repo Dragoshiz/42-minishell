@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 15:14:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:56:39 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	split_pipeline(parsing);
 	expand_variables(parsing);
 	pipe_trim_white(parsing);
-	fill_args(parsing);
+	// fill_args(parsing); // DEBUG
 	initialize_token_list(parsing);
 	split_tokens(parsing);
 	token_trim_white(parsing);
 	token_trim_quotes(parsing);
-	debug_print_args(parsing->vars->args, parsing->vars->num_args);
-	display_token_list(parsing->token_list);
+	// debug_print_args(parsing->vars->args, parsing->vars->num_args); // DEBUG
+	// display_token_list(parsing->token_list); // DEBUG
 	edge_cases(parsing);
 	syntax_errors(parsing);
 }
@@ -83,4 +83,5 @@ void	parsing_cleanup(t_parsing *parsing)
 	free(parsing->pipeline);
 	delete_token_list(parsing->token_list);
 	free(parsing->token_list);
+	// ft_free_doublepoint(vars->args); // DEBUG
 }

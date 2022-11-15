@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 15:16:46 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:41:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 	if (ft_strncmp(env->data, curr->data, len) == 0 \
 		&& env->data[len] == '=')
 	{
-		free_node(env);
 		iov->vars->env_list->head = iov->vars->env_list->head->next;
+		free_node(env);
 		env = iov->vars->env_list->head;
 	}
 	while (env->next)
@@ -84,8 +84,8 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 	if (ft_strncmp(exp->data, curr->data, len) == 0 && \
 	(exp->data[len] == '=' || ft_strlen(exp->data) == len))
 	{
-		free_node(exp);
 		iov->vars->exp_lst->head = iov->vars->exp_lst->head->next;
+		free_node(exp);
 		exp = iov->vars->exp_lst->head;
 	}
 	while (exp->next)

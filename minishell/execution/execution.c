@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 15:18:46 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:01:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ void	ft_ctrl(int sig)
 	}
 }
 
+static void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
+{
+	delete_list(vars->exp_lst);
+	free(vars->exp_lst);
+	delete_list(vars->env_list);
+	free(vars->env_list);
+	ft_free_doublepoint(vars->env_sh);
+	ft_close_pipes(parse, iov);
+	ft_free_doublepoint(vars->paths);
+}
+
 void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
 	while (1)
@@ -58,16 +69,9 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 			if (!vars->syntax_error)
 				ft_execv2(parse, iov);
 			parsing_cleanup(parse);
-			ft_free_doublepoint(vars->args);
 		}
 		if (vars->line)
 			free(vars->line);
 	}
-	delete_list(vars->exp_lst);
-	free(vars->exp_lst);
-	delete_list(vars->env_list);
-	free(vars->env_list);
-	ft_free_doublepoint(vars->env_sh);
-	ft_close_pipes(parse, iov);
-	ft_free_doublepoint(vars->paths);
+	cleanup(vars, iov, parse);
 }
