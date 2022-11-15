@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 12:58:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:31:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	is_whitespace(char *line)
 
 void	ft_init_vars(t_vars *vars)
 {
-	vars->num_args = 0;
+	// vars->num_args = 0;
 	vars->num_env_sh = 0;
-	vars->hv_append = 0;
-	vars->hv_outfile = 0;
-	vars->hv_infile = 0;
+	// vars->hv_append = 0;
+	// vars->hv_outfile = 0;
+	// vars->hv_infile = 0;
 	vars->syntax_error = 0;
 	vars->s_err_c = '\0';
 }

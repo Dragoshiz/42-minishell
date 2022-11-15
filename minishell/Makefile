@@ -25,7 +25,6 @@ execution/execution.utils/minish_utils.c\
 execution/execution.utils/exec_utils.c\
 execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
-execution/execution.utils/searchers.c\
 execution/execution.utils/exit.c\
 execution/execution.c\
 execution/new_exec.c\

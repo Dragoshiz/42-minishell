@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 12:49:28 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 17:36:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,21 +340,15 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 		if (execve(cmd_path, iov->vars->cmds, iov->vars->env_sh) < 0)
 		{
 			g_exit = 127;
-			printf("minishell: %s: command not found\n", iov->vars->cmds[0]);
+			fprintf(stderr, "minishell: %s: command not found\n", iov->vars->cmds[0]);
 			// close(iov->fdout);
 			// close(iov->fdin);
 			close(iov->tmpin);
 			close(iov->tmpout);
 			ft_close_pipes(parse, iov);
 			free(cmd_path);
-			// ft_free_doublepoint(iov->vars->cmds);
-			delete_list(iov->vars->exp_lst);
-			free(iov->vars->exp_lst);
-			delete_list(iov->vars->env_list);
-			free(iov->vars->env_list);
-			ft_free_doublepoint(iov->vars->env_sh);
-			ft_close_pipes(parse, iov);
-			ft_free_doublepoint(iov->vars->paths);
+			parsing_cleanup(iov->vars->parse);
+			cleanup(iov->vars, iov, iov->vars->parse);
 			// if (iov->hv_heredoc)
 			// {
 			// 	close(iov->hrdc_pipe[1]);
@@ -373,6 +367,7 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 	// close(iov->tmpout);
 	if (iov->hv_heredoc)
 		close(iov->hrdc_pipe[0]);
+	// ft_free_doublepoint(iov->vars->cmds);
 	// if (cmd_path[0])
 	// 	free(cmd_path);
 }
@@ -394,7 +389,7 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 	return (cmd_path);
 }
 
-void	ft_execv2(t_parsing *parse, t_iovars *iov)
+voi<ft_execv2(t_parsing *parse, t_iovars *iov)
 {
 	t_token	*current;
 	int		i;

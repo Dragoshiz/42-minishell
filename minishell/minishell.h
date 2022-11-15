@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 15:14:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:32:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,13 @@ typedef struct s_linked_list {
 
 typedef struct s_vars{
 	char			**paths; // ENV list
-	char			**args; // array of commands for the executor
 	char			**env_sh;// cpy of env variable on startup
 	char			**cmds;// array of commandse
 	char			*line;
-	pid_t			pid;
-	int				num_args;
 	int				num_env_sh;
-	int				hv_infile;
-	int				hv_outfile;
-	int				hv_append;
 	int				syntax_error;
 	char			s_err_c;
 	int				exit_status;
-	int				call_minish;
 	t_linked_list	*env_list; // working env list
 	t_linked_list	*exp_lst;
 	t_parsing		*parse;
@@ -94,12 +87,12 @@ typedef struct s_vars{
 //iov stand for Input Output Variables
 typedef struct s_iovars
 {
-	char	*cmd;
-	char	*delim;
+	// char	*cmd;
+	// char	*delim;
 	char	*filename;
 	int		**pipefds;
 	int		hrdc_pipe[2];
-	int		size_delim;
+	// int		size_delim;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
@@ -136,6 +129,8 @@ typedef struct s_parsing {
 	char			d_quote;
 	char			s_quote;
 }t_parsing;
+
+void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse);
 
 // BUILTINS
 void	env_list_create(t_vars *vars);
