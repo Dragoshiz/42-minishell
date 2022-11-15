@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 11:37:46 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 12:58:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 	if (i == 3)
 		ft_export(iov, pipe_num);
 	if (i == 4)
-		ft_unset(iov->vars);
+		ft_unset(current, iov, pipe_num);
 	if (i == 5)
 		ft_built_env(iov, pipe_num);
 	else if (i == 6)

@@ -6,94 +6,105 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 11:37:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:41:06 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_is_equal(char *env_data, char *data)
-{
-	size_t	i;
+static void	unset_exp(t_iovars *iov, t_token *curr, size_t len);
+static void	unset_env(t_iovars *iov, t_token *curr, size_t len);
+static void	free_node(t_node *node);
 
-	i = 0;
-	while (env_data[i] != '=' && env_data[i])
-		i++;
-	if (ft_strlen(data) == i)
-		return (1);
-	return (0);
-}
-
-int	ft_chk_equal(char *data)
+void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 {
-	while (*data)
+	t_token	*curr;
+	size_t	len;
+
+	len = 0;
+	curr = current;
+	if (curr->next == NULL || (curr->next && curr->pipe_nbr != pipe_num))
 	{
-		if (*data == '=')
-			return (1);
-		data++;
+		ft_putstr_fd("unset: not enough arguments\n", 1);
+		g_exit = 0;
+		return ;
 	}
-	return (0);
+	else if (curr->next && curr->pipe_nbr == pipe_num)
+	{
+		while (curr->next && curr->pipe_nbr == pipe_num)
+		{
+			if (curr->next->type == 0 && \
+			is_variable_str(curr->next->data))
+			{
+				unset_exp(iov, curr->next, len);
+				unset_env(iov, curr->next, len);
+			}
+			curr = curr->next;
+		}
+	}
+	update_env_sh(iov->vars);
 }
 
-void	ft_search_env_lst(t_token *next, t_vars *vars)
+static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 {
 	t_node	*env;
 	t_node	*tmp;
-	t_token	*token;
 
-	token = next;
-	while (token != NULL)
+	len = ft_strlen(curr->data);
+	env = iov->vars->env_list->head;
+	if (ft_strncmp(env->data, curr->data, len) == 0 \
+		&& env->data[len] == '=')
 	{
-		env = vars->env_list->head;
-		while (env->next != NULL)
+		iov->vars->env_list->head = iov->vars->env_list->head->next;
+		free_node(env);
+		env = iov->vars->env_list->head;
+	}
+	while (env->next)
+	{
+		if (ft_strncmp(env->next->data, curr->data, len) == 0 \
+			&& env->next->data[len] == '=')
 		{
-			if (ft_chk_equal(token->data) == 1)
-			{
-				printf("minishell: unset: `%s': not a valid identifier\n", token->data);
-				if (token->next != NULL)
-					token = token->next;
-				else
-					return ;
-			}
-			if (ft_strncmp(env->next->data, token->data,
-					ft_strlen(token->data)) == 0 && ft_is_equal \
-					(env->next->data, token->data) == 1)
-			{
-				tmp = env->next;
-				if (env->next->next != NULL)
-				{
-					env->next = env->next->next;
-					printf("%s\n", env->next->data);
-				}
-				free(tmp->data);
-				free(tmp);
-				break ;
-			}
-			env = env->next;
+			tmp = env->next;
+			if (env->next)
+				env->next = env->next->next;
+			free_node(tmp);
 		}
-		token = token->next;
+		if (env->next)
+			env = env->next;
 	}
 }
 
-
-void	ft_unset(t_vars *vars)
+static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 {
-	t_token	*curr;
-	int		pipe_nr;
+	t_node	*exp;
+	t_node	*tmp;
 
-	curr = vars->parse->token_list->head;
-	pipe_nr = curr->pipe_nbr;
-	if (ft_strncmp(curr->data, "unset", 5) == 0)
+	len = ft_strlen(curr->data);
+	exp = iov->vars->exp_lst->head;
+	if (ft_strncmp(exp->data, curr->data, len) == 0 && \
+	(exp->data[len] == '=' || ft_strlen(exp->data) == len))
 	{
-		if (curr->next == NULL)
-		{
-			ft_putstr_fd("unset: not enough arguments\n", 1);
-			g_exit = 0;
-			return ;
-		}
-		if (curr->next != NULL && curr->next->pipe_nbr == pipe_nr)
-		{
-			ft_search_env_lst(curr->next, vars);
-		}
+		iov->vars->exp_lst->head = iov->vars->exp_lst->head->next;
+		free_node(exp);
+		exp = iov->vars->exp_lst->head;
 	}
+	while (exp->next)
+	{
+		if (ft_strncmp(exp->next->data, curr->data, len) == 0 && \
+		(exp->next->data[len] == '=' || ft_strlen(exp->next->data) == len))
+		{
+			tmp = exp->next;
+			if (exp->next)
+				exp->next = exp->next->next;
+			free_node(tmp);
+		}
+		if (exp->next)
+			exp = exp->next;
+	}
+}
+
+static void	free_node(t_node *node)
+{
+	free(node->data);
+	free(node);
 }

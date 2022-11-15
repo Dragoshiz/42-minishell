@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 11:15:31 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 15:30:56 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ft_add2env(t_vars *vars, char *data)
 			return ;
 		}
 		add_tail(vars->env_list, ft_strdup(data));
+		update_env_sh(vars);
 	}
 }
 
@@ -110,7 +111,8 @@ int	ft_is_valid(t_token *curr, char *curr_data)
 	valid = 0;
 	while (curr_data[i] && curr_data[i] != '=')
 	{
-		if (is_variable_char(curr_data[i]) == 0)
+		if (is_variable_char(curr_data[i]) == 0 || \
+		is_variable_start_char(curr_data[0]) == 0)
 			valid = 1;
 		i++;
 	}

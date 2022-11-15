@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 10:35:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 12:58:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 static void	echo_print(t_token *curr, int pipe_num, int opt, int fd)
 {
-	while (curr && curr->type == 0 && curr->pipe_nbr == pipe_num)
+	if (curr->type == 0)
 	{
-		ft_putstr_fd(curr->data, fd);
-		if (curr->next && curr->next->pipe_nbr == pipe_num)
-			ft_putstr_fd(" ", fd);
-		curr = curr->next;
+		while (curr && curr->type == 0 && curr->pipe_nbr == pipe_num)
+		{
+			ft_putstr_fd(curr->data, fd);
+			if (curr->next && curr->next->pipe_nbr == pipe_num)
+				ft_putstr_fd(" ", fd);
+			curr = curr->next;
+		}
 	}
 	if (opt == 0)
 		ft_putstr_fd("\n", fd);

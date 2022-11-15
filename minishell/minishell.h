@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 20:49:28 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 15:14:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-// readline.h"
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
-// history.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/\
+history.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -140,7 +140,9 @@ typedef struct s_parsing {
 // BUILTINS
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
+void	update_env_sh(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
+void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
 
 // EXECUTION
 
@@ -199,8 +201,6 @@ void	ft_add2env(t_vars *vars, char *data);
 int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
 int		ft_is_valid(t_token *curr, char *curr_data);
 void	ft_get_var(t_vars *vars);
-//unset.c
-void	ft_unset(t_vars *vars);
 
 //ft_cd.c
 void	ft_cd(t_vars *vars);
@@ -234,6 +234,7 @@ int		is_variable_start_char(char c);
 int		is_quote_char(char c);
 int		is_whs_c(char c);
 int		is_word_c(char c);
+int		is_variable_str(char *c);
 
 // EDGE CASES UTILS
 
@@ -260,7 +261,7 @@ void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
-void	add_echo_values(t_parsing *p);
+
 // PIPELINE UTILITIES
 
 void	split_pipeline(t_parsing *parsing);

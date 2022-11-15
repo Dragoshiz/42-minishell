@@ -3,3 +3,4 @@
 debug_parsing/
 debug_parsing2/
 minishell.dSYM/
+.ignore_readline
