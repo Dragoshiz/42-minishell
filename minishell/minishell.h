@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 21:55:20 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:38:28 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_parsing {
 // BUILTINS
 void	env_list_create(t_vars *vars);
 void	ft_env(t_vars *vars);
+void	update_env_sh(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
 
@@ -233,6 +234,7 @@ int		is_variable_start_char(char c);
 int		is_quote_char(char c);
 int		is_whs_c(char c);
 int		is_word_c(char c);
+int		is_variable_str(char *c);
 
 // EDGE CASES UTILS
 

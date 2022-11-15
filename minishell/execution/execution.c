@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/14 12:04:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:02:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 			add_history(vars->line);
 			ft_init_vars(vars);
 			parsing(parse, vars);
-			if (!vars->syntax_error) //  && !check_builtins(vars, iov)
+			if (!vars->syntax_error)
 				ft_execv2(parse, iov);
 			parsing_cleanup(parse);
 			ft_free_doublepoint(vars->args);
+			printf("ENV_SH: %s\n", iov->vars->env_sh[0]); // DEBUG
 		}
 		if (vars->line)
 			free(vars->line);

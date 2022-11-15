@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/09 16:38:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:16:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	ft_update_data(t_vars *vars, char	*data)
 			{	
 				free(curr->data);
 				curr->data = ft_strdup(data);
+				update_env_sh(vars);
 				return (1);
 			}
 		}

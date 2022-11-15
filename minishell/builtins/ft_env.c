@@ -6,18 +6,17 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/06 19:38:03 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:39:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // initializes ENV_SH_LIST on startup
-void	env_list_create(t_vars *vars) // TODO free env_sh linkedList
+void	env_list_create(t_vars *vars)
 {
 	int	i;
 
-	// TODO check if env is valid and has content
 	vars->env_list = NULL;
 	vars->env_list = ft_calloc(1, sizeof(t_linked_list));
 	initialize_list(vars->env_list);
@@ -34,4 +33,24 @@ void	env_list_create(t_vars *vars) // TODO free env_sh linkedList
 void	ft_env(t_vars *vars)
 {
 	display_linked_list(vars->env_list);
+}
+
+void	update_env_sh(t_vars *vars)
+{
+	int		i;
+	t_node	*curr;
+
+	curr = vars->env_list->head;
+	i = count_linked_list(vars->env_list);
+	ft_free_doublepoint(vars->env_sh);
+	vars->env_sh = calloc((i + 1), sizeof(char *));
+	i = 0;
+	while (curr)
+	{
+		vars->env_sh[i] = ft_strdup(curr->data);
+		i++;
+		curr = curr->next;
+	}
+	vars->env_sh[i] = NULL;
+	vars->num_env_sh = i;
 }

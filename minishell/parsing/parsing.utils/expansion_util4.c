@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/14 11:52:17 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 12:27:51 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ char *p)
 		}
 		j = 0;
 	}
-	while (i < parsing->p_len)
+	while (i < parsing->p_len && str[j + \
+	parsing->ix + parsing->var_name_len + 1])
 	{
+		printf("DEBUG %c\n", str[j + parsing->ix + parsing->var_name_len + 1]);
 		p[i] = str[j + parsing->ix + parsing->var_name_len + 1];
 		i++;
 		j++;
@@ -60,4 +62,17 @@ char	*insert_exit_status(t_parsing *parsing, void *data)
 	free(parsing->var_value);
 	free(str);
 	return (p);
+}
+
+//function that checks for variable characters
+int	is_variable_str(char *c)
+{
+	while (*c)
+	{
+		if (*c != 95 && !(*c >= 65 \
+		&& *c <= 90) && !(*c >= 97 && *c <= 122) && !(*c >= 48 && *c <= 57))
+			return (0);
+		c++;
+	}
+	return (1);
 }

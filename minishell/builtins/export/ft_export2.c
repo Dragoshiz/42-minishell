@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 20:50:11 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:11:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ft_add2env(t_vars *vars, char *data)
 			return ;
 		}
 		add_tail(vars->env_list, ft_strdup(data));
+		update_env_sh(vars);
 	}
 }
 
