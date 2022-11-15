@@ -6,16 +6,17 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 19:26:02 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/15 19:40:06 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
 void	ft_init_exc(t_iovars *iov)
 {
 	iov->filename = NULL;
-	iov->size_delim = 0;
+	// iov->size_delim = 0;
 	iov->tmpin = 0;
 	iov->tmpout = 0;
 	iov->fdin = 0;
@@ -40,14 +41,18 @@ void	ft_ctrl(int sig)
 	}
 }
 
-static void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
+void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
 	delete_list(vars->exp_lst);
 	free(vars->exp_lst);
 	delete_list(vars->env_list);
 	free(vars->env_list);
 	ft_free_doublepoint(vars->env_sh);
-	ft_close_pipes(parse, iov);
+	if (parse->num_cmds > 1)
+	{
+		ft_close_pipes(parse, iov);
+		ft_free_doublepointi(iov->pipefds);
+	}
 	ft_free_doublepoint(vars->paths);
 }
 

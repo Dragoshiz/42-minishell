@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 09:42:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:26:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,25 @@ void	initialize_pipeline(t_parsing *parsing)
 }
 
 // transfers strings from linked list (pipeline) to arg array
-void	fill_args(t_parsing *parsing)
-{
-	int		i;
-	t_node	*current;
+// void	fill_args(t_parsing *parsing)
+// {
+// 	int		i;
+// 	t_node	*current;
 
-	current = parsing->pipeline->head;
-	parsing->vars->num_args = count_linked_list(parsing->pipeline);
-	parsing->vars->args = ft_calloc((parsing->vars->num_args + 1), \
-	sizeof(char *));
-	i = 0;
-	while (i < parsing->vars->num_args)
-	{
-		parsing->vars->args[i] = ft_strdup(current->data);
-		if (current->next)
-			current = current->next;
-		i++;
-	}
-	parsing->vars->args[i] = NULL;
-}
+// 	current = parsing->pipeline->head;
+// 	parsing->vars->num_args = count_linked_list(parsing->pipeline);
+// 	parsing->vars->args = ft_calloc((parsing->vars->num_args + 1), \
+// 	sizeof(char *));
+// 	i = 0;
+// 	while (i < parsing->vars->num_args)
+// 	{
+// 		parsing->vars->args[i] = ft_strdup(current->data);
+// 		if (current->next)
+// 			current = current->next;
+// 		i++;
+// 	}
+// 	parsing->vars->args[i] = NULL;
+// }
 
 // if i is in quoted area, quote will store which quote is
 // active and q_open will not be NULL
