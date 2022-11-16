@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 17:36:51 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/13 17:21:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 22:07:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_put_backsl(t_vars *vars)
 }
 
 //function that splits and stores the PATH variable into struct vars->paths
-void	ft_get_path(t_vars *vars, char *env[])
+void	ft_get_path(t_vars *vars, char *env_sh[])
 {
 	char	*path;
 	int		i;
@@ -34,11 +34,17 @@ void	ft_get_path(t_vars *vars, char *env[])
 	int		j;
 
 	i = 0;
-	while (env[i])
+	path = NULL;
+	while (env_sh[i])
 	{
-		if (!ft_strncmp(env[i], "PATH", 4))
-			path = ft_strdup(env[i]);
+		if (ft_strncmp(env_sh[i], "PATH", 4) == 0)
+			path = ft_strdup(env_sh[i]);
 		i++;
+	}
+	if (!path)
+	{
+		vars->paths = NULL;
+		return ;
 	}
 	vars->paths = ft_split(path, ':');
 	i = 5;
@@ -54,4 +60,3 @@ void	ft_get_path(t_vars *vars, char *env[])
 	ft_put_backsl(vars);
 	free(path);
 }
-

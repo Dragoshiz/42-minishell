@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 15:27:04 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 22:53:28 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,8 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	char	*cmd_path;
 
 	i = 0;
+	if (!vars->paths)
+		return (NULL);
 	while (vars->paths[i])
 	{
 		if (access(arg, F_OK) == 0)
@@ -318,6 +320,7 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
+
 void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 {
 	pid_t	pid;
@@ -330,10 +333,19 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 		close(iov->fdin);
 		close(iov->fdout);
 		dup2(iov->tmpin, STDIN_FILENO);
-		// close(iov->tmpin);
 		dup2(iov->tmpout, STDOUT_FILENO);
-		// close(iov->tmpout);
 		ft_close_pipes(parse, iov);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(iov->vars->cmds[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		g_exit = 127;
+		if (iov->vars->cmds)
+			ft_free_doublepoint(iov->vars->cmds);
+		if (iov->hv_heredoc)
+		{
+			close(iov->hrdc_pipe[1]);
+			close(iov->hrdc_pipe[0]);
+		}
 		return ;
 	}
 	pid = fork();
@@ -342,32 +354,10 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 		if (iov->hv_heredoc)
 			close(iov->hrdc_pipe[0]);
 		if (execve(cmd_path, iov->vars->cmds, iov->vars->env_sh) < 0)
-		{
-			g_exit = 127;
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(iov->vars->cmds[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			close(iov->fdout);
-			close(iov->fdin);
-			close(iov->tmpin);
-			close(iov->tmpout);
-			ft_close_pipes(parse, iov);
-			free(cmd_path);
-			parsing_cleanup(iov->vars->parse);
-			cleanup(iov->vars, iov, iov->vars->parse);
-			ft_free_doublepoint(iov->vars->cmds);
-			if (iov->hv_heredoc)
-			{
-				close(iov->hrdc_pipe[1]);
-				close(iov->hrdc_pipe[0]);
-			}
 			exit(g_exit);
-		}
 	}
 	waitpid(pid, &status, 0);
 	g_exit = WEXITSTATUS(status);
-	if (iov->vars->cmds)
-		ft_free_doublepoint(iov->vars->cmds);
 	dup2(iov->tmpin, STDIN_FILENO);
 	dup2(iov->tmpout, STDOUT_FILENO);
 	if (iov->hv_heredoc)
@@ -425,10 +415,8 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 			dup2(iov->tmpin, STDIN_FILENO);
 		}
 		else
-		{
 			dup2(iov->fdin, STDIN_FILENO);
-		}
-		if (!iov->hv_builtin)
+		if (!iov->hv_builtin && iov->fdin >= 0)
 		{
 			if (i != parse->num_cmds - 1)
 				iov->fdout = iov->pipefds[i][1];

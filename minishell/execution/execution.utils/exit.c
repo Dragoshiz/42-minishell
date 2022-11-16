@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:47:09 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/14 18:24:44 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 23:24:07 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_built_env(t_iovars *iov, int pipe_num)
 	env = iov->vars->env_list->head;
 	while (env != NULL)
 	{
-		if (iov->vars->parse->num_cmds > 1)
+		if (iov->vars->parse->num_cmds > 1 && pipe_num != iov->vars->parse->num_cmds - 1)
 		{
 			ft_putstr_fd(env->data, iov->pipefds[pipe_num][1]);
 			write(iov->pipefds[pipe_num][1], "\n", 1);

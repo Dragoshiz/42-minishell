@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 15:30:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 23:40:54 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_exp(t_iovars *iov, t_node *curr, int i)
 {
-	if (iov->vars->parse->num_cmds > 1)
+	if (iov->vars->parse->num_cmds > 1 && i < iov->vars->parse->num_cmds - 1)
 	{
 		write(iov->pipefds[i][1], "declare -x ", 11);
 		write(iov->pipefds[i][1], curr->data, ft_strlen(curr->data));

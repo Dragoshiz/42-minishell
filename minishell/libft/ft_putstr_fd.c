@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 15:00:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/01/04 16:21:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 21:16:56 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	int	len;
 
+	len = 0;
 	len = ft_strlen(s);
 	write(fd, s, len);
 }

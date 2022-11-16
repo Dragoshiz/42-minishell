@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 12:59:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:05:59 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	is_ordered(t_linked_list *exp_lst)
 
 	i = 0;
 	current = exp_lst->head;
+	if (current == NULL)
+		return (0);
 	while (current->next != NULL)
 	{
 		if (ft_strncmp(current->data, current->next->data, 5) > 0)
