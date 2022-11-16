@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 13:11:26 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 15:27:04 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,6 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 		}
 		i++;
 	}
-	// iov->pipefds[i] = NULL;
 }
 
 char	*ft_find_arg_path(t_vars *vars, char *arg)
@@ -243,18 +242,19 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	char	*cmd_path;
 
 	i = 0;
-	cmd_path = NULL;
 	while (vars->paths[i])
 	{
 		if (access(arg, F_OK) == 0)
 			return (arg);
 		cmd_path = ft_strjoin(vars->paths[i], arg);
 		if (access(cmd_path, F_OK) == 0)
+		{
 			return (cmd_path);
+		}
 		free(cmd_path);
 		i++;
 	}
-	return (arg);
+	return (NULL);
 }
 
 int		ft_tokens_inpipe(t_parsing *parse, int pipe)
@@ -320,7 +320,7 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 
 void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 {
-	// pid_t	pid;
+	pid_t	pid;
 	int		status;
 	char	*cmd_path;
 
@@ -330,9 +330,9 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 		close(iov->fdin);
 		close(iov->fdout);
 		dup2(iov->tmpin, STDIN_FILENO);
-		close(iov->tmpin);
+		// close(iov->tmpin);
 		dup2(iov->tmpout, STDOUT_FILENO);
-		close(iov->tmpout);
+		// close(iov->tmpout);
 		ft_close_pipes(parse, iov);
 		return ;
 	}
