@@ -6,11 +6,43 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 20:49:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:18:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static int	get_var_name_len(t_parsing *parsing, void *data, int ix, int i);
+static char	*get_var_value(t_parsing *parsing, void *data);
+static char	*write_expanded_string(t_parsing *parsing, int i, char *str, \
+char *p);
+
+// function to insert the expanded string
+char	*insert_expanded_string(t_parsing *parsing, void *data)
+{
+	int		i;
+	int		j;
+	char	*p;
+	char	*str;
+
+	i = parsing->ix + 1;
+	i = get_var_name_len(parsing, data, parsing->ix, i);
+	str = get_var_value(parsing, data);
+	i = 0;
+	p = ft_calloc((parsing->p_len + 1), sizeof(char));
+	j = 0;
+	while (i < parsing->ix)
+	{
+		p[i] = str[j];
+		i++;
+		j++;
+	}
+	p = write_expanded_string(parsing, i, str, p);
+	free(parsing->var_name);
+	free(parsing->var_value);
+	free(str);
+	return (p);
+}
 
 static int	get_var_name_len(t_parsing *parsing, void *data, int ix, int i)
 {
@@ -89,31 +121,5 @@ char *p)
 		j++;
 	}
 	p[i] = '\0';
-	return (p);
-}
-
-char	*insert_expanded_string(t_parsing *parsing, void *data)
-{
-	int		i;
-	int		j;
-	char	*p;
-	char	*str;
-
-	i = parsing->ix + 1;
-	i = get_var_name_len(parsing, data, parsing->ix, i);
-	str = get_var_value(parsing, data);
-	i = 0;
-	p = ft_calloc((parsing->p_len + 1), sizeof(char));
-	j = 0;
-	while (i < parsing->ix)
-	{
-		p[i] = str[j];
-		i++;
-		j++;
-	}
-	p = write_expanded_string(parsing, i, str, p);
-	free(parsing->var_name);
-	free(parsing->var_value);
-	free(str);
 	return (p);
 }

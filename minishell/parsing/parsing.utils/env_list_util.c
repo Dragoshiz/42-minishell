@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:14:40 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 12:39:40 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 11:16:29 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,6 @@ int	count_linked_list(t_linked_list *list)
 {
 	int		i;
 	t_node	*current;
-
-	current = list->head;
-	i = 0;
-	while (current != NULL)
-	{
-		i++;
-		current = current->next;
-	}
-	return (i);
-}
-
-int	count_token_list(t_token_list *list)
-{
-	int		i;
-	t_token	*current;
 
 	current = list->head;
 	i = 0;

@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:56:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/09 16:59:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:23:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// checks if after the dollar char is a quote char
 int	peek_dollar_quote(t_parsing *p, char *str)
 {
 	if (str[p->ix] == '$' && is_quote_char(str[p->ix + 1]))
@@ -48,4 +49,3 @@ void	seek_whs_r(t_parsing *p, char *str)
 		p->ix++;
 	}
 }
-

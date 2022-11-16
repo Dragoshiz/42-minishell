@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 21:55:04 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 12:03:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:17:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	add_syntax_error(t_parsing *p, char *c, int i)
 	p->vars->syntax_error = i;
 }
 
+// edge cases related to pipes
 void	s_err_pipe(t_parsing *p)
 {
 	t_node	*current;
@@ -32,6 +33,7 @@ void	s_err_pipe(t_parsing *p)
 	}
 }
 
+// edge cases related to redirections
 void	s_err_redir(t_parsing *p)
 {
 	t_token	*curr;

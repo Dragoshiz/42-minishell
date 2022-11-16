@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/08 22:19:30 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:24:03 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// checks if in quoted area
 void	check_expansion_quotes(char *quote, int *status, char c)
 {
 	if (c == DQUOTE && (*status == 0))
@@ -45,6 +46,7 @@ int	is_variable_char(char c)
 	return (0);
 }
 
+// function to check if character is a redirection char
 int	is_redc(char c)
 {
 	if (c == 60 || c == 62)
@@ -52,6 +54,7 @@ int	is_redc(char c)
 	return (0);
 }
 
+// function to check if character is a quote char
 int	is_quote_char(char c)
 {
 	if (c == 36 || c == 39)

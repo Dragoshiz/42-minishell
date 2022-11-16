@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:21:45 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/11 11:47:36 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:43:28 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// checks if in quoted area
 void	check_token_quotes(t_parsing *parsing, char *str, int i)
 {
 	if ((str[i] == SQUOTE || \
@@ -32,6 +33,7 @@ int	is_whs_c(char c)
 	return (0);
 }
 
+// initializes the token list
 void	initialize_token_list(t_parsing *parsing)
 {
 	parsing->token_list = NULL;
@@ -60,6 +62,7 @@ void	add_token(t_parsing *parsing, void *data, int type, t_node *current)
 	parsing->token_list->tail = node;
 }
 
+// delete token list
 void	delete_token_list(t_token_list *list)
 {
 	t_token	*temp;

@@ -6,11 +6,35 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 16:26:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:33:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static void	add_word_token(t_parsing *p, char *str, t_node *current);
+static void	add_redir_token(t_parsing *p, char *str, t_node *current);
+static void	check_string(t_parsing *p, char *str, t_node *current);
+static void	init_split_tokens(t_parsing *p, char *str);
+
+// splits into tokens. 0 if cmd or word, 1 >, 2 <, 3 >>, 4 <<
+void	split_tokens(t_parsing *parsing)
+{
+	char	*str;
+	t_node	*current;
+
+	current = parsing->pipeline->head;
+	while (current)
+	{
+		str = current->data;
+		init_split_tokens(parsing, str);
+		check_string(parsing, str, current);
+		if (parsing->q_open != NULL)
+			parsing->vars->syntax_error = 2;
+		current = current->next;
+	}
+	parsing->token_nbr = count_token_list(parsing->token_list);
+}
 
 static void	add_word_token(t_parsing *p, char *str, t_node *current)
 {
@@ -82,23 +106,4 @@ static void	init_split_tokens(t_parsing *p, char *str)
 	p->line_end = &str[len];
 	p->q_open = NULL;
 	p->quote = '\0';
-}
-
-// splits into tokens. 0 if cmd or word, 1 >, 2 <, 3 >>, 4 <<
-void	split_tokens(t_parsing *parsing)
-{
-	char	*str;
-	t_node	*current;
-
-	current = parsing->pipeline->head;
-	while (current)
-	{
-		str = current->data;
-		init_split_tokens(parsing, str);
-		check_string(parsing, str, current);
-		if (parsing->q_open != NULL)
-			parsing->vars->syntax_error = 2;
-		current = current->next;
-	}
-	parsing->token_nbr = count_token_list(parsing->token_list);
 }
