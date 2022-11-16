@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 14:10:08 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 21:14:01 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,36 @@ void	ft_init_vars(t_vars *vars)
 {
 	vars->num_env_sh = 0;
 	vars->syntax_error = 0;
-	vars->s_err_c = '\0';
+	vars->s_err_c = 0;
 }
 
 void	ft_exit(t_token *current, t_iovars *iov)
 {
-	// maybe no need for lng lng int
-	long long int	digit;
+	int	digit;
+	int	i;
 
+	i = 0;
+	digit = 0;
 	if (current->next)
 	{
+		while (current->next->data[i])
+		{
+			if (!ft_isdigit(current->next->data[i]))
+			{
+				ft_putstr_fd("minishell: exit: ", 2);
+				ft_putstr_fd(current->next->data, 2);
+				ft_putstr_fd(": numeric argument required\n", 2);
+				exit(255);
+			}
+			i++;
+		}
 		digit = ft_atoi(current->next->data);
-		g_exit = digit % 255;
+		g_exit = digit % 256;
 	}
 	close(iov->tmpin);
 	close(iov->tmpout);
-	exit(g_exit);
+	cleanup(iov->vars, iov, iov->vars->parse);
+	exit(digit);
 }
 
 void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
@@ -124,7 +138,7 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
-	g_exit = 0;
+	g_exit = -1;
 	signal(SIGINT, ft_ctrl);
 	signal(SIGQUIT, SIG_IGN);
 	vars.env_sh = NULL;

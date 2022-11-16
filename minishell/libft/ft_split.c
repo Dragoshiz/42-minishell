@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:11:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/01/12 17:50:37 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 20:26:35 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_rows(char const *s, char c)
 
 	i = 0;
 	rows = 0;
-	if (s[0] == '\0')
+	if (!s[0])
 		return (rows);
 	while (s[i] == c && s[i] != '\0')
 		i++;

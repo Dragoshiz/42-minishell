@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:46:53 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/14 20:49:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 23:53:39 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_export(t_iovars *iov, int num_pipe)
 	int		pipe_nr;
 
 	curr = iov->vars->parse->token_list->head;
+	while (curr && curr->pipe_nbr != num_pipe)
+		curr = curr->next;
 	pipe_nr = curr->pipe_nbr;
 	if (ft_strncmp(curr->data, "export", 6) == 0)
 	{

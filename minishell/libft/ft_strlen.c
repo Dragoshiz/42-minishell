@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 11:00:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/10/30 17:35:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:14:32 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	n = 0;
 	if (!str)
 		return (n);
-	while (str[n] != '\0')
+	while (str[n])
 		n++;
 	return (n);
 }
