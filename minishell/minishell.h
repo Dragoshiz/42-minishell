@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 11:47:48 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:01:19 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -41,7 +41,7 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_iovars		t_iovars;
 typedef struct s_vars		t_vars;
 
-int	g_exit;
+extern int	g_exit;
 
 typedef struct s_token {
 	char			*data;

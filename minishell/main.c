@@ -6,11 +6,13 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 11:23:57 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:10:08 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit;
 
 //copies env in the vars->env
 void	ft_cpy_env(t_vars *vars, char **env)

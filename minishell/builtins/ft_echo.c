@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 12:58:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:33:26 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	ft_echo(t_token *curr, t_iovars *iov, int pipe_num)
 	}
 	else
 	{
+		if (!curr->next)
+		{
+			write(1, "\n", 1);
+			return ;
+		}
 		curr = curr->next;
 		if (iov->vars->parse->num_cmds > 1 && pipe_num < iov->vars->parse->num_cmds - 1)
 			echo_print(curr, pipe_num, 0, iov->pipefds[pipe_num][1]);
