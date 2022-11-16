@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:52:42 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:32:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ static void	syntax_errors(t_parsing *parsing)
 		ft_putstr_fd("minish: syntax error near unexpected token '", 2);
 		ft_putstr_fd(&parsing->vars->s_err_c, 2);
 		ft_putstr_fd("' \n", 2);
+		g_exit = 258;
 	}
 	else if (parsing->vars->syntax_error == 2)
+	{
 		ft_putstr_fd("minish: syntax error unclosed quote \n", 2);
+		g_exit = 259;
+	}
 }
 
 // parsing edge cases
