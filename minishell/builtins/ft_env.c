@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 10:39:29 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:05:38 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	update_env_sh(t_vars *vars)
 	curr = vars->env_list->head;
 	i = count_linked_list(vars->env_list);
 	ft_free_doublepoint(vars->env_sh);
-	vars->env_sh = calloc((i + 1), sizeof(char *));
+	vars->env_sh = ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (curr)
 	{

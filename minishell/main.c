@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 19:48:49 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 11:23:57 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_exit(t_token *current, t_iovars *iov)
 	if (current->next)
 	{
 		digit = ft_atoi(current->next->data);
-		g_exit = digit % 256;
+		g_exit = digit % 255;
 	}
 	close(iov->tmpin);
 	close(iov->tmpout);

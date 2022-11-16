@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 11:02:01 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:11:26 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ static void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe)
 		curr = curr->next;
 	if (curr == NULL)
 		return ;
-	iov->vars->cmds = calloc(sizeof(char *), \
+	iov->vars->cmds = ft_calloc(sizeof(char *), \
 		(ft_tokens_inpipe(parse, pipe) + 1));
 	while (curr->pipe_nbr == pipe && curr->type == 0)
 	{
@@ -320,7 +320,7 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 
 void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 {
-	pid_t	pid;
+	// pid_t	pid;
 	int		status;
 	char	*cmd_path;
 
@@ -355,6 +355,7 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 			free(cmd_path);
 			parsing_cleanup(iov->vars->parse);
 			cleanup(iov->vars, iov, iov->vars->parse);
+			ft_free_doublepoint(iov->vars->cmds);
 			if (iov->hv_heredoc)
 			{
 				close(iov->hrdc_pipe[1]);
