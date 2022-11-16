@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 17:31:50 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:48:49 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include "execution/execution.h"
 
 //copies env in the vars->env
-//free vars->env at the end
 void	ft_cpy_env(t_vars *vars, char **env)
 {
 	int	i;
@@ -47,11 +45,7 @@ int	is_whitespace(char *line)
 
 void	ft_init_vars(t_vars *vars)
 {
-	// vars->num_args = 0;
 	vars->num_env_sh = 0;
-	// vars->hv_append = 0;
-	// vars->hv_outfile = 0;
-	// vars->hv_infile = 0;
 	vars->syntax_error = 0;
 	vars->s_err_c = '\0';
 }
@@ -89,7 +83,6 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 		ft_exit(current, iov);
 }
 
-// TODO checks first argument against list of builtins and returns >0 if true
 int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 {
 	int				i;
