@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 03:05:01 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/14 14:41:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:31:35 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// function to check for redirection errors
 void	redir_error_check(t_parsing *p, char *str, int i)
 {
 	if ((str[i] == '<' && str[i + 1] == '>') || \
@@ -23,6 +24,7 @@ void	redir_error_check(t_parsing *p, char *str, int i)
 	}
 }
 
+// function that returns the redirection token value
 int	token_value_red(t_parsing *p, char *str, int i)
 {
 	redir_error_check(p, str, i);
@@ -39,4 +41,40 @@ int	token_value_red(t_parsing *p, char *str, int i)
 	else if (str[i] == '>' && str[i + 1] == '<')
 		return (2);
 	return (0);
+}
+
+// function that trims whitespace
+void	token_trim_white(t_parsing *parsing)
+{
+	t_token		*current;
+	char		*p;
+
+	current = parsing->token_list->head;
+	while (current)
+	{
+		p = ft_strtrim(current->data, " ");
+		free (current->data);
+		current->data = p;
+		current = current->next;
+	}
+}
+
+// function that the quote pairs
+void	remove_quote_pairs(char *p, int *ref, char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (ref[i] != 1)
+		{
+			p[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	p[j] = '\0';
 }

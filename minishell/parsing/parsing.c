@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 15:56:39 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:52:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ static void	syntax_errors(t_parsing *parsing)
 {
 	if (parsing->vars->syntax_error == 1)
 	{
-		ft_putstr_fd("minish: syntax error near unexpected token '", 1);
-		ft_putstr_fd(&parsing->vars->s_err_c, 1);
-		ft_putstr_fd("' \n", 1);
+		ft_putstr_fd("minish: syntax error near unexpected token '", 2);
+		ft_putstr_fd(&parsing->vars->s_err_c, 2);
+		ft_putstr_fd("' \n", 2);
 	}
 	else if (parsing->vars->syntax_error == 2)
-		ft_putstr_fd("minish: syntax error unclosed quote \n", 1);
+		ft_putstr_fd("minish: syntax error unclosed quote \n", 2);
 }
 
+// parsing edge cases
 static void	edge_cases(t_parsing *parsing)
 {
 	s_err_pipe(parsing);
@@ -66,22 +67,19 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	split_pipeline(parsing);
 	expand_variables(parsing);
 	pipe_trim_white(parsing);
-	// fill_args(parsing); // DEBUG
 	initialize_token_list(parsing);
 	split_tokens(parsing);
 	token_trim_white(parsing);
 	token_trim_quotes(parsing);
-	// debug_print_args(parsing->vars->args, parsing->vars->num_args); // DEBUG
-	// display_token_list(parsing->token_list); // DEBUG
 	edge_cases(parsing);
 	syntax_errors(parsing);
 }
 
+// cleanup parsing
 void	parsing_cleanup(t_parsing *parsing)
 {
 	delete_list(parsing->pipeline);
 	free(parsing->pipeline);
 	delete_token_list(parsing->token_list);
 	free(parsing->token_list);
-	// ft_free_doublepoint(vars->args); // DEBUG
 }

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/15 12:27:51 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:20:40 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char *p)
 	return (p);
 }
 
+// function to insert the expanded exit status
 char	*insert_exit_status(t_parsing *parsing, void *data)
 {
 	int		i;
