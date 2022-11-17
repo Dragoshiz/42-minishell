@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:28:20 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 12:57:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:19:15 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,3 @@ static void	mark_dollars(t_parsing *parsing, t_token *current, int *ref)
 			break ;
 	}
 }
-

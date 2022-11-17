@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 22:42:15 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 11:03:08 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,16 @@ void	ft_dup2nclose(int fd, int std)
 {
 	dup2(fd, std);
 	close(fd);
+}
+
+//function that checks for whitespace characters
+int	is_whitespace(char *line)
+{
+	while (*line)
+	{
+		if (*line != 32 && !(*line >= 9 && *line <= 13))
+			return (0);
+		line++;
+	}
+	return (1);
 }

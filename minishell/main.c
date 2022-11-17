@@ -3,47 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/17 15:34:30 by dimbrea          ###   ########.fr       */
+=======
+/*   Updated: 2022/11/17 11:03:30 by vfuhlenb         ###   ########.fr       */
+>>>>>>> 1b25577bf2f6433dca791f8b8774884054b9a583
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit;
-
-//copies env in the vars->env
-void	ft_cpy_env(t_vars *vars, char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	vars->env_sh = ft_calloc((i + 1), sizeof(char *));
-	i = 0;
-	while (env[i])
-	{
-		vars->env_sh[i] = ft_strdup(env[i]);
-		i++;
-	}
-	vars->env_sh[i] = NULL;
-	vars->num_env_sh = i;
-}
-
-//function that checks for whitespace characters
-int	is_whitespace(char *line)
-{
-	while (*line)
-	{
-		if (*line != 32 && !(*line >= 9 && *line <= 13))
-			return (0);
-		line++;
-	}
-	return (1);
-}
 
 void	ft_init_vars(t_vars *vars)
 {
@@ -81,6 +54,7 @@ void	ft_exit(t_token *current, t_iovars *iov)
 	exit(digit);
 }
 
+<<<<<<< HEAD
 void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 {
 	iov->hv_builtin = 1;
@@ -130,6 +104,8 @@ int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 	return (0);
 }
 
+=======
+>>>>>>> 1b25577bf2f6433dca791f8b8774884054b9a583
 int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;

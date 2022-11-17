@@ -3,38 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/13 15:53:29 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:24:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	find_var(t_linked_list *list, char *str)
+{
+	t_node	*curr;
+
+	curr = list->head;
+	while (curr)
+	{
+		if (ft_strncmp(curr->data, str, ft_strlen(str)) == 0)
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
+}
+
+void	init_pwd(t_vars *vars)
+{
+	char	cwd[MAX_PATH_LEN];
+	char	*pwd;
+	char	*oldpwd;
+
+	pwd = ft_strdup("PWD=");
+	oldpwd = ft_strdup("OLDPWD=");
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		perror("");
+	if (!find_var(vars->env_list, pwd))
+	{
+		add_tail(vars->env_list, ft_strdup(ft_strjoin(pwd, cwd)));
+		if (!find_var(vars->exp_lst, pwd))
+			add_tail(vars->exp_lst, ft_strdup(ft_strjoin(pwd, cwd)));
+	}
+	else
+		update_pwd(vars, cwd, pwd, oldpwd);
+	free(pwd);
+	free(oldpwd);
+	update_env_sh(vars);
+}
+
+static void	error_messages(t_token *curr)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(curr->next->data, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	g_exit = 1;
+}
+
 void	ft_cd(t_vars *vars)
 {
 	t_token	*curr;
-	int		pipe_nr;
-	char	*home;
 
 	curr = vars->parse->token_list->head;
-	pipe_nr = curr->pipe_nbr;
-	home = getenv("HOME");
 	if (ft_strncmp(curr->data, "cd", 2) == 0)
 	{
-		if ((curr->next != NULL && curr->next->pipe_nbr != pipe_nr)
+		if ((curr->next != NULL && curr->next->pipe_nbr != curr->pipe_nbr)
 			|| curr->next == NULL)
-			chdir(home);
-		else if (curr->next->pipe_nbr == pipe_nr && curr->next)
+		{
+			ft_putstr_fd("cd: only a relative or absolute path\n", 2);
+			g_exit = 1;
+			return ;
+		}
+		if (curr->next->pipe_nbr == curr->pipe_nbr && curr->next)
 		{
 			if (chdir(curr->next->data) != 0)
 			{
-				printf("minishell: cd: %s: No such file or directory\n"\
-					, curr->next->data);
-				g_exit = 1;
+				error_messages(curr);
+				return ;
 			}
 		}
+		init_pwd(vars);
 		g_exit = 0;
 	}
 }

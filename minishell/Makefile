@@ -22,6 +22,7 @@ AF = ar rcs
 
 SRCS = \
 execution/execution.utils/minish_utils.c\
+execution/execution.utils/minish_utils2.c\
 execution/execution.utils/exec_utils.c\
 execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
@@ -52,6 +53,7 @@ builtins/ft_unset.c\
 builtins/ft_env.c\
 builtins/ft_echo.c\
 builtins/ft_cd.c\
+builtins/ft_cd2.c\
 main.c\
 
 OBJS = $(SRCS:.c=.o)
