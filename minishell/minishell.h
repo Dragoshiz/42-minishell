@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 14:01:19 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:46:03 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,15 @@ typedef struct s_linked_list {
 }	t_linked_list;
 
 typedef struct s_vars{
-	char			**paths; // ENV list
-	char			**env_sh;// cpy of env variable on startup
-	char			**cmds;// array of commandse
+	char			**paths;
+	char			**env_sh;
+	char			**cmds;
 	char			*line;
 	int				num_env_sh;
 	int				syntax_error;
 	char			s_err_c;
 	int				exit_status;
-	t_linked_list	*env_list; // working env list
+	t_linked_list	*env_list;
 	t_linked_list	*exp_lst;
 	t_parsing		*parse;
 }	t_vars;
@@ -85,12 +85,9 @@ typedef struct s_vars{
 //iov stand for Input Output Variables
 typedef struct s_iovars
 {
-	// char	*cmd;
-	// char	*delim;
 	char	*filename;
 	int		**pipefds;
 	int		hrdc_pipe[2];
-	// int		size_delim;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
@@ -129,6 +126,7 @@ typedef struct s_parsing {
 }t_parsing;
 
 void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse);
+void	ft_exit(t_token *current, t_iovars *iov);
 
 // BUILTINS
 void	env_list_create(t_vars *vars);
@@ -136,6 +134,10 @@ void	ft_env(t_vars *vars);
 void	update_env_sh(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
+void	update_pwd(t_vars *vars, char *cwd, char *pwd, char *oldpwd);
+int		find_var(t_linked_list *list, char *str);
+void	init_pwd(t_vars *vars);
+void	ft_cd(t_vars *vars);
 
 // EXECUTION
 
@@ -194,9 +196,6 @@ void	ft_add2env(t_vars *vars, char *data);
 int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
 int		ft_is_valid(t_token *curr, char *curr_data);
 void	ft_get_var(t_vars *vars);
-
-//ft_cd.c
-void	ft_cd(t_vars *vars);
 
 // other
 int		is_whitespace(char *line);

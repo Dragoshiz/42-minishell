@@ -6,13 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 00:09:54 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/17 13:24:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	find_var(t_linked_list *list, char *str)
+int	find_var(t_linked_list *list, char *str)
 {
 	t_node	*curr;
 
@@ -26,7 +26,7 @@ static int	find_var(t_linked_list *list, char *str)
 	return (0);
 }
 
-static void	update_pwd(t_vars *vars)
+void	init_pwd(t_vars *vars)
 {
 	char	cwd[MAX_PATH_LEN];
 	char	*pwd;
@@ -37,11 +37,24 @@ static void	update_pwd(t_vars *vars)
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("");
 	if (!find_var(vars->env_list, pwd))
+	{
 		add_tail(vars->env_list, ft_strdup(ft_strjoin(pwd, cwd)));
-	if (!find_var(vars->exp_lst, pwd))
-		add_tail(vars->exp_lst, ft_strdup(ft_strjoin(pwd, cwd)));
+		if (!find_var(vars->exp_lst, pwd))
+			add_tail(vars->exp_lst, ft_strdup(ft_strjoin(pwd, cwd)));
+	}
+	else
+		update_pwd(vars, cwd, pwd, oldpwd);
 	free(pwd);
 	free(oldpwd);
+	update_env_sh(vars);
+}
+
+static void	error_messages(t_token *curr)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(curr->next->data, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	g_exit = 1;
 }
 
 void	ft_cd(t_vars *vars)
@@ -62,14 +75,11 @@ void	ft_cd(t_vars *vars)
 		{
 			if (chdir(curr->next->data) != 0)
 			{
-				ft_putstr_fd("minishell: cd: ", 2);
-				ft_putstr_fd(curr->next->data, 2);
-				ft_putstr_fd(": No such file or directory\n", 2);
-				g_exit = 1;
+				error_messages(curr);
 				return ;
 			}
 		}
-		update_pwd(vars);
+		init_pwd(vars);
 		g_exit = 0;
 	}
 }

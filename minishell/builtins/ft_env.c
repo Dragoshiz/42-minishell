@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:31:14 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 13:05:38 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 11:00:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ void	update_env_sh(t_vars *vars)
 		vars->env_sh[i] = ft_strdup(curr->data);
 		i++;
 		curr = curr->next;
+	}
+	vars->env_sh[i] = NULL;
+	vars->num_env_sh = i;
+}
+
+//copies env to env_sh
+void	ft_cpy_env(t_vars *vars, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	vars->env_sh = ft_calloc((i + 1), sizeof(char *));
+	i = 0;
+	while (env[i])
+	{
+		vars->env_sh[i] = ft_strdup(env[i]);
+		i++;
 	}
 	vars->env_sh[i] = NULL;
 	vars->num_env_sh = i;
