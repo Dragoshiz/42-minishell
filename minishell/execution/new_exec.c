@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 22:53:28 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:44:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,7 +320,6 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-
 void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 {
 	pid_t	pid;
@@ -384,6 +383,31 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 	return (cmd_path);
 }
 
+static void	ft_part1exec(t_parsing *parse, t_iovars *iov, t_token *curr, int i)
+{
+	while (curr->pipe_nbr != i)
+			curr = curr->next;
+	iov->fdin = ft_get_inp(iov, parse, i);
+	iov->fdout = ft_get_out(iov, parse, i);
+	if (!check_builtins(curr, iov, i))
+		ft_get_cmd(parse, iov, curr, i);
+	if (iov->hv_heredoc)
+		iov->fdin = iov->hrdc_pipe[0];
+	else if (i != 0 && !iov->hv_builtin)
+	{
+		close(iov->pipefds[i - 1][1]);
+		iov->fdin = iov->pipefds[i - 1][0];
+	}
+	if (iov->fdin == 0)
+	{
+		if (i != 0 && iov->hv_builtin)
+			close(close(iov->pipefds[i - 1][1]));
+		dup2(iov->tmpin, STDIN_FILENO);
+	}
+	else
+		dup2(iov->fdin, STDIN_FILENO);
+}
+
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
 {
 	t_token	*current;
@@ -395,27 +419,28 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 	ft_create_pipes(parse, iov);
 	while (i < parse->num_cmds)
 	{
-		while (current->pipe_nbr != i)
-			current = current->next;
-		iov->fdin = ft_get_inp(iov, parse, i);
-		iov->fdout = ft_get_out(iov, parse, i);
-		if (!check_builtins(current, iov, i))
-			ft_get_cmd(parse, iov, current, i);
-		if (iov->hv_heredoc)
-			iov->fdin = iov->hrdc_pipe[0];
-		else if (i != 0 && !iov->hv_builtin)
-		{
-			close(iov->pipefds[i - 1][1]);
-			iov->fdin = iov->pipefds[i - 1][0];
-		}
-		if (iov->fdin == 0)
-		{
-			if (i != 0 && iov->hv_builtin)
-				close(close(iov->pipefds[i - 1][1]));
-			dup2(iov->tmpin, STDIN_FILENO);
-		}
-		else
-			dup2(iov->fdin, STDIN_FILENO);
+		// while (current->pipe_nbr != i)
+		// 	current = current->next;
+		// iov->fdin = ft_get_inp(iov, parse, i);
+		// iov->fdout = ft_get_out(iov, parse, i);
+		// if (!check_builtins(current, iov, i))
+		// 	ft_get_cmd(parse, iov, current, i);
+		// if (iov->hv_heredoc)
+		// 	iov->fdin = iov->hrdc_pipe[0];
+		// else if (i != 0 && !iov->hv_builtin)
+		// {
+		// 	close(iov->pipefds[i - 1][1]);
+		// 	iov->fdin = iov->pipefds[i - 1][0];
+		// }
+		// if (iov->fdin == 0)
+		// {
+		// 	if (i != 0 && iov->hv_builtin)
+		// 		close(close(iov->pipefds[i - 1][1]));
+		// 	dup2(iov->tmpin, STDIN_FILENO);
+		// }
+		// else
+		// 	dup2(iov->fdin, STDIN_FILENO);
+		ft_part1exec(parse, iov, current, i);
 		if (!iov->hv_builtin && iov->fdin >= 0)
 		{
 			if (i != parse->num_cmds - 1)
@@ -428,7 +453,7 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 		}
 		if (i <= parse->num_cmds - 1 && i != 0)
 			close(iov->pipefds[i - 1][0]);
-		iov->hv_heredoc = 0; //see where to put this
+		// iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}
 }

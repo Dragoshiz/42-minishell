@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/15 15:41:06 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:40:38 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 
 	len = ft_strlen(curr->data);
 	env = iov->vars->env_list->head;
+	if (!env)
+		return ;
 	if (ft_strncmp(env->data, curr->data, len) == 0 \
 		&& env->data[len] == '=')
 	{
@@ -59,6 +61,8 @@ static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 		free_node(env);
 		env = iov->vars->env_list->head;
 	}
+	if (!env)
+		return ;
 	while (env->next)
 	{
 		if (ft_strncmp(env->next->data, curr->data, len) == 0 \
@@ -69,8 +73,9 @@ static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 				env->next = env->next->next;
 			free_node(tmp);
 		}
-		if (env->next)
-			env = env->next;
+		if (!env->next)
+			break ;
+		env = env->next;
 	}
 }
 
@@ -84,6 +89,12 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 	if (ft_strncmp(exp->data, curr->data, len) == 0 && \
 	(exp->data[len] == '=' || ft_strlen(exp->data) == len))
 	{
+		if (!iov->vars->exp_lst->head->next)
+		{
+			free(iov->vars->exp_lst->head);
+			iov->vars->exp_lst->head = NULL;
+			return ;
+		}
 		iov->vars->exp_lst->head = iov->vars->exp_lst->head->next;
 		free_node(exp);
 		exp = iov->vars->exp_lst->head;

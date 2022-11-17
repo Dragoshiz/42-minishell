@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 21:14:01 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:34:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	ft_exit(t_token *current, t_iovars *iov)
 
 void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num)
 {
+	iov->hv_builtin = 1;
 	if (i == 0)
 		ft_echo(current, iov, pipe_num);
 	if (i == 1)
@@ -121,7 +122,6 @@ int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 		if (ft_strncmp(current->data, builtins[i], len) == 0
 			&& len == ft_strlen(builtins[i]))
 		{
-			iov->hv_builtin = 1;
 			ft_builtins(current, iov, i, pipe_num);
 			return (1);
 		}
