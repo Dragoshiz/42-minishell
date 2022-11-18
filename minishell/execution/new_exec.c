@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 12:36:10 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 13:38:23 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 	}
 	free(line);
 	iov->hv_heredoc = 1;
-	curr->type = 7;
+	curr->type = 6;
 	g_exit = 0;
 	close(iov->hrdc_pipe[1]);
 }
@@ -99,7 +99,7 @@ int	ft_get_fin(t_token *current)
 		g_exit = 1;
 		perror("");
 	}
-	curr->type = 8;
+	curr->type = 7;
 	free(filename);
 	return (fdin);
 }
@@ -121,7 +121,7 @@ int	ft_appnd(t_token *current)
 		g_exit = 1;
 		perror("");
 	}
-	curr->type = 9;
+	curr->type = 8;
 	free(filename);
 	return (fdout);
 }
@@ -296,7 +296,7 @@ static void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe)
 	while (curr->pipe_nbr == pipe && curr->type == 0)
 	{
 		iov->vars->cmds[i] = ft_strdup(curr->data);
-		curr->type = 8;
+		curr->type = 5;
 		curr = curr->next;
 		if (curr == NULL)
 			break ;
@@ -320,16 +320,16 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-static t_token	*ft_ifnext_cmd(t_parsing *parse, t_iovars *iov, t_token	*curr)
+static char	*ft_ifnext_cmd(t_parsing *parse, t_iovars *iov, t_token	*curr)
 {
 	(void)parse;
 	(void)iov;
-	while (curr != NULL && curr->type != 0)
+	while (curr != NULL && (curr->type != 5 && curr->type != 0))
 		curr = curr->next;
 	if (curr == NULL)
 		return (NULL);
-	else if (curr->type == 0)
-		return (curr);
+	else if (curr->type == 5 || curr->type == 0)
+		return (curr->data);
 	return (NULL);
 }
 
@@ -348,10 +348,11 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, t_token *curr)
 		dup2(iov->tmpout, STDOUT_FILENO);
 		ft_close_pipes(parse, iov);
 		g_exit = 0;
-		if (ft_ifnext_cmd(parse, iov, curr) != NULL)
+		cmd_path = ft_ifnext_cmd(parse, iov, curr);
+		if (cmd_path != NULL)
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(curr->data, STDERR_FILENO);
+			ft_putstr_fd(cmd_path, STDERR_FILENO);
 			ft_putstr_fd(": command not found\n", STDERR_FILENO);
 			g_exit = 127;
 		}
