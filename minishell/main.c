@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 14:21:20 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:33:13 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char *argv[], char *env[])
 	ft_init_exc(&iov);
 	iov.tmpin = dup(STDIN_FILENO);
 	iov.tmpout = dup(STDOUT_FILENO);
-	ft_start_exec(&vars, &iov, &parsing);
+	ft_execution(&vars, &iov, &parsing);
 	close(iov.tmpin);
 	close(iov.tmpout);
 	return (0);
