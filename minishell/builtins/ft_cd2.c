@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:44:43 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:49:55 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	update_pwd(t_vars *vars, char *cwd, char *pwd)
 	ft_update_exp(vars->exp_lst, pwd_data);
 	free(pwd_data);
 }
+
+// static update_pwd2(t_vars *vars, char *cwd, char *pwd, char *oldpwd)
+// {
+	
+// }
+
 
 // updates PWD and OLDPWD if variables are present
 void	update_oldpwd(t_vars *vars, char *oldpwd)

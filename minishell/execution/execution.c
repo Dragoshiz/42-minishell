@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/18 15:31:24 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:25:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ void	ft_ctrl(int sig)
 	}
 }
 
+void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
+{
+	int	i;
+
+	i = 0;
+	if (parse->num_cmds > 1)
+	{
+		while (iov->pipefds[i])
+		{
+			close(iov->pipefds[i][1]);
+			close(iov->pipefds[i][0]);
+			i++;
+		}
+	}
+}
+
 void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
 	delete_list(vars->exp_lst);
@@ -54,7 +70,7 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 {
 	while (1)
 	{
-		vars->line = readline("minish >");
+		vars->line = readline("minishell > ");
 		if (!vars->line)
 		{
 			write(1, "exit\n", 5);

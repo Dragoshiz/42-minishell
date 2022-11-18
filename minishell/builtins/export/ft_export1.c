@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 13:10:30 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:41:13 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,35 @@ int	ft_update_exp(t_linked_list *exp_lst, char *data)
 		curr = curr->next;
 	}
 	return (0);
+}
+
+//puts variables used after export in exp_lst and
+// if they are valid also in env_lst
+void	ft_get_var(t_vars *vars)
+{
+	t_token	*curr;
+	int		pipe_nr;
+
+	curr = vars->parse->token_list->head;
+	while (curr != NULL)
+	{
+		if (ft_strncmp(curr->data, "export", 6) == 0)
+		{
+			pipe_nr = curr->pipe_nbr;
+			while (pipe_nr == curr->pipe_nbr && curr->next != NULL)
+			{
+				curr = curr->next;
+				if (ft_is_valid(curr, curr->data) == 0)
+				{
+					if (ft_update_exp(vars->exp_lst, curr->data) != 1)
+					{
+						if (ft_chk_cur_env(vars->exp_lst, curr->data) == 0)
+							add_tail(vars->exp_lst, ft_strdup(curr->data));
+					}
+					ft_add2env(vars, curr->data);
+				}
+			}
+			curr = curr->next;
+		}
+	}
 }
