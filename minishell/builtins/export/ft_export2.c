@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/16 23:40:54 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 13:09:45 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	ft_add2env(t_vars *vars, char *data)
 int	ft_chk_cur_env(t_linked_list *exp_lst, char *data)
 {
 	t_node	*curr;
-	int		len;
+	size_t	len;
+	size_t	i;
 
 	len = 0;
 	while (data[len] != '=' && data[len])
@@ -93,7 +94,10 @@ int	ft_chk_cur_env(t_linked_list *exp_lst, char *data)
 	{
 		if (ft_strncmp(curr->data, data, len) == 0)
 		{
-			if (data[len] != '=')
+			i = 0;
+			while (curr->data[i] != '=' && curr->data[i])
+				i++;
+			if (i == len)
 				return (1);
 		}
 		curr = curr->next;
