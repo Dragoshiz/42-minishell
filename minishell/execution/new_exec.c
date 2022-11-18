@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 15:44:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 12:36:10 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 
 	curr = current->next;
 	delim = curr->data;
-	curr->type = 8;
 	size_delim = ft_strlen(delim);
 	pipe(iov->hrdc_pipe);
 	while (1)
@@ -78,6 +77,7 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 	}
 	free(line);
 	iov->hv_heredoc = 1;
+	curr->type = 7;
 	g_exit = 0;
 	close(iov->hrdc_pipe[1]);
 }
@@ -94,12 +94,12 @@ int	ft_get_fin(t_token *current)
 		return (fdin);
 	filename = ft_strdup(curr->data);
 	fdin = open(filename, O_RDONLY);
-	curr->type = 8;
 	if (fdin < 0)
 	{
 		g_exit = 1;
 		perror("");
 	}
+	curr->type = 8;
 	free(filename);
 	return (fdin);
 }
@@ -115,13 +115,13 @@ int	ft_appnd(t_token *current)
 	if (curr->data == NULL)
 		return (fdout);
 	filename = ft_strdup(curr->data);
-	curr->type = 8;
 	fdout = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 	if (fdout < 0)
 	{
 		g_exit = 1;
 		perror("");
 	}
+	curr->type = 9;
 	free(filename);
 	return (fdout);
 }
@@ -137,13 +137,13 @@ int	ft_overwrite(t_token *current)
 	if (curr->data == NULL)
 		return (fdout);
 	filename = ft_strdup(curr->data);
-	curr->type = 8;
 	fdout = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fdout < 0)
 	{
 		g_exit = 1;
 		perror("");
 	}
+	curr->type = 9;
 	free(filename);
 	return (fdout);
 }
@@ -320,7 +320,20 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-void	ft_forknexec(t_parsing *parse, t_iovars *iov)
+static t_token	*ft_ifnext_cmd(t_parsing *parse, t_iovars *iov, t_token	*curr)
+{
+	(void)parse;
+	(void)iov;
+	while (curr != NULL && curr->type != 0)
+		curr = curr->next;
+	if (curr == NULL)
+		return (NULL);
+	else if (curr->type == 0)
+		return (curr);
+	return (NULL);
+}
+
+void	ft_forknexec(t_parsing *parse, t_iovars *iov, t_token *curr)
 {
 	pid_t	pid;
 	int		status;
@@ -334,10 +347,14 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov)
 		dup2(iov->tmpin, STDIN_FILENO);
 		dup2(iov->tmpout, STDOUT_FILENO);
 		ft_close_pipes(parse, iov);
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(iov->vars->cmds[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		g_exit = 127;
+		g_exit = 0;
+		if (ft_ifnext_cmd(parse, iov, curr) != NULL)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(curr->data, STDERR_FILENO);
+			ft_putstr_fd(": command not found\n", STDERR_FILENO);
+			g_exit = 127;
+		}
 		if (iov->vars->cmds)
 			ft_free_doublepoint(iov->vars->cmds);
 		if (iov->hv_heredoc)
@@ -410,37 +427,16 @@ static void	ft_part1exec(t_parsing *parse, t_iovars *iov, t_token *curr, int i)
 
 void	ft_execv2(t_parsing *parse, t_iovars *iov)
 {
-	t_token	*current;
+	t_token	*curr;
 	int		i;
 
 	i = 0;
 	iov->hv_heredoc = 0;
-	current = parse->token_list->head;
+	curr = parse->token_list->head;
 	ft_create_pipes(parse, iov);
 	while (i < parse->num_cmds)
 	{
-		// while (current->pipe_nbr != i)
-		// 	current = current->next;
-		// iov->fdin = ft_get_inp(iov, parse, i);
-		// iov->fdout = ft_get_out(iov, parse, i);
-		// if (!check_builtins(current, iov, i))
-		// 	ft_get_cmd(parse, iov, current, i);
-		// if (iov->hv_heredoc)
-		// 	iov->fdin = iov->hrdc_pipe[0];
-		// else if (i != 0 && !iov->hv_builtin)
-		// {
-		// 	close(iov->pipefds[i - 1][1]);
-		// 	iov->fdin = iov->pipefds[i - 1][0];
-		// }
-		// if (iov->fdin == 0)
-		// {
-		// 	if (i != 0 && iov->hv_builtin)
-		// 		close(close(iov->pipefds[i - 1][1]));
-		// 	dup2(iov->tmpin, STDIN_FILENO);
-		// }
-		// else
-		// 	dup2(iov->fdin, STDIN_FILENO);
-		ft_part1exec(parse, iov, current, i);
+		ft_part1exec(parse, iov, curr, i);
 		if (!iov->hv_builtin && iov->fdin >= 0)
 		{
 			if (i != parse->num_cmds - 1)
@@ -449,11 +445,10 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 				dup2(iov->tmpout, STDOUT_FILENO);
 			else
 				dup2(iov->fdout, STDOUT_FILENO);
-			ft_forknexec(parse, iov);
+			ft_forknexec(parse, iov, curr);
 		}
 		if (i <= parse->num_cmds - 1 && i != 0)
 			close(iov->pipefds[i - 1][0]);
-		// iov->hv_heredoc = 0; //see where to put this
 		i++;
 	}
 }

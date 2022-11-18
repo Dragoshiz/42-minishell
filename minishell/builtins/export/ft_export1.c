@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 00:05:59 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 13:10:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_update_data(t_vars *vars, char	*data)
 {
 	t_node	*curr;
 	int		len;
+	int		i;
 
 	len = 0;
 	while (data[len] != '=' && data[len])
@@ -60,12 +61,13 @@ int	ft_update_data(t_vars *vars, char	*data)
 	{
 		if (ft_strncmp(curr->data, data, len) == 0)
 		{
-			if ((data[len] == '=' && ft_hv_equal(curr->data) == 1)
-				|| (data[len] == '=' && ft_hv_equal(curr->data) == 0))
-			{	
+			i = 0;
+			while (curr->data[i] != '=' && curr->data[i])
+				i++;
+			if (len == i && data[len] == '=')
+			{
 				free(curr->data);
 				curr->data = ft_strdup(data);
-				update_env_sh(vars);
 				return (1);
 			}
 		}
@@ -79,6 +81,7 @@ int	ft_update_exp(t_linked_list *exp_lst, char *data)
 {
 	t_node	*curr;
 	int		len;
+	int		i;
 
 	len = 0;
 	while (data[len] != '=' && data[len])
@@ -88,8 +91,10 @@ int	ft_update_exp(t_linked_list *exp_lst, char *data)
 	{
 		if (ft_strncmp(curr->data, data, len) == 0)
 		{
-			if ((data[len] == '=' && ft_hv_equal(curr->data) == 1)
-				|| (data[len] == '=' && ft_hv_equal(curr->data) == 0))
+			i = 0;
+			while (curr->data[i] != '=' && curr->data[i])
+				i++;
+			if (len == i && data[len] == '=')
 			{
 				free(curr->data);
 				curr->data = ft_strdup(data);
