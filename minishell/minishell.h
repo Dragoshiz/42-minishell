@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 14:08:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:26:54 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_vars{
 	t_linked_list	*env_list;
 	t_linked_list	*exp_lst;
 	t_parsing		*parse;
+	char			*pwd_tmp;
 }	t_vars;
 
 //iov stand for Input Output Variables
@@ -134,7 +135,8 @@ void	ft_env(t_vars *vars);
 void	update_env_sh(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
-void	update_pwd(t_vars *vars, char *cwd, char *pwd, char *oldpwd);
+void	update_pwd(t_vars *vars, char *cwd, char *pwd);
+void	update_oldpwd(t_vars *vars, char *oldpwd);
 int		find_var(t_linked_list *list, char *str);
 void	ft_cd(t_vars *vars);
 

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 15:33:13 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:38:52 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void	ft_exit(t_token *current, t_iovars *iov)
 	exit(digit);
 }
 
-static void	startup_init(t_vars *vars)
-{
-	vars->pwd_tmp = NULL;
-}
-
 int	main(int argc, char *argv[], char *env[])
 {
 	t_vars		vars;
@@ -69,8 +64,8 @@ int	main(int argc, char *argv[], char *env[])
 	vars.env_sh = NULL;
 	iov.vars = &vars;
 	vars.parse = &parsing;
+	vars.pwd_tmp = NULL;
 	ft_init_vars(&vars);
-	startup_init(&vars);
 	ft_cpy_env(&vars, env);
 	env_list_create(&vars);
 	ft_get_export(&iov);
