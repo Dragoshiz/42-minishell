@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 11:12:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:05:21 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// checks if var beginning with *str exists in *list
 int	find_var(t_linked_list *list, char *str)
 {
 	t_node	*curr;
@@ -26,14 +27,14 @@ int	find_var(t_linked_list *list, char *str)
 	return (0);
 }
 
-void	init_pwd(t_vars *vars)
+static void	init_pwd(t_vars *vars)
 {
 	char	cwd[MAX_PATH_LEN];
 	char	*pwd;
 	char	*oldpwd;
 
 	pwd = ft_strdup("PWD=");
-	oldpwd = ft_strdup("OLDPWD=");
+	oldpwd = ft_strdup("OLD");
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("");
 	if (find_var(vars->env_list, pwd))
@@ -42,7 +43,6 @@ void	init_pwd(t_vars *vars)
 	}
 	free(pwd);
 	free(oldpwd);
-	update_env_sh(vars);
 }
 
 static void	error_messages(t_token *curr)

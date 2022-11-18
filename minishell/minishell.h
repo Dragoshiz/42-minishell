@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 16:01:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:06:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
@@ -136,7 +136,6 @@ void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
 void	update_pwd(t_vars *vars, char *cwd, char *pwd, char *oldpwd);
 int		find_var(t_linked_list *list, char *str);
-void	init_pwd(t_vars *vars);
 void	ft_cd(t_vars *vars);
 
 // EXECUTION
