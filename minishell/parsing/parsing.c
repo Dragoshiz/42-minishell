@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/17 00:16:45 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:49:28 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	syntax_errors(t_parsing *parsing)
 {
 	if (parsing->vars->syntax_error == 1)
 	{
-		ft_putstr_fd("minish: syntax error near unexpected token '", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 		write(2, &parsing->vars->s_err_c, 1);
 		ft_putstr_fd("' \n", 2);
 		g_exit = 258;
 	}
 	else if (parsing->vars->syntax_error == 2)
 	{
-		ft_putstr_fd("minish: syntax error unclosed quote \n", 2);
+		ft_putstr_fd("minishell: syntax error unclosed quote \n", 2);
 		g_exit = 259;
 	}
 }
@@ -65,7 +65,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 
 // Main function for Parsing & initial checks
 void	parsing(t_parsing *parsing, t_vars *vars)
-{
+{	
 	initialize_parsing(parsing, vars);
 	initialize_pipeline(parsing);
 	split_pipeline(parsing);

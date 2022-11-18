@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 18:45:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:45:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_parsing {
 
 void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse);
 void	ft_exit(t_token *current, t_iovars *iov);
+int		handle_lonely_pipe(t_vars *vars);
 
 // BUILTINS
 void	env_list_create(t_vars *vars);

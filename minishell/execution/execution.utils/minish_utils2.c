@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 11:43:45 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:48:14 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ int	check_builtins(t_token *current, t_iovars *iov, int pipe_num)
 		i++;
 	}
 	return (0);
+}
+
+int	handle_lonely_pipe(t_vars *vars)
+{
+	if (*vars->line == PIPE)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token '|' \n", 2);
+		return (0);
+	}
+	return (1);
 }

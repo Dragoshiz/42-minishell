@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/18 16:25:45 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 19:49:09 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 			write(1, "exit\n", 5);
 			break ;
 		}
-		if (*vars->line && !is_whitespace(vars->line))
+		if (*vars->line && !is_whitespace(vars->line) && \
+			handle_lonely_pipe(vars))
 		{
 			add_history(vars->line);
 			ft_init_vars(vars);

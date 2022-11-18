@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:56:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:23:42 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:34:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	split_pipeline(t_parsing *parsing)
 	int	i;
 
 	i = 0;
-	if (*parsing->vars->line == PIPE)
-		parsing->vars->syntax_error = 1;
 	while (i < parsing->line_len)
 	{
 		check_quotes(parsing, i);
