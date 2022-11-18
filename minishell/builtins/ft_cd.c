@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:46:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:00:47 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void	error_messages(t_token *curr)
 
 static void	init_oldpwd(t_vars *vars, char *oldpwd, char *cwd)
 {
-
 	if (vars->pwd_tmp == NULL && !(find_var(vars->env_list, oldpwd)))
 	{
 		ft_update_exp(vars->exp_lst, ft_strjoin(oldpwd, cwd));
