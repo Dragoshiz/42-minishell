@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 12:40:38 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:58:43 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 static void	unset_exp(t_iovars *iov, t_token *curr, size_t len);
-static void	unset_env(t_iovars *iov, t_token *curr, size_t len);
-static void	free_node(t_node *node);
+static int	hv_exp_next(t_iovars *iov, t_node *exp);
 
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 {
@@ -45,38 +44,18 @@ void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 	update_env_sh(iov->vars);
 }
 
-static void	unset_env(t_iovars *iov, t_token *curr, size_t len)
+static int	hv_exp_next(t_iovars *iov, t_node *exp)
 {
-	t_node	*env;
-	t_node	*tmp;
-
-	len = ft_strlen(curr->data);
-	env = iov->vars->env_list->head;
-	if (!env)
-		return ;
-	if (ft_strncmp(env->data, curr->data, len) == 0 \
-		&& env->data[len] == '=')
+	if (!iov->vars->exp_lst->head->next)
 	{
-		iov->vars->env_list->head = iov->vars->env_list->head->next;
-		free_node(env);
-		env = iov->vars->env_list->head;
+		free(iov->vars->exp_lst->head);
+		iov->vars->exp_lst->head = NULL;
+		return (0);
 	}
-	if (!env)
-		return ;
-	while (env->next)
-	{
-		if (ft_strncmp(env->next->data, curr->data, len) == 0 \
-			&& env->next->data[len] == '=')
-		{
-			tmp = env->next;
-			if (env->next)
-				env->next = env->next->next;
-			free_node(tmp);
-		}
-		if (!env->next)
-			break ;
-		env = env->next;
-	}
+	iov->vars->exp_lst->head = iov->vars->exp_lst->head->next;
+	free_node(exp);
+	exp = iov->vars->exp_lst->head;
+	return (1);
 }
 
 static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
@@ -89,15 +68,8 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 	if (ft_strncmp(exp->data, curr->data, len) == 0 && \
 	(exp->data[len] == '=' || ft_strlen(exp->data) == len))
 	{
-		if (!iov->vars->exp_lst->head->next)
-		{
-			free(iov->vars->exp_lst->head);
-			iov->vars->exp_lst->head = NULL;
+		if (!hv_exp_next(iov, exp))
 			return ;
-		}
-		iov->vars->exp_lst->head = iov->vars->exp_lst->head->next;
-		free_node(exp);
-		exp = iov->vars->exp_lst->head;
 	}
 	while (exp->next)
 	{
@@ -114,7 +86,7 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 	}
 }
 
-static void	free_node(t_node *node)
+void	free_node(t_node *node)
 {
 	free(node->data);
 	free(node);

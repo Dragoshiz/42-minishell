@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:51:22 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:45:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	ft_env(t_vars *vars);
 void	update_env_sh(t_vars *vars);
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
+void	unset_env(t_iovars *iov, t_token *curr, size_t len);
+void	free_node(t_node *node);
 void	update_pwd(t_vars *vars, char *cwd, char *pwd);
 void	update_oldpwd(t_vars *vars, char *oldpwd);
 int		find_var(t_linked_list *list, char *str);

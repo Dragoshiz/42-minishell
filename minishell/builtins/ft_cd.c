@@ -6,12 +6,13 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 17:00:47 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:22:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	init_cd(t_vars *vars, t_token *curr, char *oldpwd, char *cwd);
 static void	init_pwd(t_vars *vars);
 static void	error_messages(t_token *curr);
 static void	init_oldpwd(t_vars *vars, char *oldpwd, char *cwd);
@@ -35,19 +36,24 @@ void	ft_cd(t_vars *vars)
 			g_exit = 1;
 			return ;
 		}
-		if (curr->next->pipe_nbr == curr->pipe_nbr && curr->next)
-		{
-			if (chdir(curr->next->data) == 0)
-			{
-				init_oldpwd(vars, oldpwd, cwd);
-				init_pwd(vars);
-				g_exit = 0;
-			}
-			else
-				error_messages(curr);
-		}
+		init_cd(vars, curr, oldpwd, cwd);
 	}
 	free(oldpwd);
+}
+
+static void	init_cd(t_vars *vars, t_token *curr, char *oldpwd, char *cwd)
+{
+	if (curr->next->pipe_nbr == curr->pipe_nbr && curr->next)
+	{
+		if (chdir(curr->next->data) == 0)
+		{
+			init_oldpwd(vars, oldpwd, cwd);
+			init_pwd(vars);
+			g_exit = 0;
+		}
+		else
+			error_messages(curr);
+	}
 }
 
 static void	init_pwd(t_vars *vars)
