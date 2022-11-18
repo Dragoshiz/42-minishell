@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 13:23:56 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:43:26 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,20 @@
 static char	*pwd_data(t_linked_list *list, char *str)
 {
 	t_node	*curr;
+	char	*p;
 
 	curr = list->head;
+	p = NULL;
 	while (curr)
 	{
 		if (ft_strncmp(curr->data, str, ft_strlen(str)) == 0)
-			return (curr->data);
+		{
+			p = ft_strdup(curr->data);
+			return (p);
+		}
 		curr = curr->next;
 	}
-	return (NULL);
+	return (p);
 }
 
 void	update_pwd(t_vars *vars, char *cwd, char *pwd, char *oldpwd)
