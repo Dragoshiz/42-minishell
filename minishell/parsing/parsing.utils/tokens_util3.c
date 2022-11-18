@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:28:20 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 13:19:15 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:15:44 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,31 @@ void	token_trim_quotes(t_parsing *parsing)
 	}
 }
 
-static void	analyse_quotes(t_parsing *parsing, t_token *current, int *ref)
+static void	analyse_quotes(t_parsing *parsing, t_token *c, int *ref)
 {
 	int	i;
 
 	i = -1;
-	while (current->data[++i])
+	while (c->data[++i])
 	{
-		if ((current->data[i] == parsing->d_quote || current->data[i] == \
-		parsing->s_quote) && parsing->m1 >= 0 && current->data[i] \
+		if ((c->data[i] == parsing->d_quote || c->data[i] == \
+		parsing->s_quote) && parsing->m1 >= 0 && c->data[i] \
 		!= parsing->quote)
 			ref[i] = -1;
-		if ((current->data[i] == parsing->d_quote || current->data[i] == \
+		if ((c->data[i] == parsing->d_quote || c->data[i] == \
 		parsing->s_quote) && parsing->m1 < 0)
 		{
-			parsing->quote = current->data[i];
+			parsing->quote = c->data[i];
 			parsing->m1 = i;
 		}
-		else if (current->data[i] == parsing->quote && parsing->m2 < 0)
+		else if (c->data[i] == parsing->quote && parsing->m2 < 0)
 		{
 			parsing->m2 = i;
 			ref[parsing->m1] = 1;
 			ref[parsing->m2] = 1;
-			if (i > 0 && current->data[parsing->m1 - 1] == '$')
-				mark_dollars(parsing, current, ref);
-			init_analyse_quotes(parsing, current);
+			if (i > 0 && parsing->m1 > 0 && c->data[parsing->m1 - 1] == '$')
+				mark_dollars(parsing, c, ref);
+			init_analyse_quotes(parsing, c);
 		}
 	}
 }
