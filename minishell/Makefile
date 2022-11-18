@@ -21,6 +21,9 @@ RM = rm -f
 AF = ar rcs
 
 SRCS = \
+execution/redirections/file_io.c\
+execution/redirections/heredoc.c\
+execution/redirections/redirect.c\
 execution/execution.utils/minish_utils.c\
 execution/execution.utils/minish_utils2.c\
 execution/execution.utils/exec_utils.c\
@@ -28,7 +31,8 @@ execution/execution.utils/hrdc.c\
 execution/execution.utils/pipes.c\
 execution/execution.utils/exit.c\
 execution/execution.c\
-execution/new_exec.c\
+execution/execve.c\
+execution/exec.c\
 parsing/parsing.utils/parsing_util.c\
 parsing/parsing.utils/parsing_util2.c\
 parsing/parsing.utils/env_list_util.c\

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 09:53:21 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:42:13 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/
+// Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/
+// 8.2.1/include/readline/history.h"
 # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
 # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
@@ -40,8 +42,7 @@
 typedef struct s_parsing	t_parsing;
 typedef struct s_iovars		t_iovars;
 typedef struct s_vars		t_vars;
-
-extern int	g_exit;
+extern int					g_exit;
 
 typedef struct s_token {
 	char			*data;
@@ -197,6 +198,19 @@ int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
 int		ft_is_valid(t_token *curr, char *curr_data);
 void	ft_get_var(t_vars *vars);
 
+//redirect.c
+int		ft_get_meta(t_token *current, int type, t_iovars *iov);
+
+//file_io.c
+int		ft_get_fin(t_token *current);
+int		ft_overwrite(t_token *current);
+int		ft_appnd(t_token *current);
+
+//exec.c
+void	ft_err_n_close(t_parsing *parse, t_iovars *iov, t_token *curr, \
+char *cmd_path);
+void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe);
+
 // other
 int		is_whitespace(char *line);
 void	ft_cpy_env(t_vars *vars, char **env);
@@ -283,7 +297,6 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov);
 int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
 int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
 void	ft_get_hrdoc(t_token *current, t_iovars *iov);
-int		ft_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
 void	ft_close_pipes(t_parsing *parse, t_iovars *iov);

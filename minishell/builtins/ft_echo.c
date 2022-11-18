@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 23:21:00 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:40:05 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ static void	echo_print(t_token *curr, int pipe_num, int opt, int fd)
 	g_exit = 0;
 }
 
+static void	ft_echo2(t_token *curr, t_iovars *iov, int pipe_num)
+{
+	if (!curr->next)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
+	curr = curr->next;
+	if (iov->vars->parse->num_cmds > 1
+		&& pipe_num < iov->vars->parse->num_cmds - 1)
+		echo_print(curr, pipe_num, 0, iov->pipefds[pipe_num][1]);
+	else if (iov->hv_out == 1)
+		echo_print(curr, pipe_num, 0, iov->fdout);
+	else
+		echo_print(curr, pipe_num, 0, 1);
+}
+
 void	ft_echo(t_token *curr, t_iovars *iov, int pipe_num)
 {
 	if (curr->next && ft_strncmp(curr->next->data, "-n", 2) == 0)
@@ -44,18 +61,5 @@ void	ft_echo(t_token *curr, t_iovars *iov, int pipe_num)
 			echo_print(curr, pipe_num, 1, 1);
 	}
 	else
-	{
-		if (!curr->next)
-		{
-			write(1, "\n", 1);
-			return ;
-		}
-		curr = curr->next;
-		if (iov->vars->parse->num_cmds > 1 && pipe_num < iov->vars->parse->num_cmds - 1)
-			echo_print(curr, pipe_num, 0, iov->pipefds[pipe_num][1]);
-		else if (iov->hv_out == 1)
-			echo_print(curr, pipe_num, 0, iov->fdout);
-		else
-			echo_print(curr, pipe_num, 0, 1);
-	}
+		ft_echo2(curr, iov, pipe_num);
 }

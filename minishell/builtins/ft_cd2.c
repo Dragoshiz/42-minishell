@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 16:43:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:44:20 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static char	*pwd_data(t_linked_list *list, char *str)
 	}
 	return (p);
 }
+
+// static update_pwd2(t_vars *vars, char *cwd, char *pwd, char *oldpwd)
+// {
+	
+// }
+
 
 void	update_pwd(t_vars *vars, char *cwd, char *pwd, char *oldpwd)
 {
