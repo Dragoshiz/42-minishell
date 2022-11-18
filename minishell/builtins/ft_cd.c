@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 13:05:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:28:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,15 @@ static void	init_pwd(t_vars *vars)
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("");
 	if (find_var(vars->env_list, pwd))
+		update_pwd(vars, cwd, pwd);
+	if (vars->pwd_tmp != NULL)
 	{
-		update_pwd(vars, cwd, pwd, oldpwd);
+		if (find_var(vars->env_list, oldpwd))
+			update_oldpwd(vars, oldpwd);
 	}
+	if (vars->pwd_tmp)
+		free(vars->pwd_tmp);
+	vars->pwd_tmp = ft_strjoin(pwd, cwd);
 	free(pwd);
 	free(oldpwd);
 }
