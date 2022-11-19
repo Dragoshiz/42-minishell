@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/19 21:10:12 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 22:56:10 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 			handle_lonely_pipe(vars))
 			ft_execution2(vars, iov);
 		free(vars->line);
-		if (parse->num_cmds > 1)
-			ft_free_doublepointi(iov->pipefds);
+		// if (parse->num_cmds > 1)
+		// 	ft_free_doublepointi(iov->pipefds);
 	}
 	// if (vars->is_cmds)
 	// 	ft_free_doublepoint(vars->cmds);
