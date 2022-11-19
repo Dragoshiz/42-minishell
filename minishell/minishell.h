@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 11:10:12 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:52:17 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 // # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
 // # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
+# include <dirent.h>
 # include "libft/libft.h"
 
 typedef struct s_parsing	t_parsing;
@@ -72,10 +73,12 @@ typedef struct s_vars{
 	char			**env_sh;
 	char			**cmds;
 	char			*line;
+	int				is_dir;
 	int				num_env_sh;
 	int				syntax_error;
 	char			s_err_c;
 	int				exit_status;
+	int				is_cmds;
 	t_linked_list	*env_list;
 	t_linked_list	*exp_lst;
 	t_parsing		*parse;
@@ -304,5 +307,6 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
 void	ft_close_pipes(t_parsing *parse, t_iovars *iov);
 void	ft_ctrl(int sig);
 void	ft_ctrl_hrdc(int sig);
+void	ft_execv3(t_iovars *iov, t_parsing *parse, int i);
 
 #endif

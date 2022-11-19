@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:59:28 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:37:27 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,24 @@ void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe)
 	int		i;
 
 	i = 0;
+	iov->vars->cmds = NULL;
 	while (curr != NULL && curr->type != 0 && curr->pipe_nbr != pipe)
 		curr = curr->next;
 	if (curr == NULL)
 		return ;
-	iov->vars->cmds = ft_calloc(sizeof(char *), \
-		(ft_tokens_inpipe(parse, pipe) + 1));
+	iov->vars->is_cmds = 1;
+	iov->vars->cmds = malloc(sizeof(char *) \
+	* (ft_tokens_inpipe(parse, pipe) + 1));
 	while (curr->pipe_nbr == pipe && curr->type == 0)
 	{
 		iov->vars->cmds[i] = ft_strdup(curr->data);
 		curr->type = 5;
+		i++;
 		curr = curr->next;
 		if (curr == NULL)
 			break ;
-		i++;
 	}
+	iov->vars->cmds[i] = NULL;
 }
 
 static char	*ft_ifnext_cmd(t_parsing *parse, t_iovars *iov, t_token	*curr)
@@ -103,15 +106,13 @@ char *cmd_path)
 	ft_close_pipes(parse, iov);
 	g_exit = 0;
 	cmd_path = ft_ifnext_cmd(parse, iov, curr);
-	if (cmd_path != NULL)
+	if (cmd_path != NULL && !iov->vars->is_dir)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd_path, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		g_exit = 127;
 	}
-	if (iov->vars->cmds)
-		ft_free_doublepoint(iov->vars->cmds);
 	if (iov->hv_heredoc)
 	{
 		close(iov->hrdc_pipe[1]);

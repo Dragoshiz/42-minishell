@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 19:57:16 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/05 14:43:01 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:56:08 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

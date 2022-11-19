@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:32:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:41:13 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 11:19:51 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 int	is_ordered(t_linked_list *exp_lst)
 {
 	t_node	*current;
-	int		i;
 
-	i = 0;
 	current = exp_lst->head;
 	if (current == NULL)
 		return (0);

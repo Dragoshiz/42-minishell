@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:29:42 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:41:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:33:24 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,9 @@ int	ft_is_valid(t_token *curr, char *curr_data)
 	}
 	if (valid == 1)
 	{
-		printf("minishell: export: '%s': not a valid identifier\n", curr_data);
+		ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+		ft_putstr_fd(curr_data, STDERR_FILENO);
+		ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 		curr = curr->next;
 		g_exit = 1;
 		return (valid);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:35:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/18 19:49:09 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:47:27 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,17 @@ void	ft_close_pipes(t_parsing *parse, t_iovars *iov)
 	}
 }
 
-void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
+static void	ft_execution2(t_vars *vars, t_iovars *iov)
 {
-	delete_list(vars->exp_lst);
-	free(vars->exp_lst);
-	delete_list(vars->env_list);
-	free(vars->env_list);
-	ft_free_doublepoint(vars->env_sh);
-	if (g_exit != -1)
-	{
-		if (parse->num_cmds > 1)
-		{
-			ft_close_pipes(parse, iov);
-			ft_free_doublepointi(iov->pipefds);
-		}
-	}
+	add_history(vars->line);
+	ft_init_vars(vars);
+	ft_get_path(vars, vars->env_sh);
+	parsing(vars->parse, vars);
+	if (!vars->syntax_error)
+		ft_execv2(vars->parse, iov);
+	parsing_cleanup(vars->parse);
+	if (iov->vars->paths)
+		ft_free_doublepoint(iov->vars->paths);
 }
 
 void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
@@ -73,24 +69,19 @@ void	ft_execution(t_vars *vars, t_iovars *iov, t_parsing *parse)
 		vars->line = readline("minishell > ");
 		if (!vars->line)
 		{
+			vars->is_cmds = 0;
+			vars->parse->num_cmds = 0;
 			write(1, "exit\n", 5);
 			break ;
 		}
 		if (*vars->line && !is_whitespace(vars->line) && \
 			handle_lonely_pipe(vars))
-		{
-			add_history(vars->line);
-			ft_init_vars(vars);
-			ft_get_path(vars, vars->env_sh);
-			parsing(parse, vars);
-			if (!vars->syntax_error)
-				ft_execv2(parse, iov);
-			parsing_cleanup(parse);
-			if (iov->vars->paths)
-				ft_free_doublepoint(iov->vars->paths);
-		}
-		if (vars->line)
-			free(vars->line);
+			ft_execution2(vars, iov);
+		free(vars->line);
+		if (iov->pipefds)
+			ft_free_doublepointi(iov->pipefds);
 	}
+	if (vars->is_cmds)
+		ft_free_doublepoint(vars->cmds);
 	cleanup(vars, iov, parse);
 }

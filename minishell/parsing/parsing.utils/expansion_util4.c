@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_util4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:20:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:30:54 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char *p)
 	while (i < parsing->p_len && str[j + \
 	parsing->ix + parsing->var_name_len + 1])
 	{
-		printf("DEBUG %c\n", str[j + parsing->ix + parsing->var_name_len + 1]);
 		p[i] = str[j + parsing->ix + parsing->var_name_len + 1];
 		i++;
 		j++;

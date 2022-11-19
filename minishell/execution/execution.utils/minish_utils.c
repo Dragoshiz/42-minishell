@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minish_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/17 11:03:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:08:36 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	ft_free_doublepoint(char **to_free)
 	int	i;
 
 	i = 0;
+	if (!*to_free)
+		return ;
 	while (to_free[i])
 	{
 		free(to_free[i]);
 		i++;
 	}
-	if (to_free)
-		free(to_free);
+	free(to_free);
 }
 
 void	ft_free_doublepointi(int **to_free)
@@ -31,6 +32,8 @@ void	ft_free_doublepointi(int **to_free)
 	int	i;
 
 	i = 0;
+	if (!to_free)
+		return ;
 	while (to_free[i])
 	{
 		free(to_free[i]);

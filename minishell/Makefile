@@ -27,10 +27,10 @@ execution/redirections/redirect.c\
 execution/execution.utils/minish_utils.c\
 execution/execution.utils/minish_utils2.c\
 execution/execution.utils/exec_utils.c\
-execution/execution.utils/pipes.c\
 execution/execution.utils/exit.c\
 execution/execution.c\
 execution/execve.c\
+execution/execve2.c\
 execution/exec.c\
 parsing/parsing.utils/parsing_util.c\
 parsing/parsing.utils/parsing_util2.c\

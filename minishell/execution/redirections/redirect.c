@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 16:24:01 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:25:12 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:09:57 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 	i = 0;
 	if (parse->num_cmds == 1)
 		return ;
-	iov->pipefds = ft_calloc(sizeof(int *), parse->num_cmds);
+	iov->pipefds = malloc(sizeof(int *) * parse->num_cmds);
 	while (i < parse->num_cmds - 1)
 	{
 		iov->pipefds[i] = ft_calloc(sizeof(int), 2);
@@ -53,4 +53,5 @@ void	ft_create_pipes(t_parsing *parse, t_iovars *iov)
 		}
 		i++;
 	}
+	iov->pipefds[i] = NULL;
 }
