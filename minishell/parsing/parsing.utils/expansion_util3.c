@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_util3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:24:03 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/19 21:11:29 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_redc(char c)
 // function to check if character is a quote char
 int	is_quote_char(char c)
 {
-	if (c == 36 || c == 39)
+	if (c == 34 || c == 39)
 		return (1);
 	return (0);
 }

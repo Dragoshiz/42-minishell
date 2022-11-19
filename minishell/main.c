@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 16:05:52 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 21:11:30 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_exit(t_token *current, t_iovars *iov)
 		digit = ft_atoi(current->next->data);
 		g_exit = digit % 256;
 	}
+	if (iov->vars->is_cmds)
+		ft_free_doublepoint(iov->vars->cmds);
 	close(iov->tmpin);
 	close(iov->tmpout);
 	cleanup(iov->vars, iov, iov->vars->parse);

@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 15:10:49 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 17:08:36 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 21:11:26 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_free_doublepoint(char **to_free)
 	int	i;
 
 	i = 0;
-	if (!*to_free)
-		return ;
 	while (to_free[i])
 	{
 		free(to_free[i]);
@@ -32,8 +30,6 @@ void	ft_free_doublepointi(int **to_free)
 	int	i;
 
 	i = 0;
-	if (!to_free)
-		return ;
 	while (to_free[i])
 	{
 		free(to_free[i]);

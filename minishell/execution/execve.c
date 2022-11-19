@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 16:27:13 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 17:52:30 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/19 21:11:25 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, t_token *curr)
 		return ;
 	}
 	ft_execve(iov, cmd_path);
-	free(cmd_path);
+	if (cmd_path)
+		free(cmd_path);
 	dup2(iov->tmpin, STDIN_FILENO);
 	dup2(iov->tmpout, STDOUT_FILENO);
 	if (iov->hv_heredoc)
@@ -59,7 +60,8 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 	if ((curr->data[0] == '.' || curr->data[0] == '/')
 		&& access(curr->data, X_OK) == 0 && dir == NULL)
 	{
-		cmd_path = curr->data;
+		cmd_path = ft_strdup(curr->data);
+		return (cmd_path);
 	}
 	else if (dir != NULL)
 	{
@@ -70,6 +72,8 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 		closedir(dir);
 	}
+	if (!iov->vars->cmds[0])
+		return (cmd_path);
 	cmd_path = ft_find_arg_path(iov->vars, iov->vars->cmds[0]);
 	return (cmd_path);
 }
