@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:23:30 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 13:37:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 14:28:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,47 @@ void	ft_init_vars(t_vars *vars)
 	vars->is_dir = 0;
 }
 
-void	ft_exit(t_token *current, t_iovars *iov)
+static void	exit_message(char *str)
 {
-	int	digit;
-	int	i;
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+}
 
-	i = 0;
-	digit = 0;
-	if (current->next)
-	{
-		while (current->next->data[i])
-		{
-			if (!ft_isdigit(current->next->data[i]))
-			{
-				ft_putstr_fd("minishell: exit: ", 2);
-				ft_putstr_fd(current->next->data, 2);
-				ft_putstr_fd(": numeric argument required\n", 2);
-				exit(255);
-			}
-			i++;
-		}
-		digit = ft_atoi(current->next->data);
-		g_exit = digit % 256;
-	}
+static void	exit_cleanup(t_iovars *iov)
+{
 	if (iov->vars->is_cmds)
 		ft_free_doublepoint(iov->vars->cmds);
 	close(iov->tmpin);
 	close(iov->tmpout);
 	parsing_cleanup(iov->vars->parse);
 	cleanup(iov->vars, iov, iov->vars->parse);
+	if (iov->vars->paths)
+		ft_free_doublepoint(iov->vars->paths);
+}
+
+void	ft_exit(t_token *current, t_iovars *iov)
+{
+	int	digit;
+	int	i;
+
+	i = -1;
+	digit = 0;
+	if (current->next)
+	{
+		while (current->next->data[++i])
+		{
+			if (!ft_isdigit(current->next->data[i]))
+			{
+				exit_message(current->next->data);
+				exit_cleanup(iov);
+				exit(255);
+			}
+		}
+		digit = ft_atoi(current->next->data);
+		g_exit = digit % 256;
+	}
+	exit_cleanup(iov);
 	exit(digit);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 18:22:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 14:35:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_cd(t_vars *vars)
 		{
 			ft_putstr_fd("cd: only a relative or absolute path\n", 2);
 			g_exit = 1;
+			free(oldpwd);
 			return ;
 		}
 		init_cd(vars, curr, oldpwd, cwd);
