@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 18:58:43 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 01:37:11 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	hv_exp_next(t_iovars *iov, t_node *exp)
 {
 	if (!iov->vars->exp_lst->head->next)
 	{
+		free(iov->vars->exp_lst->head->data); // DEBUG 20.11. 01:30
 		free(iov->vars->exp_lst->head);
 		iov->vars->exp_lst->head = NULL;
 		return (0);
