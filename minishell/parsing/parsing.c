@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/19 21:11:24 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/20 01:00:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	syntax_errors(t_parsing *parsing)
 // parsing edge cases
 static void	edge_cases(t_parsing *parsing)
 {
+	if (s_err_token(parsing))
+		return ;
 	s_err_pipe(parsing);
 	s_err_redir(parsing);
 }

@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 22:56:42 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 01:00:04 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ int		is_variable_str(char *c);
 
 void	s_err_pipe(t_parsing *p);
 void	s_err_redir(t_parsing *p);
+int		s_err_token(t_parsing *p);
 void	add_syntax_error(t_parsing *p, char *c, int i);
 
 // EXPANSION UTILITIES

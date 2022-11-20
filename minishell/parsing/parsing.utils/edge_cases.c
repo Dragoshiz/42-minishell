@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 21:55:04 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:17:14 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 01:13:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,31 @@ void	s_err_redir(t_parsing *p)
 		}
 		curr = curr->next;
 	}
+}
+
+// edge cases related to tokens
+int	s_err_token(t_parsing *p)
+{
+	t_token	*current;
+
+	current = p->token_list->head;
+	if (!current)
+	{
+		p->vars->syntax_error = 3;
+		ft_putstr_fd("\n", 2);
+		g_exit = 259;
+		return (1);
+	}
+	while (current)
+	{
+		if (!current || is_whitespace(current->data))
+		{
+			p->vars->syntax_error = 3;
+			ft_putstr_fd("\n", 2);
+			g_exit = 259;
+			return (1);
+		}
+		current = current->next;
+	}
+	return (0);
 }
