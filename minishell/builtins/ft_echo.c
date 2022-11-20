@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsbusburg.deg.de>+#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 21:48:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/19 18:59:599 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 12:34:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

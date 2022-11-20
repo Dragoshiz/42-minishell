@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 01:00:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 13:28:42 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,26 +128,64 @@ typedef struct s_parsing {
 	char			s_quote;
 }t_parsing;
 
-void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse);
+// MAIN
+
 void	ft_exit(t_token *current, t_iovars *iov);
 int		handle_lonely_pipe(t_vars *vars);
+void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse);
 
 // BUILTINS
-void	env_list_create(t_vars *vars);
+
+// env
 void	ft_env(t_vars *vars);
+void	env_list_create(t_vars *vars);
 void	update_env_sh(t_vars *vars);
+// echo
 void	ft_echo(t_token *current, t_iovars *iov, int pipe_num);
+// unset
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num);
 void	unset_env(t_iovars *iov, t_token *curr, size_t len);
 void	free_node(t_node *node);
+int		find_var(t_linked_list *list, char *str);
+// pwd
 void	update_pwd(t_vars *vars, char *cwd, char *pwd);
 void	update_oldpwd(t_vars *vars, char *oldpwd);
-int		find_var(t_linked_list *list, char *str);
+// cd
 void	ft_cd(t_vars *vars);
+// export.c
+void	ft_get_export(t_iovars *iov);
+void	ft_export(t_iovars *iov, int num_pipe);
+// export1.c
+int		ft_chk_chars(char *data);
+int		ft_hv_equal(char *curr_data);
+int		is_ordered(t_linked_list *exp_lst);
+int		ft_update_data(t_vars *vars, char	*data);
+int		ft_update_exp(t_linked_list *exp_lst, char *data);
+// export2.c
+void	ft_printnsortexp(t_iovars *iov, t_linked_list *exp_lst, int num_pipe);
+void	ft_add2env(t_vars *vars, char *data);
+int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
+int		ft_is_valid(t_token *curr, char *curr_data);
+void	ft_get_var(t_vars *vars);
+
+// NEW EXEC
+char	*ft_exe(t_parsing *parse, t_iovars *iov);
+void	ft_execv2(t_parsing *parse, t_iovars *iov);
+int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
+void	ft_get_hrdoc(t_token *current, t_iovars *iov);
+char	*ft_custom_strjoin(char *s1, char *s2);
+void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
+void	ft_close_pipes(t_parsing *parse, t_iovars *iov);
+void	ft_ctrl(int sig);
+void	ft_ctrl_hrdc(int sig);
+void	ft_execv3(t_iovars *iov, t_parsing *parse, int i);
+void	ft_forknexec(t_parsing *parse, t_iovars *iov, t_token *curr);
+void	ft_execve(t_iovars *iov, char *cmd_path);
 
 // EXECUTION
 
-//execution.c
+// execution.c
 void	ft_exec_cmd(t_vars *vars, t_iovars *iov);
 void	ft_exec_utils(t_vars *vars, t_iovars *iov, int numcmds);
 void	ft_get_path(t_vars *vars, char *env[]);
@@ -162,19 +200,18 @@ void	ft_count_args(t_vars *vars);
 void	ft_dup2nclose(int fd, int std);
 // pipes.c
 char	*ft_get_filename(char *arg, int i);
-// void	ft_get_cmd(t_vars *vars, char *arg);
 int		ft_hrdoc(t_vars *vars, t_iovars *iov, char *arg, int i);
-//searchers.c
+// searchers.c
 int		ft_find_in(t_vars *vars);
 int		ft_find_out(t_vars *vars, t_iovars *iov, char *arg);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
 char	*ft_find_delim(t_vars *vars, t_iovars *iov, char *arg, int i);
-//exec_utils.c
+// exec_utils.c
 void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
 int		t_size_rl(char *line, int size_delim);
 char	*ft_custom_strjoin(char *s1, char *s2);
 void	ft_errmsg(t_vars *vars, int i);
-//hrdc.c
+// hrdc.c
 void	ft_set_redir(t_vars *vars);
 void	ft_find_hrdc(t_vars *vars, t_iovars *iov);
 void	ft_find_io(t_vars *vars, t_iovars *iov, char *arg);
@@ -184,38 +221,16 @@ void	ft_builtins(t_token *current, t_iovars *iov, int i, int pipe_num);
 void	ft_built_env(t_iovars *iov, int pipe_num);
 void	ft_built_pwd(t_iovars *iov, int pipe_num);
 void	ft_executable(t_vars *vars, t_iovars *iov, t_parsing *parsing);
-
-//export.c
-void	ft_get_export(t_iovars *iov);
-void	ft_export(t_iovars *iov, int num_pipe);
-
-//export1.c
-int		ft_chk_chars(char *data);
-int		ft_hv_equal(char *curr_data);
-int		is_ordered(t_linked_list *exp_lst);
-int		ft_update_data(t_vars *vars, char	*data);
-int		ft_update_exp(t_linked_list *exp_lst, char *data);
-
-//export2.c
-void	ft_printnsortexp(t_iovars *iov, t_linked_list *exp_lst, int num_pipe);
-void	ft_add2env(t_vars *vars, char *data);
-int		ft_chk_cur_env(t_linked_list *exp_lst, char *data);
-int		ft_is_valid(t_token *curr, char *curr_data);
-void	ft_get_var(t_vars *vars);
-
 //redirect.c
 int		ft_get_meta(t_token *current, int type, t_iovars *iov);
-
 //file_io.c
 int		ft_get_fin(t_token *current);
 int		ft_overwrite(t_token *current);
 int		ft_appnd(t_token *current);
-
-//exec.c
+// exec.c
 void	ft_err_n_close(t_parsing *parse, t_iovars *iov, t_token *curr, \
 char *cmd_path);
 void	ft_get_cmd(t_parsing *parse, t_iovars *iov, t_token *curr, int pipe);
-
 // other
 int		is_whitespace(char *line);
 void	ft_cpy_env(t_vars *vars, char **env);
@@ -227,13 +242,9 @@ int		ft_exec_file(t_parsing *parsing);
 
 void	parsing(t_parsing *parsing, t_vars *vars);
 void	parsing_cleanup(t_parsing *parsing);
-
-// PARSING DEBUG
-
+// parsing debug
 void	display_token_list(t_token_list *list);
-
-// PARSING UTILS
-
+// parsing utils
 void	seek_word_r(t_parsing *parsing, char *str);
 void	seek_red_r(t_parsing *parsing, char *str);
 void	seek_whs_r(t_parsing *parsing, char *str);
@@ -245,23 +256,17 @@ int		is_quote_char(char c);
 int		is_whs_c(char c);
 int		is_word_c(char c);
 int		is_variable_str(char *c);
-
-// EDGE CASES UTILS
-
+// edge case utils
 void	s_err_pipe(t_parsing *p);
 void	s_err_redir(t_parsing *p);
 int		s_err_token(t_parsing *p);
 void	add_syntax_error(t_parsing *p, char *c, int i);
-
-// EXPANSION UTILITIES
-
+// expansion untils
 char	*insert_exit_status(t_parsing *parsing, void *data);
 char	*insert_expanded_string(t_parsing *parsing, void *data);
 void	check_expansion_quotes(char *quote, int *status, char c);
 void	expand_variables(t_parsing *parsing);
-
-// TOKEN UTILITIES
-
+// token utils
 void	remove_quote_pairs(char *p, int *ref, char *str);
 void	token_trim_white(t_parsing *parsing);
 void	token_trim_quotes(t_parsing *parsing);
@@ -272,23 +277,17 @@ void	initialize_token_list(t_parsing *parsing);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);
-
-// PIPELINE UTILITIES
-
+// pipeline utils
 void	split_pipeline(t_parsing *parsing);
 void	initialize_pipeline(t_parsing *parsing);
 void	fill_args(t_parsing *parsing);
 void	check_quotes(t_parsing *parsing, int i);
 void	pipe_trim_white(t_parsing *parsing);
 void	add_tail_pipe(t_parsing *parsing, void *data);
-
-// LINE UTIL
-
+// line utils
 void	initialize_line(t_parsing *parsing);
 char	*dup_range(char *p_start, char *p_end);
-
-// LIST UTIL
-
+// list utils
 void	add_head(t_linked_list *list, void *data);
 void	add_tail(t_linked_list *list, void *data);
 void	display_linked_list(t_linked_list *list);
@@ -296,18 +295,5 @@ void	initialize_list(t_linked_list *list);
 int		count_linked_list(t_linked_list *list);
 int		count_token_list(t_token_list *list);
 void	delete_list(t_linked_list *list);
-
-//NEW EXEC
-char	*ft_exe(t_parsing *parse, t_iovars *iov);
-void	ft_execv2(t_parsing *parse, t_iovars *iov);
-int		ft_get_out(t_iovars *iov, t_parsing *parse, int pipe_nbr);
-int		ft_get_inp(t_iovars *iov, t_parsing *parse, int pipe_nbr);
-void	ft_get_hrdoc(t_token *current, t_iovars *iov);
-char	*ft_custom_strjoin(char *s1, char *s2);
-void	ft_create_pipes(t_parsing *parse, t_iovars *iov);
-void	ft_close_pipes(t_parsing *parse, t_iovars *iov);
-void	ft_ctrl(int sig);
-void	ft_ctrl_hrdc(int sig);
-void	ft_execv3(t_iovars *iov, t_parsing *parse, int i);
 
 #endif
