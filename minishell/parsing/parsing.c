@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/20 01:00:19 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:42:26 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	parsing(t_parsing *parsing, t_vars *vars)
 	split_tokens(parsing);
 	token_trim_white(parsing);
 	token_trim_quotes(parsing);
+	display_token_list(parsing->token_list);
 	edge_cases(parsing);
 	syntax_errors(parsing);
 }

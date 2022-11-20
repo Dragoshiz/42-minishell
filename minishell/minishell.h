@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 13:28:42 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:46:12 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,7 @@ int		token_value_red(t_parsing *parsing, char *str, int i);
 void	redir_error_check(t_parsing *p, char *str, int i);
 void	add_token(t_parsing *parsing, void *data, int type, t_node *current);
 void	initialize_token_list(t_parsing *parsing);
+void	init_split_tokens(t_parsing *p, char *str);
 void	check_token_quotes(t_parsing *parsing, char *str, int i);
 void	delete_token_list(t_token_list *list);
 void	split_tokens(t_parsing *parsing);

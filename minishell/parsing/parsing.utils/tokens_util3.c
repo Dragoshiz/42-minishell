@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:28:20 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/18 19:15:44 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:46:19 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,16 @@ static void	mark_dollars(t_parsing *parsing, t_token *current, int *ref)
 		if ((parsing->m1 - x) < 0)
 			break ;
 	}
+}
+
+void	init_split_tokens(t_parsing *p, char *str)
+{
+	int		len;
+
+	len = ft_strlen(str);
+	p->p_start = str;
+	p->p_end = &str[len];
+	p->line_end = &str[len];
+	p->q_open = NULL;
+	p->quote = '\0';
 }

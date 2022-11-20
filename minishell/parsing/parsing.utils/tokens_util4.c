@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 03:05:01 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 12:31:35 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:43:16 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	token_trim_white(t_parsing *parsing)
 	current = parsing->token_list->head;
 	while (current)
 	{
-		p = ft_strtrim(current->data, " ");
+		p = ft_strtrim(current->data, WHITESPACE);
 		free (current->data);
 		current->data = p;
 		current = current->next;

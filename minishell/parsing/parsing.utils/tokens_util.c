@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:03:59 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 12:33:38 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:48:46 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	add_word_token(t_parsing *p, char *str, t_node *current);
 static void	add_redir_token(t_parsing *p, char *str, t_node *current);
 static void	check_string(t_parsing *p, char *str, t_node *current);
-static void	init_split_tokens(t_parsing *p, char *str);
+static void	check_string2(t_parsing *p, char *str, t_node *current);
 
 // splits into tokens. 0 if cmd or word, 1 >, 2 <, 3 >>, 4 <<
 void	split_tokens(t_parsing *parsing)
@@ -67,6 +67,17 @@ static void	add_redir_token(t_parsing *p, char *str, t_node *current)
 	}
 }
 
+static void	check_string2(t_parsing *p, char *str, t_node *current)
+{
+	if (p->ix > 0 && !is_whs_c(str[p->ix - 1]) \
+		&& !is_redc(str[p->ix - 1]))
+	{
+		p->p_end = &str[p->ix];
+		add_token(p, dup_range(p->p_start, p->p_end), 0, current);
+		p->p_start = &p->p_end[1];
+	}
+}
+
 static void	check_string(t_parsing *p, char *str, t_node *current)
 {
 	p->ix = 0;
@@ -77,12 +88,9 @@ static void	check_string(t_parsing *p, char *str, t_node *current)
 		{
 			if (is_redc(str[p->ix]))
 				add_redir_token(p, str, current);
-			else if (is_whs_c(str[p->ix]) && \
-			!is_whs_c(str[p->ix - 1]) && !is_redc(str[p->ix - 1]))
+			else if (is_whs_c(str[p->ix]))
 			{
-				p->p_end = &str[p->ix];
-				add_token(p, dup_range(p->p_start, p->p_end), 0, current);
-				p->p_start = &p->p_end[1];
+				check_string2(p, str, current);
 			}
 			else if (is_word_c(str[p->ix]) && is_redc(str[p->ix + 1]))
 				add_word_token(p, str, current);
@@ -94,16 +102,4 @@ static void	check_string(t_parsing *p, char *str, t_node *current)
 			add_token(p, dup_range(p->p_start, p->line_end), 0, current);
 		p->ix++;
 	}
-}
-
-static void	init_split_tokens(t_parsing *p, char *str)
-{
-	int		len;
-
-	len = ft_strlen(str);
-	p->p_start = str;
-	p->p_end = &str[len];
-	p->line_end = &str[len];
-	p->q_open = NULL;
-	p->quote = '\0';
 }
