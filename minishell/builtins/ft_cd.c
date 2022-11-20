@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:55:15 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 14:35:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 19:03:24 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,13 @@ static void	error_messages(t_token *curr)
 
 static void	init_oldpwd(t_vars *vars, char *oldpwd, char *cwd)
 {
+	char	*old;
+
 	if (vars->pwd_tmp == NULL && !(find_var(vars->env_list, oldpwd)))
 	{
-		ft_update_exp(vars->exp_lst, ft_strjoin(oldpwd, cwd));
-		ft_add2env(vars, ft_strjoin(oldpwd, cwd));
+		old = ft_strjoin(oldpwd, cwd);
+		ft_update_exp(vars->exp_lst, old);
+		ft_add2env(vars, old);
+		free(old);
 	}
 }

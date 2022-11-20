@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 16:27:13 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 15:21:38 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/20 19:26:29 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ char	*ft_exe(t_parsing *parse, t_iovars *iov)
 	}
 	if (!iov->vars->cmds[0])
 		return (cmd_path);
-	cmd_path = ft_find_arg_path(iov->vars, iov->vars->cmds[0]);
+	cmd_path = ft_strdup(ft_find_arg_path(iov->vars, iov->vars->cmds[0]));
 	return (cmd_path);
 }

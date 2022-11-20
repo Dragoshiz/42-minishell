@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 12:37:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 17:53:49 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 
 static int	hv_exp_next(t_iovars *iov, t_node *exp)
 {
-	if (!iov->vars->exp_lst->head->next)
+	if (!iov->vars->exp_lst->head->next \
+		&& (count_linked_list(iov->vars->exp_lst) == 1))
 	{
 		free(iov->vars->exp_lst->head->data);
 		free(iov->vars->exp_lst->head);
