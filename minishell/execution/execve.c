@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 16:27:13 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 13:28:37 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:21:38 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	ft_forknexec(t_parsing *parse, t_iovars *iov, t_token *curr)
 	cmd_path = ft_exe(parse, iov);
 	if (!cmd_path || iov->vars->is_dir)
 	{
+		if (iov->hv_heredoc)
+		{
+			close(iov->hrdc_pipe[1]);
+			close(iov->hrdc_pipe[0]);
+		}
 		ft_err_n_close(parse, iov, curr, cmd_path);
 		return ;
 	}

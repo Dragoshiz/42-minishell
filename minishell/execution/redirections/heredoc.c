@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 16:19:46 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/18 16:21:03 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/20 15:30:31 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ char	*ft_custom_strjoin(char *s1, char *s2)
 	return (p);
 }
 
-static void	ft_get_hrdoc2(t_token *curr, t_iovars *iov, char *line)
+static void	ft_get_hrdoc2(t_iovars *iov, char *line)
 {
 	free(line);
-	iov->hv_heredoc = 1;
-	curr->type = 6;
 	g_exit = 0;
 	close(iov->hrdc_pipe[1]);
 }
@@ -58,6 +56,8 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 
 	curr = current->next;
 	delim = curr->data;
+	iov->hv_heredoc = 1;
+	curr->type = 6;
 	size_delim = ft_strlen(delim);
 	pipe(iov->hrdc_pipe);
 	while (1)
@@ -72,5 +72,5 @@ void	ft_get_hrdoc(t_token *current, t_iovars *iov)
 		write(iov->hrdc_pipe[1], line, ft_strlen(line));
 		free(line);
 	}
-	ft_get_hrdoc2(curr, iov, line);
+	ft_get_hrdoc2(iov, line);
 }
