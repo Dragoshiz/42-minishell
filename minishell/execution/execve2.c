@@ -6,7 +6,7 @@
 /*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:43:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 15:16:34 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 15:00:07 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	ft_part1exec(t_parsing *parse, t_iovars *iov, t_token *curr, int i)
 		ft_get_cmd(parse, iov, curr, i);
 	if (iov->hv_heredoc)
 		iov->fdin = iov->hrdc_pipe[0];
-	else if (i != 0 && !iov->hv_builtin)
+	if (i != 0 && !iov->hv_builtin)
 	{
 		close(iov->pipefds[i - 1][1]);
 		iov->fdin = iov->pipefds[i - 1][0];
@@ -57,7 +57,7 @@ static void	ft_part1exec(t_parsing *parse, t_iovars *iov, t_token *curr, int i)
 	if (iov->fdin == 0)
 	{
 		if (i != 0 && iov->hv_builtin)
-			close(close(iov->pipefds[i - 1][1]));
+			close((iov->pipefds[i - 1][1]));
 		dup2(iov->tmpin, STDIN_FILENO);
 	}
 	else
@@ -88,4 +88,6 @@ void	ft_execv2(t_parsing *parse, t_iovars *iov)
 			ft_free_doublepoint(iov->vars->cmds);
 		i++;
 	}
+	if (parse->num_cmds > 1)
+		ft_free_doublepointi(iov->pipefds);
 }
