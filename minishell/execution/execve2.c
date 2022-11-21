@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:43:17 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/21 15:00:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 17:57:22 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	cleanup(t_vars *vars, t_iovars *iov, t_parsing *parse)
 	free(vars->exp_lst);
 	delete_list(vars->env_list);
 	free(vars->env_list);
+	if (vars->pwd_tmp)
+		free(vars->pwd_tmp);
 	ft_free_doublepoint(vars->env_sh);
 	if (g_exit != -1)
 	{

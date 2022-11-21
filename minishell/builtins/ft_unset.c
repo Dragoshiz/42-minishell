@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/21 11:43:05 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 17:40:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 		while (curr->next && curr->pipe_nbr == pipe_num)
 		{
 			if (curr->next->type == 0 && \
-			is_variable_str(curr->next->data))
+			ft_is_valid_unset(curr, curr->next->data) == 0)
 			{
 				unset_exp(iov, curr->next, len);
 				unset_env(iov, curr->next, len);

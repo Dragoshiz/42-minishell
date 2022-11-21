@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:43:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/21 11:42:47 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 17:38:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,31 @@ void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 			break ;
 		env = env->next;
 	}
+}
+
+//checks if variable is a valid identifier
+int	ft_is_valid_unset(t_token *curr, char *curr_data)
+{
+	int	valid;
+	int	i;
+
+	i = 0;
+	valid = 0;
+	while (curr_data[i])
+	{
+		if (is_variable_char(curr_data[i]) == 0 || \
+		is_variable_start_char(curr_data[0]) == 0)
+			valid = 1;
+		i++;
+	}
+	if (valid == 1)
+	{
+		ft_putstr_fd("minishell: unset: ", STDERR_FILENO);
+		ft_putstr_fd(curr_data, STDERR_FILENO);
+		ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
+		curr = curr->next;
+		g_exit = 1;
+		return (valid);
+	}
+	return (valid);
 }
