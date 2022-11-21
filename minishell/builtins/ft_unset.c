@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:50:57 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/20 17:53:49 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 11:43:05 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 static void	unset_exp(t_iovars *iov, t_token *curr, size_t len);
 static int	hv_exp_next(t_iovars *iov, t_node *exp);
+
+void	ft_replace_tail(t_linked_list *list)
+{
+	t_node	*node;
+
+	node = list->head;
+	while (node->next != NULL)
+		node = node->next;
+	list->tail = node;
+}
 
 void	ft_unset(t_token *current, t_iovars *iov, int pipe_num)
 {
@@ -73,7 +83,7 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 		if (!hv_exp_next(iov, exp))
 			return ;
 	}
-	while (exp->next)
+	while (exp->next != NULL)
 	{
 		if (ft_strncmp(exp->next->data, curr->data, len) == 0 && \
 		(exp->next->data[len] == '=' || ft_strlen(exp->next->data) == len))
@@ -82,8 +92,9 @@ static void	unset_exp(t_iovars *iov, t_token *curr, size_t len)
 			if (exp->next)
 				exp->next = exp->next->next;
 			free_node(tmp);
+			ft_replace_tail(iov->vars->exp_lst);
 		}
-		if (exp->next)
+		else
 			exp = exp->next;
 	}
 }

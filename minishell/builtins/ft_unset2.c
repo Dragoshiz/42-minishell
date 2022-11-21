@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:43:34 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/18 18:48:30 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:42:47 by dimbrea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	unset_env(t_iovars *iov, t_token *curr, size_t len)
 			if (env->next)
 				env->next = env->next->next;
 			free_node(tmp);
+			ft_replace_tail(iov->vars->env_list);
 		}
 		if (!env->next)
 			break ;
