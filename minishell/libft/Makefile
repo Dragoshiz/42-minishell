@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+         #
+#    By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/16 16:02:04 by dimbrea           #+#    #+#              #
-#    Updated: 2022/11/21 11:47:43 by dimbrea          ###   ########.fr        #
+#    Updated: 2022/11/21 15:29:36 by vfuhlenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 RM = rm -f
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/21 11:42:27 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 15:28:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <unistd.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-// # include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
-# include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/Users/vfuhlenb/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/Users/dimbrea/goinfre/.brew/Cellar/readline/8.2.1/include/readline/history.h"
 # include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
