@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:27:00 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/16 11:18:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:08:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*insert_expanded_string(t_parsing *parsing, void *data)
 	char	*p;
 	char	*str;
 
+	parsing->var_name_len = 0;
 	i = parsing->ix + 1;
 	i = get_var_name_len(parsing, data, parsing->ix, i);
 	str = get_var_value(parsing, data);

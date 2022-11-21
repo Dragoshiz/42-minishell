@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:02:50 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/19 21:11:26 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 15:42:27 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_find_arg_path(t_vars *vars, char *arg)
 	while (vars->paths[i])
 	{
 		if (access(arg, F_OK) == 0)
-			return (arg);
+			return (ft_strdup(arg));
 		cmd_path = ft_strjoin(vars->paths[i], arg);
 		if (access(cmd_path, F_OK) == 0)
 		{

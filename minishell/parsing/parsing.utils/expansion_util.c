@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:53:08 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/12 21:04:04 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:28:17 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	insert(t_parsing *p, t_node *current, int opt)
 
 static int	expand_var(t_parsing *p, t_node *current)
 {
-	p->len = ft_strlen(current->data);
+	p->pipelen = ft_strlen(current->data);
 	while (current->data[p->ix])
 	{
 		p->check = 0;
@@ -60,8 +60,8 @@ void	expand_variables(t_parsing *parsing)
 		while (1)
 		{
 			parsing->ix = expand_var(parsing, current);
-			if ((parsing->ix == parsing->len && parsing->check == 0) \
-			|| parsing->len == 0)
+			if ((parsing->ix == parsing->pipelen && parsing->check == 0) \
+			|| parsing->pipelen == 0)
 				break ;
 			parsing->ix = 0;
 			parsing->status = 0;
@@ -71,5 +71,5 @@ void	expand_variables(t_parsing *parsing)
 		if (current == NULL)
 			break ;
 	}
-	parsing->len = 0;
+	parsing->pipelen = 0;
 }

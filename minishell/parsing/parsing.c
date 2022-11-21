@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimbrea <dimbrea@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:38:33 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2022/11/20 16:00:07 by dimbrea          ###   ########.fr       */
+/*   Updated: 2022/11/21 16:15:36 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	initialize_parsing(t_parsing *parsing, t_vars *vars)
 	parsing->d_quote = DQUOTE;
 	parsing->s_quote = SQUOTE;
 	parsing->token_nbr = 0;
+	parsing->pipelen = 0;
 }
 
 // Main function for Parsing & initial checks

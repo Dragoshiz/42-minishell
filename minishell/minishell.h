@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:25:23 by dimbrea           #+#    #+#             */
-/*   Updated: 2022/11/21 15:28:36 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:15:21 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct s_parsing {
 	int				m2;
 	char			d_quote;
 	char			s_quote;
+	int				pipelen;
 }t_parsing;
 
 // MAIN
